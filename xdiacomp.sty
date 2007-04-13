@@ -1,0 +1,84 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\unless\ifdefined\XeTeXversion
+  \@latex@error{^^J
+   *************************************************^^J
+   *** The xdiacomp package only works with XeTeX ***^^J
+   *************************************************}
+\fi
+\ProvidesPackage{xdiacomp}
+  [2006/07/06 v0.1 Automatic composition of diacritics from Unicode input]
+\begingroup
+ \def\XunicodeLoaded{%
+  \@latex@error{*** this package is not compatible with xunicode ***^^J}\@ehc
+  \endgroup\endinput}
+\expandafter\ifx\csname UndeclareUTFcomposite\endcsname\relax\else\expandafter\XunicodeLoaded\fi
+\endgroup
+% various definitions of accents and diacritics 
+\gdef\textsubbreve#1{\hmode@bgroup\o@lign{\relax#1\crcr\hidewidth 
+ \vbox to.2ex{\hbox{\ifnum\fontdimen1\font=0 %
+ \kern-0.0em\else\kern-0.40em\fi\ifnum\XeTeXcharglyph"02D8 > 0\char"02D8\relax%
+ \else\fontencoding{T1}\selectfont\char8\fi}\vss}\hidewidth}} 
+\gdef\oldain{\ifnum\fontdimen1\font=0 %
+    \protect\raisebox{0.4ex}{$\lhook$}%
+    \else\protect\raisebox{0.4ex}{\kern.05em$\lhook$\kern-.1em}\fi}
+\gdef\oldhamza{\ifnum\fontdimen1\font=0 %
+    \protect\raisebox{0.4ex}{$\rhook$}% 
+    \else\protect\raisebox{0.4ex}{\kern.05em$\rhook$\kern-.1em}\fi}
+\gdef\b#1{\hmode@bgroup\o@lign{\relax#1\crcr\hidewidth\sh@ft{29}%
+    \vbox to.2ex{\hbox{\ifnum\XeTeXcharglyph"02C9 > 0\char"02C9\relax%
+    \else\fontencoding{T1}\selectfont\char9\fi}\vss}\hidewidth}\egroup}
+\newcommand{\ain}{\raisebox{.8ex}{\fontencoding{T3}\fontfamily{ptm}\selectfont\char21}}
+\newcommand{\hamza}{\raisebox{.8ex}{\fontencoding{T3}\fontfamily{ptm}\selectfont\char20}}
+
+% now we redefine the catcodes
+\catcode `ḍ = \active
+\catcode `ḥ = \active
+\catcode `ḳ = \active
+\catcode `ṣ = \active
+\catcode `ṭ = \active
+\catcode `ẓ = \active
+\catcode `ḫ = \active
+\catcode `ḏ = \active
+\catcode `ṯ = \active
+\catcode `Ḍ = \active
+\catcode `Ḥ = \active
+\catcode `Ḳ = \active
+\catcode `Ṣ = \active
+\catcode `Ṭ = \active
+\catcode `Ẓ = \active
+\catcode `Ḫ = \active
+\catcode `Ḏ = \active
+\catcode `Ṯ = \active
+\catcode `ʿ = \active
+\catcode `ʾ = \active
+\catcode `ġ = \active
+\catcode `Ġ = \active
+\catcode `ǧ = \active
+\catcode `Ǧ = \active
+
+\def ḍ{\iffontchar\font"1E0D\char"1E0D\relax\else{\d d}\fi}%
+\def ḥ{\iffontchar\font"1E25\char"1E25\relax\else{\d h}\fi}%
+\def ḳ{\iffontchar\font"1E33\char"1E33\relax\else{\d k}\fi}%
+\def ṣ{\iffontchar\font"1E63\char"1E63\relax\else{\d s}\fi}%
+\def ṭ{\iffontchar\font"1E6D\char"1E6D\relax\else{\d t}\fi}%
+\def ẓ{\iffontchar\font"1E93\char"1E93\relax\else{\d z}\fi}%
+\def ḫ{\iffontchar\font"1E2B\char"1E2B\relax\else{\textsubbreve h}\fi}%
+\def ḏ{\iffontchar\font"1E0F\char"1E0F\relax\else{\b d}\fi}%
+\def ṯ{\iffontchar\font"1E6F\char"1E6F\relax\else{\b t}\fi}%
+\def Ḍ{\iffontchar\font"1E0C\char"1E0C\relax\else{\d D}\fi}%
+\def Ḥ{\iffontchar\font"1E24\char"1E24\relax\else{\d H}\fi}%
+\def Ḳ{\iffontchar\font"1E32\char"1E32\relax\else{\d K}\fi}%
+\def Ṣ{\iffontchar\font"1E62\char"1E62\relax\else{\d S}\fi}%
+\def Ṭ{\iffontchar\font"1E6C\char"1E6C\relax\else{\d T}\fi}%
+\def Ẓ{\iffontchar\font"1E92\char"1E92\relax\else{\d Z}\fi}%
+\def Ḫ{\iffontchar\font"1E2A\char"1E2A\relax\else{\textsubbreve H}\fi}%
+\def Ḏ{\iffontchar\font"1E0E\char"1E0E\relax\else{\b D}\fi}%
+\def Ṯ{\iffontchar\font"1E6E\char"1E6E\relax\else{\b T}\fi}%
+\def ʿ{\iffontchar\font"02BF\char"02BF\relax\else{\ain}\fi}%
+\def ʾ{\iffontchar\font"02BE\char"02BE\relax\else{\hamza}\fi}%
+\def ġ{\iffontchar\font"0121\char"0121\relax\else{\. g}\fi}%
+\def Ġ{\iffontchar\font"0120\char"0120\relax\else{\. G}\fi}%
+\def ǧ{\iffontchar\font"01E7\char"01E7\relax\else{\v g}\fi}%
+\def Ǧ{\iffontchar\font"01E6\char"01E6\relax\else{\v G}\fi}%
+
+\endinput

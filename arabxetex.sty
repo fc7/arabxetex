@@ -1,0 +1,503 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{arabxetex}
+  [2006/11/28 v1.00a ArabTeX-like interface for XeLaTeX]
+%
+\DeclareOption{fullvoc}{\def\ax@mode{fullvoc}}
+\DeclareOption{voc}{\def\ax@mode{voc}}
+\DeclareOption{novoc}{\def\ax@mode{novoc}}
+\DeclareOption{trans}{\def\ax@mode{trans}}
+\DeclareOption{utf}{\def\ax@mode{utf}}
+\DeclareOption{fdf2alif}{\def\ax@font@allah{fdf2alif}}
+\DeclareOption{fdf2noalif}{\def\ax@font@allah{fdf2noalif}}
+\ExecuteOptions{novoc,fdf2alif}
+\ProcessOptions
+\def\ax@mode@fullvoc{fullvoc}
+\def\ax@mode@voc{voc}
+\def\ax@mode@novoc{novoc}
+\def\ax@mode@trans{trans}
+\def\ax@mode@utf{utf}
+\newif\ifax@mode@defined
+\def\ax@ismode@defined#1{%
+	\ifcsname ax@mode@#1\endcsname%
+		\ax@mode@definedtrue%
+	\else%
+		\ax@mode@definedfalse%
+	\fi}
+\def\ax@lang{arab}%default language (for macros like \aemph)
+\RequirePackage{bidi}
+\RequirePackage{amsmath}%because of macro \overline used in \aemph
+\RequirePackage{fontspec}
+\AtBeginDocument{\ifdefined\arabicfont\relax\else%
+	\newfontfamily\arabicfont[Script=Arabic,Scale=2]{Scheherazade}\fi}%
+\def\ax@trans@style{\itshape}%
+\newcommand{\SetTransliterationStyle}[1]{\def\ax@trans@style{#1}}
+\newcommand{\SetAllahWithAlif}{\def\ax@font@allah{fdf2alif}}
+\newcommand{\SetAllahWithoutAlif}{\def\ax@font@allah{fdf2noalif}}
+\def\arabtex@codes{\catcode`^=11\relax\catcode`_=11\relax}
+\def\UC{\char"E000} % this is used to capitalize the following letter (ignoring article al-) in transliteration
+%%%
+\newenvironment{arab}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{arab}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+\let\Arabic=\arab%
+%%%
+\newenvironment{maghribi}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{maghribi}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\@tempa}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\ax@mode}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+%%%
+\newenvironment{farsi}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{farsi}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-farsi-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\@tempa}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\ax@mode}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+\let\persian=\farsi
+%%%
+\newenvironment{urdu}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{urdu}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-urdu-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Language=Urdu}%Mapping=arabtex-utf}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\@tempa}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\ax@mode}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+%%%
+\newenvironment{pashto}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{pashto}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-pashto-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\@tempa}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\ax@mode}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+%%%
+\newenvironment{sindhi}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{sindhi}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-sindhi-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Language=Sindhi}%Mapping=arabtex-utf}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\@tempa,Language=Sindhi}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\ax@mode,Language=Sindhi}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+%%%
+\newenvironment{turk}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{turk}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	%\ifx\@tempa\ax@mode@trans%
+	%	\par\arabtex@codes\ax@trans@style%
+	%	\addfontfeature{Mapping=arabtex-turk-trans}%
+	%\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\@tempa}%
+	\fi%\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\ax@mode}%
+\fi}
+{%\ifx\@tempa\ax@mode@trans\relax\else
+\unsetRL%\fi
+\par}
+\let\ottoman=\turk
+%%%
+\newenvironment{kurdish}[1][]%
+{\def\ax@lang{kurdish}%
+%\edef\@tempa{#1}%
+%\ifx\@tempa\ax@mode@trans%
+%	\par\arabtex@codes\ax@trans@style%
+%	\addfontfeature{Mapping=arabtex-kurdish-trans}%
+%\else%
+\ifx\@tempa\ax@mode@utf%
+	\par\setRL\arabicfont\addfontfeature{Language=Kurdish}%Mapping=arabtex-utf}%
+\else%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-kurdish,Language=Kurdish}%
+\fi}
+{%\ifx\@tempa\ax@mode@trans\relax\else
+\unsetRL%\fi
+\par}
+%%%
+\newenvironment{kashmiri}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{kashmiri}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	%\ifx\@tempa\ax@mode@trans%
+	%	\par\arabtex@codes\ax@trans@style%
+	%	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-trans}%
+	%\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\@tempa}%
+	\fi%\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\ax@mode}%
+\fi}
+{%\ifx\@tempa\ax@mode@trans\relax\else
+\unsetRL%\fi
+\par}
+%%%
+\newenvironment{malay}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{malay}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	%\ifx\@tempa\ax@mode@trans%
+	%	\par\arabtex@codes\ax@trans@style%
+	%	\addfontfeature{Mapping=arabtex-malay-trans}%
+	%\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\@tempa}%
+	\fi%\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\ax@mode}%
+\fi}
+{%\ifx\@tempa\ax@mode@trans\relax\else
+\unsetRL%\fi
+\par}
+\let\jawi=\malay
+%%%
+\newenvironment{uighur}[1]%
+{%\edef\@tempa{#1}%
+\def\ax@lang{uighur}%
+%\ifx\@tempa\ax@mode@trans%
+%	\par\arabtex@codes\ax@trans@style%
+%	\addfontfeature{Mapping=arabtex-uighur-trans}%
+%\else%
+\ifx\@tempa\ax@mode@utf%
+	\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+\else%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-uighur}%
+\fi}
+{%\ifx\@tempa\ax@mode@trans\relax\else
+\unsetRL%\fi
+\par}
+%%%
+\def\textarab{\bgroup\arabtex@codes\text@arab}
+\let\textarabic=\textarab
+\def\textmaghribi{\bgroup\arabtex@codes\text@maghribi}
+\def\textfarsi{\bgroup\arabtex@codes\text@farsi}
+\let\textpersian=\textfarsi
+\def\texturdu{\bgroup\arabtex@codes\text@urdu}
+\def\textsindhi{\bgroup\arabtex@codes\text@sindhi}
+\def\textpashto{\bgroup\arabtex@codes\text@pashto}
+\def\textturk{\bgroup\arabtex@codes\text@turk}
+\let\textottoman=\textturk
+\def\textkurdish{\bgroup\arabtex@codes\text@kurdish}
+\def\textkashmiri{\bgroup\arabtex@codes\text@kashmiri}
+\def\textmalay{\bgroup\arabtex@codes\text@malay}
+\let\textjawi=\textmalay
+\def\textuighur{\bgroup\arabtex@codes\text@uighur}
+\newcommand\text@arab[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{arab}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}
+		\else%
+			\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}#2}%
+		\fi\fi
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@maghribi[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{maghribi}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\@tempa}#2}%
+		\fi\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@farsi[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{farsi}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-farsi-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\@tempa}#2}%
+		\fi\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@urdu[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{urdu}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-urdu-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Language=Urdu}#2}%eventually Mapping=arabtex-utf
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\@tempa,Language=Urdu}#2}%
+		\fi\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\ax@mode,Language=Urdu}#2}%
+	\fi\egroup}
+\newcommand\text@sindhi[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{sindhi}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-sindhi-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Language=Sindhi} #2}%eventually Mapping=arabtex-utf
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\@tempa,Language=Sindhi}#2}%
+		\fi\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\ax@mode,Language=Sindhi}#2}%
+	\fi\egroup}
+\newcommand\text@pashto[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{pashto}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-pashto-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\@tempa}#2}%
+		\fi\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@turk[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{turk}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		% UNCOMMENT when transliteration mapping is done
+		%\ifx\@tempa\ax@mode@trans%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-turk-trans}#2}%
+		%\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\@tempa}#2}%
+		\fi%\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@kurdish[2][]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{kurdish}%
+		% UNCOMMENT when transliteration mapping is done
+		%\ifx\@tempa\ax@mode@trans%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kurdish-trans}#2}%
+		%\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-kurdish,Language=Kurdish}#2}%
+		\fi%\fi%
+	\egroup}
+\newcommand\text@kashmiri[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{kashmiri}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		% UNCOMMENT when transliteration mapping is done
+		%\ifx\@tempa\ax@mode@trans%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kashmiri-trans}#2}%
+		%\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\@tempa}#2}%
+		\fi%\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@malay[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{malay}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		% UNCOMMENT when transliteration mapping is done
+		%\ifx\@tempa\ax@mode@trans%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-malay-trans}#2}%
+		%\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\@tempa}#2}%
+		\fi%\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@uighur[2][]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{uighur}%
+		% UNCOMMENT when transliteration mapping is done
+		%\ifx\@tempa\ax@mode@trans%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-uighur-trans}#2}%
+		%\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-uighur}#2}%
+		\fi%\fi%
+	\egroup}
+%
+\newcommand{\textlatin}[1]{\LR{\rmfamily #1}}
+%\newcommand{\aemph}[1]{$\overline{\text{\textarab{#1}}}$} %%TODO generalize to all languages
+%% implement a parameter \ax@lang
+\newcommand{\aemph}[1]{%
+  \edef\@tempb{\expandafter\noexpand\csname text\ax@lang\endcsname}%
+  $\overline{\text{\@tempb{#1}}}$}
+%
+%experimental: this surely does not work!
+% this would make possible to define commands that accept args containing \arabtex@codes
+%\def\newarabxetexcommand#1#2{%
+%	\edef\ax@tcomm@nd{\expandafter\relax\csname #1@\endcsname}
+%	\expandafter\def\string#1{%
+%	\bgroup\arabtex@codes\ax@tcomm@nd}
+%	\def\ax@tcomm@nd{#2\egroup}}
+\endinput

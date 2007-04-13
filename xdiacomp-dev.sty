@@ -1,0 +1,401 @@
+%\@latex@error{***THIS IS THE Development version!***}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\unless\ifdefined\XeTeXversion
+  \@latex@error{^^J
+   *************************************************^^J
+   *** The xdiacomp package only works with XeTeX ***^^J
+   *************************************************}
+\fi
+\ProvidesPackage{xdiacomp-dev}
+\RequirePackage[T3,T1,EU1]{fontenc}
+\ifdefined\fontspec
+	\AtBeginDocument{\fontencoding{EU1}\selectfont}
+\fi
+% various definitions of accents and diacritics 
+%\def\changeencoding#1{\def\cf@encoding{#1}}
+%>> THESE should now be redefined for encoding UX
+%\DeclareTextCommand{\textsubbreve}{UX}[1]{%
+\gdef\UX@textsubbreve#1{\hmode@bgroup\o@lign{\relax#1\crcr\hidewidth 
+   \vbox to.2ex{\hbox{\ifnum\fontdimen1\font=0 %
+   \kern-0.0em\else\kern-0.40em\fi\iffontchar\font"02D8\char"02D8\relax%
+   \else\fontencoding{T1}\selectfont\char8\fi}\vss}\hidewidth}} 
+\gdef\UX@oldain{\ifnum\fontdimen1\font=0 %
+    \protect\raisebox{0.4ex}{$\lhook$}%
+    \else\protect\raisebox{0.4ex}{\kern.05em$\lhook$\kern-.1em}\fi}
+\gdef\UX@oldhamza{\ifnum\fontdimen1\font=0 %
+    \protect\raisebox{0.4ex}{$\rhook$}% 
+    \else\protect\raisebox{0.4ex}{\kern.05em$\rhook$\kern-.1em}\fi}
+%\DeclareTextCommand{\b}{UX}[1]{%
+\gdef\UX@b#1{\hmode@bgroup\o@lign{\relax#1\crcr\hidewidth\sh@ft{29}%
+    \vbox to.2ex{\hbox{\iffontchar\font"02C9\char"02C9\relax%
+    \else\fontencoding{T1}\selectfont\char9\fi}\vss}\hidewidth}\egroup}
+\gdef\UX@ain{\raisebox{.8ex}{\fontencoding{T3}\fontfamily{ptm}\selectfont\char21}}
+\gdef\UX@hamza{\raisebox{.8ex}{\fontencoding{T3}\fontfamily{ptm}\selectfont\char20}}
+%\DeclareTextCommand{\d}{UX}[1]{%
+\gdef\UX@d#1{\hmode@bgroup\o@lign{\relax#1\crcr\hidewidth\sh@ft{10}.\hidewidth}\egroup}
+%\gdef\UX@dot#1{\add@accent{"002E}{#1}}
+%\gdef\UX@v#1{\add@accent{"030C}{#1}} 
+
+% now we redefine the catcodes
+\catcode `ḍ = \active
+\catcode `ḥ = \active
+\catcode `ḳ = \active
+\catcode `ṣ = \active
+\catcode `ṭ = \active
+\catcode `ẓ = \active
+\catcode `ḫ = \active
+\catcode `ḏ = \active
+\catcode `ṯ = \active
+\catcode `Ḍ = \active
+\catcode `Ḥ = \active
+\catcode `Ḳ = \active
+\catcode `Ṣ = \active
+\catcode `Ṭ = \active
+\catcode `Ẓ = \active
+\catcode `Ḫ = \active
+\catcode `Ḏ = \active
+\catcode `Ṯ = \active
+\catcode `ʿ = \active
+\catcode `ʾ = \active
+\catcode `ġ = \active
+\catcode `Ġ = \active
+\catcode `ǧ = \active
+\catcode `Ǧ = \active
+
+\def ḍ{\iffontchar\font"1E0D\char"1E0D\relax\else%\iffontchar\font"0323{d\char"0323}\else
+	{\UX@d d}\fi}%
+\def ḥ{\iffontchar\font"1E25\char"1E25\relax\else{\UX@d h}\fi}%
+\def ḳ{\iffontchar\font"1E33\char"1E33\relax\else{\UX@d k}\fi}%
+\def ṣ{\iffontchar\font"1E63\char"1E63\relax\else{\UX@d s}\fi}%
+\def ṭ{\iffontchar\font"1E6D\char"1E6D\relax\else{\UX@d t}\fi}%
+\def ẓ{\iffontchar\font"1E93\char"1E93\relax\else{\UX@d z}\fi}%
+\def ḫ{\iffontchar\font"1E2B\char"1E2B\relax\else{\UX@textsubbreve h}\fi}%
+\def ḏ{\iffontchar\font"1E0F\char"1E0F\relax\else{\UX@b d}\fi}%
+\def ṯ{\iffontchar\font"1E6F\char"1E6F\relax\else{\UX@b t}\fi}%
+\def Ḍ{\iffontchar\font"1E0C\char"1E0C\relax\else{\UX@d D}\fi}%
+\def Ḥ{\iffontchar\font"1E24\char"1E24\relax\else{\UX@d H}\fi}%
+\def Ḳ{\iffontchar\font"1E32\char"1E32\relax\else{\UX@d K}\fi}%
+\def Ṣ{\iffontchar\font"1E62\char"1E62\relax\else{\UX@d S}\fi}%
+\def Ṭ{\iffontchar\font"1E6C\char"1E6C\relax\else{\UX@d T}\fi}%
+\def Ẓ{\iffontchar\font"1E92\char"1E92\relax\else{\UX@d Z}\fi}%
+\def Ḫ{\iffontchar\font"1E2A\char"1E2A\relax\else{\UX@textsubbreve H}\fi}%
+\def Ḏ{\iffontchar\font"1E0E\char"1E0E\relax\else{\UX@b D}\fi}%
+\def Ṯ{\iffontchar\font"1E6E\char"1E6E\relax\else{\UX@b T}\fi}%
+\def ʿ{\iffontchar\font"02BF\char"02BF\relax\else{\UX@ain}\fi}%
+\def ʾ{\iffontchar\font"02BE\char"02BE\relax\else{\UX@hamza}\fi}%
+\def ġ{\iffontchar\font"0121\char"0121\relax\else{\fontencoding{T1}\. g}\fi}%
+\def Ġ{\iffontchar\font"0120\char"0120\relax\else{\fontencoding{T1}\. G}\fi}%
+\def ǧ{\iffontchar\font"01E7\char"01E7\relax\else{\fontencoding{T1}\v g}\fi}%
+\def Ǧ{\iffontchar\font"01E6\char"01E6\relax\else{\fontencoding{T1}\v G}\fi}%
+
+\endinput
+
+###############################################
+>>> Idea is to implement suggestion from Ross Moore on the xetex ML
+SEE THREAD anti-xunicode 
+
+
+
+There is no incompatibility.
+Just change the font-encoding away from the default of 'U',
+whenever you encounter one of your active characters.
+
+xunicode is setup so that accenting macros, such as \d ,
+only provide the UTF8 code when the encoding is 'U'.
+So if you switch to a different encoding, then you can
+hook-in to a different way to compose glyphs for the
+result that you wish to achieve.
+This avoids falling into an infinite loop.
+
+e.g. this is the easy part:
+\catcode `ḍ = \active
+\DeclareRobustCommand{ḍ}{%
+   \ifnum\XeTeXcharglyph"1E0D > 0\char"1E0D\relax
+   \else{\fontencoding{UX}\d d}\fi}%
+
+You also need a declaration for how \d  works
+with the 'UX' encoding.
+If this is the same as for T1 or T3 then you could
+just use those instead.
+
+The macro programming required is not too tricky,
+but does require making heavy use of the
+\csname ... \endcsname  construction, and \expandafter .
+
+#############################################
+
+But this thread is about having yet another kind of fall-back,
+whereby TeX positions the accent-glyph over a letter, as it
+used to do, and still does with OT1 encoding.
+
+Here is a way to achieve this.
+
+
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\usepackage{xunicode}
+\setromanfont[Mapping=tex-text]{Lucida Grande}
+\makeatletter
+   \def\changefencoding#1{\def\cf@encoding{#1}}
+\makeatother
+\let\realaccent\"   %%  this is important ...
+   \DeclareTextAccent{\"}{UX}{"00A8}
+\let\"\realaccent   %%  ... to avoid an infinite loop
+\begin{document}
+{%\tracingall
+\"u
+\UndeclareUTFcomposite[U]{x00FC}{\"}{u}
+\"u
+\changefencoding{UX}%
+\"u
+}
+\end{document}
+
+
+Now the 3rd instance of \"u is set by placing Ux00A8
+appropriately above the letter u .
+
+
+One way to check these claims is to uncomment before
+\tracingall , and check the .log file  or Console window.
+There you can find that the 3 instances result in,
+respectively:
+
+1st instance:
+\\U\"-u ->\char "00FC\relax
+
+
+2nd instance:
+\@secondoftwo #1#2->#2
+#1<-\\U\"-u
+#2<-\add@encoded@accent {0308}{u}{00A8}
+
+\add@encoded@accent #1#2#3->\ifx \relax #2\relax \char "#3\else \ifx  
+\ #2\relax
+\char "#3\else \expandafter \ifx \UTF@space #2\relax \char "#3\else  
+\ifx ~#2\c
+har "#3\else #2\char "#1\fi \fi \fi \fi \relax
+#1<-0308
+#2<-u
+#3<-00A8
+(... ultimately gets to the final branch:  #2\char "#1  )
+
+
+3rd instance:
+\UX\" ->\add@accent {"00A8}
+
+\add@accent #1#2->\hmode@bgroup \let \hmode@start@before@group  
+\@firstofone \se
+tbox \@tempboxa \hbox {#2\global \mathchardef \accent@spacefactor  
+\spacefactor
+}\accent #1 #2\egroup \spacefactor \accent@spacefactor
+#1<-"00A8
+#2<-u
+
+Note that this latter method *is* the OT1 method of placing
+accents.
+
+
+
+For accents that "go under", as with \d  (dot-under accent),
+there is a slight variation, since the OT1 method doesn't
+use \add@accent  for these.
+
+
+However, this works:
+
+\let\realaccent\d
+\DeclareTextAccent{\d}{UX}{"002E}
+\expandafter\let\csname UX\string\d\expandafter\endcsname\csname OT1 
+\string\d\endcsname
+\let\d\realaccent
+
+#############################################
+
+On 23/07/2006, at 10:21 PM, Ralf Stubner wrote:
+
+> > Ross Moore <ross@ics.mq.edu.au> writes:
+
+>> >>   xunicode.sty  could (and perhaps should) be modified to also  
+>> >> include
+>> >> a check for the precomposed glyph, then use the fall-back if not  
+>> >> found.
+> >
+> > I don't think this is necessary, since XeTeX actually does this  
+> > checking
+> > allready. For example, the eogonek in
+> >
+> > \documentclass[a4paper]{article}
+> > \usepackage{fontspec,xunicode}
+> > \setromanfont[Mapping=tex-text]{Gentium}
+> > \begin{document}
+> > \k{e}
+> >  \UndeclareUTFcomposite[U]{x0119}{\k}{e}
+> > \k{e}
+> > e\char"0328
+> > \end{document}
+> >
+> > uses the procomposed form in all three cases, even though Gentium does
+> > not contain any smart features like mark or ccmp. ('mark' wouldn't  
+> > help
+> > here much anyway).
+
+This is a property of the font, surely,
+so cannot be relied upon in general.
+
+> > I am not sure, but maybe this means that many of the
+> > '\DeclareUTFcomposite' in xunicode.sty are not necesary.
+
+I don't see this as a consequence at all.
+This is the mechanism whereby LaTeX is told that a particular
+combination of accent and base-letter is available as a
+single character, within the declared encoding.
+
+> >
+> > BTW, XeTeX also seems to decompose characters while looking for the  
+> > best
+> > way to render them. Example: The current development version of FPL  
+> > Neu
+> > does not contain an Obreve U+014E. It does contain a combining breve
+> > U+0306 with suitable 'mark' features, though. This is correctly used
+> > regardless of whether I input Obreve as precomposed character or in
+> > decomposed form.
+
+Again, a property of the font surely?
+
+
+>> >> The above examples show that XeLaTeX already has the ability to do
+>> >> what the OP requested; namely to have a sequence of fall-backs
+>> >> available for accented characters, according to what is available
+>> >> in the font, or font-encoding.
+> >
+> > I am not sure. I think the OP wanted to use Unicode input, not TeX
+> > commands. Adam has explained the different possibilities that exist  
+> > when
+> > one starts from decomposed input, which can be assumed without loss of
+> > generality:
+> >
+> > a) look for a composed form
+> > b) look for a matching 'ccmp' feature
+> > c) look for an applicable 'mark' (or 'mkmk') feature
+> > d) some fallback
+
+Sure. But one needs a way of achieving this within the context
+of multiple fonts in the same document, perhaps with multiple
+different encodings, and only wanting the fallback to be used
+in some (but not all) situations.
+
+Thus with declarations such as:
+
+\catcode `ḍ = \active
+\DeclareRobustCommand{ḍ}{%
+   \iffontchar\font"1E0D\char"1E0D%
+   \else
+     ... fall back expansion ...
+   \fi}
+
+the problem is to define the "fallback expansion" appropriately.
+
+
+I'm asserting that, with appropriate commands in the header
+to support a (pseudo-)encoding 'UX' say, then this should
+be something like:
+
+   {\changeencoding{UX}\d{d}}
+
+to temporarily (note the extra braces) change the encoding,
+so as to make use of TeX's default handling of accents by
+a box-like construction.
+
+
+Perhaps better is to first check for a combining character,
+and use this --- if it actually produces acceptable results:
+
+   \iffontchar\font"1E0D\relax d\char"1E0D\else
+     {\changeencoding{UX}\d{d}}\fi
+
+
+
+Alternatively, you might wish to force the fall-back method
+with a particular character in a particular font; e.g.,
+where ḍ *is* available, but you don't like its appearance.
+
+Here's how to do it, without upsetting how  ḍ  is handled
+as a normal character with other fonts in the same document.
+
+{\catcode `ḍ = \active
+  \newcommand{ḍ}{{\changeencoding{UX}\d{d}}}
+   \global\let\composeddot ḍ
+   \gdef\activateddot{\catcode `ḍ = \active\let ḍ\composeddot}
+}
+
+Now whenever you switch to that particular font, you need
+to also \activateddot ; e.g.
+
+  \newcommand\selectGentium{%
+    \setromanfont[Mapping=tex-text]{Gentium}%
+    \activateddot}
+
+and only use \selectGentium within a grouping or environment,
+so that the \catcode change remains contained.
+
+For a robust version of this use instead:
+
+\catcode `ḍ = \active
+  \DeclareRobustCommand{\ddotu}{{\changeencoding{UX}\d{d}}}
+   \def\activateddotu{\catcode `ḍ = \active\let ḍ\ddotu}
+\catcode `ḍ = 12
+
+so that  \section{All about ḍ.}
+will write out the aux-file string as:  All about \ddotu .
+
+Make sure that, when the T-of-C is constructed, there is an
+expansion for \ddotu  appropriate to the font being used there.
+
+
+
+The extra header declarations required to support this technique
+was in a previous email, but I repeat it here for completeness.
+
+
+% Define a macro to change encoding flag, without requiring
+% the support of an  <encoding>enc.def  file.
+\makeatletter
+  \def\changeencoding#1{\def\cf@encoding{#1}}
+\makeatother
+
+% Declare an accent with UX encoding, to fall-back
+% to using the  OT1 (or T1) \add@accent  method.
+% Make sure this *precedes* loading any packages
+% that use \DeclareTextAccent for the same accent;
+%  e.g.  hyperref.sty  for PD1-encoding.
+
+%  umlaut  using the "00A8 character
+\let\realaccent\"
+  \DeclareTextAccent{\"}{UX}{"00A8}
+\let\"\realaccent
+
+%  ogonek  using the "02DB character
+\let\realaccent\k
+  \DeclareTextAccent{\k}{UX}{"02DB}
+\let\k\realaccent
+
+%  dot-above  using the "02D9 character
+\let\realaccent\.
+  \DeclareTextAccent{\.}{UX}{"02D9}
+\let\.\realaccent
+
+%  dot-under  using the "002E character (full-stop)
+%    or we could use the combining-char at "0323
+%    for a lower, larger dot in some fonts
+\let\realaccent\d
+  \DeclareTextAccent{\d}{UX}{"002E}
+  % this next line is because \accent  is *not* used for this
+  \expandafter\let\csname UX\string\d\expandafter\endcsname\csname OT1 
+\string\d\endcsname
+\let\d\realaccent
+
+% It seems to be immaterial whether these are loaded before or after:
+\usepackage{fontspec}
+\usepackage{xunicode}
