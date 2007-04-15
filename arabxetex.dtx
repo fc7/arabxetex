@@ -1,0 +1,1972 @@
+% \iffalse
+%
+%!TEX encoding = UTF-8 Unicode
+%
+% Copyright (C) 2007 by François Charette <firmicus at gmx dot net>
+% 
+% Distributable under the LaTeX Project Public License,
+% version 1.3c or higher (your choice). The latest version of
+% this license is at: http://www.latex-project.org/lppl.txt
+%
+% This work is "maintained" (as per LPPL maintenance status) 
+% by François Charette.
+% 
+% This work consists of the file  bidi.dtx
+%           and the derived files bidi.sty and bidi.pdf.
+%
+%
+%<*batchfile>
+\begingroup
+\input docstrip.tex
+\keepsilent
+\preamble
+
+  ____________________________
+  The arabxetex package         
+  (C) 2007  François Charette    
+  License information appended
+
+
+\endpreamble
+\postamble
+
+Copyright (C) 2007 by François Charette <firmicus at gmx dot net>
+
+Distributable under the LaTeX Project Public License,
+version 1.3c or higher (your choice). The latest version of
+this license is at: http://www.latex-project.org/lppl.txt
+
+This work is "maintained" (as per LPPL maintenance status) 
+by François Charette.
+
+This work consists of the file \jobname.dtx
+and the derived files \jobname.sty and \jobname.pdf.
+as well as an extensive collection of TECKit files 
+(*.map, compiled as *.tec).
+
+\endpostamble
+\askforoverwritefalse
+\generate{\file{\jobname.sty}{\from{\jobname.dtx}{package}}}
+\generate{\file{\jobname.ins}{\from{\jobname.dtx}{batchfile}}}
+\nopreamble\nopostamble
+\generate{\file{README}{\from{\jobname.dtx}{readme}}}
+\generate{\file{arabxetex-dtx-style.sty}{\from{\jobname.dtx}{dtx-style}}}
+\endgroup
+%</batchfile>
+%
+%<*driver>
+\documentclass[11pt]{ltxdoc}
+\usepackage{arabxetex-dtx-style}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+%\OnlyDescription
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+%
+%<*readme>
+--------------------------
+THE ARABXETEX PACKAGE v1.0
+
+This package provides a convenient ArabTeX-like user-interface for typesetting
+languages using the Arabic script in XeLaTeX, with flexible access to font
+features. Input in ArabTeX notation can be set in three different
+vocalization modes or in roman transliteration. Direct UTF-8 input is also
+supported.  Since most of the ‘real work’ -- namely parsing and converting
+ArabTeX input to Unicode -- is done at the level of TECkit mappings,
+ArabXeTeX is really performant.
+
+The TECkit fontmapping files (*.map and *.tec) should be copied to 
+<TEXMF>/fonts/misc/xetex/fontmapping/arabxetex/
+
+-------------------------
+François Charette
+2007
+%</readme>
+%
+% \fi
+%
+% \errorcontextlines=999
+% \makeatletter
+%
+% \GetFileInfo{\jobname.sty}
+% 
+% \title{~\hfil {\color{IslamicGreen}\arabxetex \hfil \arabxetexAr}\hfil~\\ 
+% An \arabtex-like interface for typesetting languages in Arabic script with \XeLaTeX}
+% \author{François Charette}
+% \date{\filedate \qquad \fileversion}
+% 
+% \maketitle
+% \tableofcontents
+% 
+% 
+% \DeleteShortVerb{\|}
+% \MakeShortVerb{\¦}
+% 
+% \begin{abstract}
+% This package provides a convenient \arabtex-like user-interface for typesetting 
+% languages using the Arabic script in \XeLaTeX, with flexible access to font
+% features. Input in \arabtex\ notation can be set in three different vocalization 
+% modes or in roman transliteration. Direct UTF-8 input is also supported. 
+% Since most of the ‘real work’ -- namely parsing and converting \arabtex\ input to Unicode -- 
+% is done at the level of TECkit mappings, \arabxetex\ is really performant.
+% \end{abstract}
+% 
+% \tableofcontents
+% 
+% \section{Introduction}
+% 
+% Since the early 1990s, \TeX\ users who wished to typeset in Arabic script 
+% have relied on Klaus Lagally's excellent \arabtex\ system.\footnote{ ^^A
+% 	\url{ftp://ftp.informatik.uni-stuttgart.de/pub/arabtex/arabtex.htm}.
+% 	Version 2.00 was released in April 1992 and version 3.00 in November of
+% 	the following year.  The latest stable version (dated 2 July 2006) is
+% 	3.11s. Since version 3.02 the Hebrew language is also supported.}
+% While \arabtex's overall qualities and Lagally's masterful \TeX-programming
+% abilities are undeniable, the system can hardly hide its 15-odd years of
+% existence.  Or to state it otherwise, it is now slowly becoming an archaic
+% piece of sofware (which as a historian who has used \arabtex\ for more than
+% eleven years I find a sad thing to admit). First of all, it is monolithic and
+% idiosyncratic, in the sense that everything -- from parsing the input encoding,
+% to doing contextual analysis, to assembling all elements of the script and
+% placing them on the page from right to left, in defiance of \TeX's natural
+% logic -- is taken care of by means of \TeX\ macro programming.  Thus before the
+% availability of relatively fast Pentium processors, \arabtex\ was really slow,
+% but this is less of an issue nowadays. Another disadvantage is that one is
+% inexorably bound to use the custom Naskh font, which without being necessarily
+% ugly does not meet the standards of fine typesetting. Finally, the collection
+% of very sophisticated \TeX\ code that constitutes the \arabtex\ package is not
+% documented at all, which means that even though it is now licensed under the
+% LPPL, its internals are extremely difficult to understand in depth.  
+% (It is only fair to state, however, that Prof.~Lagally has been extremely 
+% responsive to ideas, suggestions and wishes by users in the past).
+% 
+% The introduction of Omega in \ca 1996, a \TeX\ extension for multilingual,
+% multidirectional typesetting based on Unicode, raised of course many hopes, but
+% these have by now completely dissipated since the project has been moribund for
+% several years and is now probably defunct. Aleph, a more humble attempt to reach 
+% some of the goals set by Omega, has been equally unsuccessful.\footnote{ ^^A
+% 	Based on Omega 1.15 and \eTeX, Aleph attempted to provide a usable and
+% 	stable branch.  See
+% 	\url{http://www.tug.org/TUGboat/Articles/tb25-1/bilotta.pdf}.
+% 	Unfortunately the project is currently dormant.}
+% Both engines suffered of numerous bugs and never reached a stable and usable
+% state, \textit{at least according to my own subjective experience}.
+% 
+% After completion of the initial alpha version of \arabxetex, I came across the
+% package \pkg{Arabi} by Youssef Jabri on CTAN.\footnote{ ^^A
+% 	\url{http://www.ctan.org/tex-archive/language/arabic/arabi/}}
+% This is a pure LaTeX/Babel approach to Arabic typesetting which makes use of
+% TFM hackery (by means of complex sequences of ligature rules) to provide custom
+% contextual analysis for individual fonts. Thus the \pkg{Arabi} only works in
+% combination with the fonts for which support is built in the package.
+% 
+% With the availability of Jonathan Kew's \XeTeX, users can now rely on a very
+% up-to-date typesetting engine based on the integration of \eTeX, Unicode, and 
+% modern font-rendering technology (AAT and ICU), without the complex hassle of
+% font installation.\footnote{ ^^A
+% 	\url{http://scripts.sil.org/xetex}. \XeTeX\ was originally developed 
+% 	for the Mac~OS~X platform, but Linux and WIN32 ports are now available.}
+% 
+% \section{Description}
+% 
+% The \arabxetex\ package consists of a set of \textbf{TECkit}\footnote{ ^^A
+% 	\url{http://scripts.sil.org/TECkit}} 
+% mappings for converting internally from \arabtex's \ASCII\ input convention to
+% Unicode, and a \LaTeX\ style file (\pkg{arabxetex.sty}) that provides a
+% convenient user interface for typesetting in those languages. 
+% For details on \arabtex\ and its input convention the reader is referred to 
+% Lagally's detailed manual.\footnote{ ^^A
+% 	\url{http://129.69.218.213/arabtex/doc/arabdoc.pdf}}
+% \arabxetex introduces several additions, and a few minor modifications, 
+% to \arabtex's conventions. These are documented in tabular form in 
+% Section~\ref{conventiontable}.  \arabxetex\ relies on the package \pkg{bidi}
+% which contains the macros necessary for bidirectional typesetting --
+% using \eTeX's \cmd{\beginR} \ldots \cmd{\endR}, \cmd{\beginL} \ldots \cmd{\endL} 
+% primitives.  The main code in \pkg{bidi.sty} is essentially borrowed, 
+% with minor adaptations, from the file \pkg{rlbabel.def} in the Babel
+% distribution (where it serves for typesetting Hebrew). Some improvements 
+% in the beta version were inspired by Youssef Jabri's \pkg{Arabi}.
+% 
+% Languages supported at present are the same as in \arabtex, namely: Arabic,
+% Maghribi Arabic, Farsi (Persian), Urdu, Sindhi, Kashmiri, Ottoman Turkish,
+% Kurdish, Jawi (Malay) and Uighur.  \arabxetex\ adds support for several
+% additional Unicode characters, so that some more languages are probably
+% supported de-facto as well (such as Western Punjabi).
+% 
+% \subsection{The \arabtex\ input encoding}
+% 
+% Why would one need to type those languages by means of an old-fashioned 
+% \ASCII\ \label{arabtexnotes} representation?  
+% Native speakers have access to keyboards that allow to input
+% them directly in Unicode, while non-native scholars who need to type them 
+% can use keymaps or keyboard utilities to achieve the same, so why bother? 
+% An expert in Arabic mathematical linguistic and author of the Perl module 
+% \pkg{Encode::Arabic::ArabTeX}, Otakar Srmž, has this to say about the 
+% virtues of \arabtex\ \ASCII\ encoding:
+% \begin{quote}
+% 	“ArabTeX is an excellent extension to TeX/LaTeX designed for
+% 	typesetting the right-to-left scripts of the Orient. It comes up with
+% 	very intuitive and comprehensible lower \ASCII\ transliterations, the
+% 	expressive power of which is even better than that of the scripts.”^^A\footnote{ %
+% 		[Source: \url{http://search.cpan.org/~smrz/Encode-Arabic-1.16/ArabTeX/ArabTeX.pm#DESCRIPTION}.
+% 		See also \url{http://ufal.mff.cuni.cz/~smrz/ICFP2006/icfp-encode.pdf}]^^A}
+% \end{quote}
+% There are indeed several advantages in using \arabtex\ input convention for
+% typesetting in the Arabic script, besides ease and legibility.  First it is
+% possible and even trivial to switch between a representation of the data in the
+% Arabic script and its romanized transliteration, without having to modify it.
+% Second, despite the increasing availability of good Unicode editors that
+% support bidirectionality, editing (La)\TeX\ source files with bidirectional
+% content can be a real pain, for it leads to confusion and distraction.  Also,
+% with complex multi-layer documents such as critical editions, where footnotes
+% and annotations abound, the advantage of dealing with a plain \ASCII\ encoding
+% cannot be overstated. Finally, such an input convention allows far greater
+% control of typographical details.
+% 
+% \section{Usage}
+% 
+% For short insertions (say within a LR text), use ¦\text<language>[option]{...}¦
+% where ¦<language>¦ is one of the following:  
+% \begin{compactitem}[\textbf{·}]
+% 	\item ¦arab¦ (¦Arabic¦),\footnote{ ^^A
+% 		Since the command \cmd\arabic\ is already defined in \LaTeX, we chose
+% 		the environment ¦arab¦ and the command \cmd\textarab\ instead,
+% 		but the equivalent environment ¦Arabic¦ and the command
+% 		\cmd\textarabic\ are also available.}
+% 	\item ¦farsi¦ (¦persian¦), 
+% 	\item ¦urdu¦, 
+% 	\item ¦sindhi¦, 
+% 	\item ¦pashto¦, 
+% 	\item ¦turk¦ (¦ottoman¦), 
+% 	\item ¦kurdish¦,
+% 	\item ¦kashmiri¦, 
+% 	\item ¦malay¦ (¦jawi¦), and 
+% 	\item ¦uighur¦.
+% \end{compactitem}
+% For typesetting whole paragraphs in Arabic script, use 
+% \begin{Verbatim}[gobble=2,fontsize=\normalsize]
+%   \begin{<language>}[option] 
+%   ...
+%   \end{<language>}
+% \end{Verbatim}
+% 
+% Most languages can be typeset in one of four modes: non-vocalized, vocalized,
+% fully-vocalized, and transliterated, exactly as in \arabtex, and these are
+% switched by means of the options ¦novoc¦, ¦voc¦, ¦fullvoc¦ and ¦trans¦,
+% respectively.  Note that Kurdish and Uighur only have one vocalization mode.
+% The mode can be determined either globally as an option to the \pkg{arabxetex}
+% package, or as a local option of either the ¦\text<language>¦ commands or
+% ¦\begin{<language>}¦ \ldots ¦\end{<language>}¦ environments. 
+% When no option is set locally, the global option is chosen.
+% The default global option is always \textit{non-vocalized} mode.
+% 
+% There is also an option \pkg{utf} for input in plain UTF-8 encoding.  Note that
+% it is also possible to mix \arabtex\ input convention and UTF-8 characters,
+% since the latter will not be affected by the font-mapping (except of course in
+% transliteration mode, unless your roman font also contains Arabic characters).
+% There are also advantages of choosing an \arabtex\ mapping (\ie one of the
+% ¦novoc¦, ¦voc¦ and ¦fullvoc¦ modes) even with UTF-8 encoding, as it provides
+% easy access to special glyphs and some useful features. See further below.
+% 
+% Latin (LR) insertions within Arabic environment can be made by means of the
+% command \cmd\textlatin¦{…}¦.  Emphasis in Arabic is traditionally indicated by
+% overlining the text, and this can be achieved with the command
+% \cmd\aemph:\footnote{ ^^A
+% 	This macro makes use of the mathematical command \cmd\overline,
+% 	which explains why \pkg{arabxetex} requires the \pkg{amsmath} package.
+% 	I welcome any suggestion that would make it possible to circumvent this
+% 	by emulating \cmd\overline\ directly.}
+% 
+% \parindentoff
+% \begin{minipage}[t]{.4\textwidth}
+% \begin{Verbatim}[gobble=2]
+%     \begin{arab}[novoc]
+%     mi_tAl: \aemph{45} darajaT	
+%     \end{arab}
+% \end{Verbatim}
+% \end{minipage}
+% \hfill
+% \begin{minipage}[t]{.4\textwidth}
+% \begin{arab}[novoc]
+% 	~ \\
+% mi_tAl: \aemph{45} darajaT	
+% \end{arab}
+% \end{minipage}
+% \medskip
+% 
+% \textbf{Important:} \arabxetex\ requires that the user has defined an
+% \cmd\arabicfont\ in the preamble.  
+% The recommended procedure by means of \pkg{fontspec} is to define it as follows:
+% \begin{Verbatim}[gobble=2,fontsize=\normalsize]
+%     \newfontfamily\arabicfont[Script=Arabic]{<fontname>}
+% \end{Verbatim}
+% If not, then the font \textbf{Scheherazade} (designed by Bob Halissy and
+% Jonathan Kew of SIL International) is taken as default.\footnote{ ^^A
+% 	Available from \url{http://scripts.sil.org/ArabicFonts}. For
+% 	typesetting Sindhi and Kashmiri the font \textbf{Lateef}, available at
+% 	the same place, is also recommended.}
+% 
+% \textbf{NB:} In a later version we may define more general and flexible font commands,
+% perhaps by having individual font families for each language (\cmd\farsifont,
+% \cmd\urdufont, etc.)
+% 
+% ^^A¦TODO:¦ Include links to other open source, freeware and commercial Arabic fonts available.
+% ^^A see appendix 
+% 
+% 
+% \subsection{Examples}
+% 
+% \texttt{THIS SECTION IS INCOMPLETE}
+% 
+% \subsubsection{Contextual analysis of \textit{hamza}}
+% 
+% \begin{Verbatim}[gobble=2,fontsize=\normalsize]
+% \begin{arab}
+% 'amruN, 'ibiluN, 'u_htuN, '"u_ht"uN, '"Uql"Id"Is, ra'suN, 'ar'asu, 
+% sa'ala, qara'a, bu'suN, 'ab'usuN, ra'ufa, ru'asA'u, bi'ruN, 'as'ilaTuN, 
+% ka'iba, qA'imuN, ri'AsaTuN, su'ila, samA'uN, barI'uN, sU'uN, bad'uN, 
+% ^say'uN, ^say'iN, ^say'aN, sA'ala, mas'alaTuN, saw'aTuN, _ha.tI'aTuN, 
+% jA'a, ridA'uN, ridA'aN, jI'a, radI'iN, sU'uN, .daw'uN, qay'iN, .zim'aN
+% , yatasA'alUna, 'a`dA'akum, 'a`dA'ikum, 'a`dA'ukum maqrU'aT, mU'ibAt, 
+% taw'am, yas'alu, 'a.sdiq^A$\;$'uh_u, ya^g^I'u, s^U'ila 
+% \end{arab}
+% \end{Verbatim}
+% 
+% \begin{arab}[voc]
+% 'amruN, 'ibiluN, 'u_htuN, '"u_ht"uN, '"Uql"Id"Is, ra'suN, 'ar'asu, 
+% sa'ala, qara'a, bu'suN, 'ab'usuN, ra'ufa, ru'asA'u, bi'ruN, 'as'ilaTuN, 
+% ka'iba, qA'imuN, ri'AsaTuN, su'ila, samA'uN, barI'uN, sU'uN, bad'uN, 
+% ^say'uN, ^say'iN, ^say'aN, sA'ala, mas'alaTuN, saw'aTuN, _ha.tI'aTuN, 
+% jA'a, ridA'uN, ridA'aN, jI'a, radI'iN, sU'uN, .daw'uN, qay'iN, .zim'aN
+% , yatasA'alUna, 'a`dA'akum, 'a`dA'ikum, 'a`dA'ukum maqrU'aT, mU'ibAt, 
+% taw'am, yas'alu, 'a.sdiq^A$\;$'uh_u, ya^g^I'u, s^U'ila 
+% \end{arab}
+% 
+% \subsubsection{Special orthographies}
+% 
+% Some Arabic words, like \textit{miʾa} “hundred”, have irregular orthographies.
+% \arabxetex\ recognizes them automatically.
+% 
+% \begin{minipage}[t]{.4\textwidth}
+% \begin{Verbatim}[gobble=2]
+%     \begin{arab}[voc]
+%     mi'aT , mi'at"An , sab`ami'"aT
+%     \end{arab}
+% \end{Verbatim}
+% \end{minipage}
+% \hfill
+% \begin{minipage}[t]{.4\textwidth}
+% \begin{arab}[voc]
+% ~ \\
+% mi'aT , mi'at"An , sab`ami'"aT
+% \end{arab}
+% \end{minipage}
+% \bigskip
+% 
+% \textbf{NB}: For the time being only \textit{miʾa} is supported, but more irregular
+% constructs should be added in later versions.
+% 
+% \subsubsection{Typesetting the Holy Qurʾān}
+% 
+% \begin{Verbatim}[gobble=2,fontsize=\normalsize]
+% \begin{arab}[fullvoc]
+% mina 'l-qur'Ani 'l-karImi, sUraTu 'l-ssajdaTi 15--16:
+%  
+% 'innamA yu'minu bi-B"'Ay_atinA 'lla_dIna 'i_dA _dukkirUA bihA _harrUA
+% sujjadaN wa-sabba.hUA bi-.hamdi rabbihim wa-hum lA yastakbirUna SAJDA [[15]]
+% tatajAfY_a junUbuhum `ani 'l-ma.dAji`i yad`Una rabbahum _hawfaN wa-.tama`aN
+% wa-mimmA razaqn_ahum yunfiqUna [[16]]
+% \end{arab}
+% \end{Verbatim}
+% 
+% \begin{arab}[fullvoc]
+% mina 'l-qur'Ani 'l-karImi, sUraTu 'l-ssajdaTi 15--16:
+%  
+% 'innamA yu'minu bi-B"'Ay_atinA 'lla_dIna 'i_dA _dukkirUA bihA _harrUA
+% sujjadaN wa-sabba.hUA bi-.hamdi rabbihim wa-hum lA yastakbirUna SAJDA [[15]]
+% tatajAfY_a junUbuhum `ani 'l-ma.dAji`i yad`Una rabbahum _hawfaN wa-.tama`aN
+% wa-mimmA razaqn_ahum yunfiqUna [[16]]
+% \end{arab}
+% 
+% \begin{Verbatim}[gobble=2,fontsize=\normalsize]
+% \newcommand{\hamzaB}{\char"200D\char"0640\raise-.95ex\hbox{\char"0654}\char"200D}
+% \begin{arab}[fullvoc]
+% sUraTu 'l-baqaraTi 71--72:
+% 
+% qAla 'innahu, yaqUlu 'innahA baqaraTuN llA _dalUluN tu_tIru 'l-'ar.da wa-lA
+% tasq.I 'l-.har_ta musallamaTuN llA ^siyaTa fIhA|^JIM qAluW" 'l-\hamzaB a___ana
+% ji'ta bi-'l-.haqqi|^JIM fa_daba.hUhA wa-mA kAdduW" yaf`alUna [[71]] wa-'i_d
+% qataltum nafsaN fa-udda$\,$_ara|'|_i"tum fIhA|^SLY wa-al-ll_ahu mu_hrijuN mmA
+% kun"tum taktumUna [[72]] 
+% \end{arab} 
+% \end{Verbatim}
+% 
+% \begin{arab}[fullvoc]
+% sUraTu 'l-baqaraTi 71--72:
+% 
+% qAla 'innahu, yaqUlu 'innahA baqaraTuN llA _dalUluN tu_tIru 'l-'ar.da wa-lA
+% tasq.I 'l-.har_ta musallamaTuN llA ^siyaTa fIhA|^JIM qAluW" 'l-\hamzaB a___ana
+% ji'ta bi-'l-.haqqi|^JIM fa_daba.hUhA wa-mA kAdduW" yaf`alUna [[71]] wa-'i_d
+% qataltum nafsaN fa-udda$\,$_ara|'|_i"tum fIhA|^SLY wa-al-ll_ahu mu_hrijuN mmA
+% kun"tum taktumUna [[72]] 
+% \end{arab}
+% 
+% \subsubsection{Farsi}
+% These are some of the Persian examples in the \arabtex\ documentation:
+% \begin{Verbatim}[gobble=2,fontsize=\normalsize]
+% \begin{farsi}[voc]
+% _hwAb, xwI^s, _hwod, ^ceH, naH, yal_aH, _hAneH, _hAneHhA, _hAneH-hA, 
+% ketAb-e, U, rAh-e,   t_U, nAmeH-i, man, bInI-e, An, mard, pA-i, In, 
+% zan, bAzU-i, In, zan, dAr-_i, man, _hU-_i, t_U, nAmeH-_i, sormeH-_i, 
+% gofteH-_i, ketAb-I, rAh-I, nAmeH-I, dAnA-I, pArU-I, dAnA-I-keH, 
+% pArU-I-keH, rafteH-am, rafteH-Im, AnjA-st, U-st, t_U-st, ketAb-I-st, 
+% be-man, be-t_U, be-An, be-In, be-insAn, beU, be-U, .sA.heb"|_hAneH, 
+% pas"|andAz, naw"|AmUz  
+% \end{farsi} 
+% \end{Verbatim}
+% 
+% \begin{farsi}[voc]
+% _hwAb, xwI^s, _hwod, ^ceH, naH, yal_aH, _hAneH, _hAneHhA, _hAneH-hA, 
+% ketAb-e, U, rAh-e,   t_U, nAmeH-i, man, bInI-e, An, mard, pA-i, In, 
+% zan, bAzU-i, In, zan, dAr-_i, man, _hU-_i, t_U, nAmeH-_i, sormeH-_i, 
+% gofteH-_i, ketAb-I, rAh-I, nAmeH-I, dAnA-I, pArU-I, dAnA-I-keH, 
+% pArU-I-keH, rafteH-am, rafteH-Im, AnjA-st, U-st, t_U-st, ketAb-I-st, 
+% be-man, be-t_U, be-An, be-In, be-insAn, beU, be-U, .sA.heb"|_hAneH, 
+% pas"|andAz, naw"|AmUz  
+% \end{farsi}
+% 
+% \subsubsection{Urdu}
+% 
+% Urdu example:\footnote{ ^^A
+% 	Borrowed from \url{http://tabish.freeshell.org/u-trans/urducode.html}}
+% \begin{Verbatim}[gobble=2,fontsize=\normalsize]
+% \begin{urdu}[novoc]
+% ,ham `i^sq kE mArO.n kA itnA ,hI fasAna,h ,hae
+% rOnE kO na,hI.n kO'I ,ha.nsnE kO zamAna,h ,hae
+% 
+% ya,h kiskA ta.sawwur ,hae ya,h kiskA fasAna,h ,hae
+% jO a^sk ,hae A.nkhO.n mE.n tasbI.h kA dAnA ,hae
+% \end{urdu}
+% \end{Verbatim}
+% 
+% \begin{urdu}[novoc]
+% ,ham `i^sq kE mArO.n kA itnA ,hI fasAna,h ,hae\\
+% rOnE kO na,hI.n kO'I ,ha.nsnE kO zamAna,h ,hae
+% 
+% ya,h kiskA ta.sawwur ,hae ya,h kiskA fasAna,h ,hae\\
+% jO a^sk ,hae A.nkhO.n mE.n tasbI.h kA dAnA ,hae
+% \end{urdu}
+% ^^Aﮨﹷﻢ ﻋﹻﺸﻖ ﻛﮯ ﻣﺎﺭﻭﮞ ﰷ ﹺﺍﺗﻨﺎ ﮨﹻﯽ ﻓﹷﺴﺎﻧﹷﻪ ﮨﹷﮯ
+% ^^Aﺭﻭﻧﮯ ﻛﻮ ﻧﹷﮩﹻﻴﮟ ﻛﻮﺋﹻﯽ ﮨﹷﻨﺴﻨﮯ ﻛﻮ ﺯﹶﻣﺎﻧﹷﻪ ﮨﹷﮯ
+% 
+% ^^Aﻳﹷﻪ ﻛﹻﺴﲀ ﺗﹷﺼﹷﻮﹽﹸﺭ ﮨﹷﮯ ﻳﹷﻪ ﻛﹻﺴﲀ ﻓﹷﺴﺎﻧﹷﻪ ﮨﹷﮯ
+% ^^Aﺟﻮ ﺍﺷﻚ ﮨﹷﮯ ﺁﻧﻜﮭﻮﮞ ﻣﻴﮟ ﺗﹷﺴﺒﹻﻴﺢ ﰷ ﺩﺍﻧﺎ ﮨﹷﮯ
+% 	
+% \subsection{Special considerations}
+% \parindenton
+% \subsubsection{The name of God}  \label{allahliga}
+% 
+% The glyph \textsf{FDF2}, defined as ‘\textsc{arabic ligature allah isolated form}’ 
+% by the Unicode Consortium, is a source of great confusion.  
+% It is displayed in the Unicode Book with an initial alif and thus represents the 
+% name of God, Allāh, which in Arabic is always written as a special ligature 
+% (\ie {\tradarabic اﷲ} and not {\arabicfont الله}).\footnote{ ^^A
+% 	The glyph {\tradarabic اﷲ} is taken from the font Traditional Arabic.
+% 	In Scheherazade its design is rather suboptimal: {\arabicfont\char"FDF2}.}
+% 
+% However, the majority of real-world fonts rather represent that 
+% ligature \textit{without} the initial alif.\footnote{ ^^A
+% 	My research on Arabic fonts available or known to me yields the following picture: 
+% 	The fonts that do not display the initial alif in the ligature \textsf{FDF2} 
+% 	include those provided by \href{http://www.linotype.com/2517/arabicfonts.html}{Linotype}; 
+% 	the great majority of those licensed to or developed by 
+% 	\href{http://www.microsoft.com/typography/links/FontPortal.aspx?PID=8}{Microsoft}
+% 	(I could verify it for Times New Roman, Arial, Courier New, Microsoft Sans Serif, 
+% 	Arabic Transparent, Simplified Arabic, Simplified Arabic Fixed, 
+% 	WinSoft Serif Pro, Traditional Arabic, Andalus, Old Antic Bold, 
+% 	Old Antic Decorated and Farsi Simple Bold); the fonts distributed by 
+% 	\href{http://www.arabeyes.org}{Arabeyes.org}; 
+% 	\href{http://scripts.sil.org/ArabicFonts}{SIL}'s Lateef; 
+% 	and the fonts developed by \href{www.crulp.org}{CRULP} in Pakistan.
+% 	The Unicode-conformant fonts, on the other hand, are:
+% 	\href{http://scripts.sil.org/ArabicFonts}{SIL}'s Scheherazade, 
+% 	\href{http://www.tdc.org/news/2006Results/AdobeArabic.html}{Adobe Arabic} 
+% 	(distributed with the \href{http://www.adobe.com/ceea/}{Middle-Eastern version} 
+% 	of the latest \href{http://www.adobe.com/products/acrobat/readermain.html}{Adobe Reader 7}),  	    Arial Unicode MS, and \href{http://sakkal.com/type/typesetting.html}{Arabic Typesetting}
+% 	(distributed with \href{http://www.microsoft.com/typography/VOLT.mspx}{VOLT} 
+% 	and with \href{http://www.microsoft.com/office/editions/prodinfo/language/proofingtools.mspx}{Microsoft Office Proofing Tools 2003}).}
+% The confusion probably has to do with Unicode’s omission to include the ALLAH
+% ligature without the initial alif, which is imperatively required for typesetting 
+% expressions like \textit{al-ḥamdu li-llāh} \RL{\tradarabic الحمد ﷲ}. 
+% Many fonts code the ligature {\tradarabic ﷲ} in the Private Use Area
+% and make it accessible as a default ligature for the sequence \textit{lām-lām-hāʾ}. 
+% In such a case it can be generated from the input ¦\textarab{l|lh}¦ 
+% (the vertical bar here tells \arabxetex\ not to interpret the sequence ¦ll¦ 
+% as \textit{lām} with \textit{shadda}).\footnote{ ^^A
+% 	This currently does not work with Scheharazade, but the 
+% 	developers are aware of the problem.}
+% Besides not being a standard \arabtex\ input sequence, the trouble is that 
+% there is no way to know a priori whether the font provides the glyph {\tradarabic ﷲ}
+% at all, and whether it is defined as a default ligature from the above input.
+% 
+% To solve this problem with \arabxetex, we had no choice but provide two classes of 
+% font mappings, one for each of the above two categories of Arabic fonts.\footnote{ ^^A
+% 	This has the unfortunate consequence of doubling the number of mappings shipped
+% 	with \arabxetex. But since their size is small, it is more an esthetic annoyance 
+% 	than a practical one.}
+% By default we assume the canonical situation where \textsf{U+FDF2} corresponds to 
+% {\adobearabic\char"FDF2}, but the user can change this by choosing one of the package options
+% ¦fdf2alif¦ or ¦fdf2noalif¦; it can also be changed locally by means of the commands
+% \cmd\SetAllahWithAlif\ and \cmd\SetAllahWithoutAlif\ \textit{before} making use of 
+% \cmd\arabicfont. In a future version we hope to implement a database of Arabic fonts 
+% within \arabxetex, so that this would work automatically in the most common cases.
+% 
+% The font Adobe Arabic has in addition the ligature \textit{fa-li-llāh}: 
+% \textit{fā fatḥa lām kasra lām hāʾ} $\rightarrow$ {\adobearabic فَلِله}, which can be
+% entered in \arabtex\ notation as ¦\textarab{falilh}¦. In this particular case we also
+% provide the input convention ¦FALILLAH¦.
+% 
+% 
+% ^^ATEST Scheherazade: \textarab{l|lh} 
+% ^^A
+% ^^A\renewcommand{\arabicfont}{\tradarabic} 
+% ^^ATEST Trad Arabic: \textarab{l|lh}
+% 
+% ^^ALinotype: \\
+% ^^ALotus Linotype {\lotusfont\char"FDF2} --- 
+% ^^AAlHarfAlJadid Linotype One {\fontspec[Scale=1.5]{AlHarfAlJadid Linotype One}\char"FDF2} --- 
+% ^^AAlHarfAlJadid Linotype Two {\fontspec[Scale=1.5]{AlHarfAlJadid Linotype Two}\char"FDF2} --- 
+% ^^AMariam Linotype {\fontspec[Scale=1.5]{Mariam Linotype}\char"FDF2} --- 
+% ^^AQadi Linotype {\fontspec[Scale=1.5]{Qadi Linotype}\char"FDF2}  
+% ^^A
+% ^^AFonts from or licensed to Microsoft: \\
+% ^^ATimes New Roman {\fontspec[Scale=1.5]{Times New Roman}\char"FDF2} --- 
+% ^^AArial {\fontspec[Scale=1.5]{Arial}\char"FDF2} --- 
+% ^^ACourier New {\fontspec[Scale=1.5]{Courier New}\char"FDF2} --- 
+% ^^AMicrosoft Sans Serif {\fontspec[Scale=1.5]{Microsoft Sans Serif}\char"FDF2} --- 
+% ^^AArial Unicode MS {\arialuni\char"FDF2} --- 
+% ^^AArabic Transparent {\fontspec[Scale=1.5]{Arabic Transparent}\char"FDF2} --- 
+% ^^ASimplified Arabic {\fontspec[Scale=1.5]{Simplified Arabic}\char"FDF2} --- 
+% ^^ASimplified Arabic Fixed {\fontspec[Scale=1.5]{Simplified Arabic Fixed}\char"FDF2} --- 
+% ^^AWinSoft Serif Pro {\fontspec[Scale=1.5]{WinSoft Serif Pro}\char"FDF2} --- 
+% ^^ATraditional Arabic {\fontspec[Scale=1.5]{Traditional Arabic}\char"FDF2} --- 
+% ^^AArabic Typesetting {\arabtype\char"FDF2} --- 
+% ^^AAndalus {\fontspec[Scale=1.5]{Andalus}\char"FDF2} --- 
+% ^^AOld Antic Bold {\fontspec[Scale=1.5]{Old Antic Bold}\char"FDF2} --- 
+% ^^AFarsi Simple Bold {\fontspec[Scale=1.5]{Farsi Simple Bold}\char"FDF2}  
+% ^^A
+% ^^A
+% ^^AAdobe:\\
+% ^^AAdobe Arabic {\adobearabic\char"FDF2} --- 
+% ^^A
+% ^^ASIL: \\
+% ^^AScheherazade {\arabicfont\char"FDF2} --- 
+% ^^ALateef {\fontspec{Lateef}\char"FDF2}  
+% ^^A
+% ^^A%CRULP:\\
+% ^^A%Nafees Nastaleeq {\fontspec{Nafees Nastaleeq}\char"FDF2} --- 
+% ^^A%{\fontspec{Nafees Pakistani Naskh}\char"FDF2}
+% ^^A
+% ^^AArabeyes:\\
+% ^^AKacstBook {\fontspec{KacstBook}\char"FDF2}
+% ^^AKacstFarsi {\fontspec{KacstFarsi}\char"FDF2}
+% 
+% 
+% 
+% 
+% \subsection{Transliteration}
+% 
+% At the moment transliteration mappings are provided for Arabic, Persian, Urdu, 
+% Sindhi and Pashto. The rest will be provided in a forthcoming version.
+% It is also planned to implement alternative transliteration conventions
+% for each language, as with \arabtex, \eg ZDMG, Encyclopedia Iranica, etc.
+% Transliteration is set in italics by default. This can be changed by declaring, e.g.,
+% ¦\SetTransliterationStyle{\upshape}¦.
+% To transliterate proper nouns with capitals, prefix the words to be capitalized with \cmd\UC:
+% \begin{Verbatim}[gobble=2,fontsize=\normalsize]
+% \begin{arab}[trans]
+% al-^say_h al-`Alim \UC na.sIr \UC al-dIn \UC al-.tUsI
+% \end{arab}
+% \end{Verbatim}
+% ^^A\SetTransliterationStyle{\gentium\itshape}
+% \begin{arab}[trans]
+% \noindent al-^say_h al-`Alim \UC na.sIr \UC al-dIn \UC al-.tUsI
+% \end{arab}
+% Note that the article \textit{al-} is automatically skipped.
+% Note also that since the transliteration is coded in Unicode at the level of
+% the font-mapping, it is necessary that the font contains all required glyphs.\footnote{ ^^A
+% 	See Appendix~\ref{latinextfonts} for a list of recommended Unicode fonts that cover the 
+% 	full \textsc{latin extended additional} plane.}
+% 
+% ^^AThe above example was set in Gentium (since FPL Neu does not provide all
+% ^^Arequired glyphs) If your default roman font does not have the required
+% ^^Adiacritics, you can declare for instance
+% ^^A¦\SetTransliterationStyle{\fontspec{Gentium}\itshape}¦.
+% 
+% ^^A\section{TODO}
+% ^^A
+% ^^A\begin{MYitemize}
+% ^^A	\item implement romanized transliterations for kashmiri, turkish, kurdish, malay and uighur.
+% ^^A	\item perhaps at a later stage: add support for hebrew and judeo-arabic?
+% ^^A	\item syriac?
+% ^^A\end{MYitemize}
+% ^^A
+% 
+% \subsection{Typesetting critical editions with \pkg{ednotes}}
+% \unsetfootnoteRL
+% 
+% In conjunction with \pkg{bidi}, the \pkg{ednotes} package makes it wonderfully
+% easy to typeset critical editions of texts in Arabic script (or other RTL
+% scripts).\footnote{ 
+% 		The package \href{http://tug.ctan.org/tex-archive/macros/latex/contrib/ledmac/ledmac.pdf}{\pkg{ledmac}} 
+%	has not been extensively tested with \pkg{bidi} yet, but our initial
+%	trials were not successful.}
+%	^^A Be aware that  -- as any package which plays with the primitive \cmd\everypar -- 
+% 	^^A is not compatible with \pkg{bidi}.
+% The direction of each level of footnotes can be controlled by 
+% means of ¦\SetFootnoteHook{\setRL}¦ (or ¦\setLR¦) right before the declaration
+% ¦\DeclareNewFootnote{X}[…]¦. Here is an example preamble that might be used
+% for typesetting a critical edition with \pkg{ednotes} and \arabxetex.\footnote{ ^^A
+% 	Of course if the edition is typed directly in UTF-8 encoding, 
+% 	the use of \arabxetex\ is by no means compulsory. Yet see the 
+% 	remarks in §~\ref{arabtexnotes} above.}
+% See the \pkg{ednotes} documentation for more details.\footnote{ ^^A
+% 	\url{http://www.ctan.org/tex-archive/macros/latex/contrib/ednotes/ednotugb.pdf}.
+% 	See also \url{http://www.webdesign-bu.de/uwe_lueck/critedltx.html}.}
+% 
+% \begin{Verbatim}[gobble=2,fontsize=\small]
+% \usepackage[modulo,perpage,para*]{ednotes}%this calls manyfoot.sty and lineno.sty 
+% \usepackage{arabxetex}
+% 
+% % make \footnoterule of \textwidth
+% \makeatletter%
+% \renewcommand{\footnoterule}{\kern-3\p@
+%   \hrule width \textwidth \kern 2.6\p@}
+% \makeatother
+% 
+% \modulolinenumbers[5]
+% % this is to set linenumbering in Arabic:
+% \renewcommand{\linenumberfont}{\arabicfont\addfontfeature{Mapping=arabicdigits}\tiny}
+% 
+% \renewcommand{\extrafootnoterule}{}
+% \SelectFootnoteRule[0]{extra}
+% \SetFootnoteHook{\unsetRL}%--> must appear immediately before \DeclareNewFootnote 
+% %% For ednotes the command \PrecedeLevelWith{X}{hook} is available
+% \DeclareNewFootnote{B}[fnsymbol]
+% \renewcommand*{\differentlines}[2]{\linesfmt{\RL{#1$-$#2}}}%
+% \renewcommand*{\linesfmt}[1]{\raisebox{1ex}{\linenumberfont #1}~}%
+% \renewcommand{\lemmafmt}[1]{#1~[ }%
+% %Custom macros to enter variants, additions, omissions, illegible passages,
+% % text above the line, marginal notes, lacunae, and restorations:
+% \newcommand{\VAR}[2]{\Anote{\textarab{#1}}{\textarab{#2}}}
+% \newcommand{\ADD}{\textlatin{\textbf{+}}\,}% or \textarab{zAyid fI}\ 
+% \newcommand{\OM}{\textlatin{\textbf{\char"2013}}\,}% or \textarab{nAqi.s fI}\ 
+% \newcommand{\ILLEG}{\textarab{.gayr maqrU' fI}\ }
+% \newcommand{\BLANK}{\textarab{bayA.d fI}\ }
+% \newcommand{\SUPERLIN}{\textarab{ta.ht al-sa.tr fI}\ }
+% \newcommand{\MARG}{\textarab{bi-al-hAmi^s fI}\ }
+% \newcommand{\LACUNA}{\textlatin{\textlangle~{\dots}~\textrangle}}
+% \newcommand{\RESTOR}[1]{\textlatin{\textrangle}#1\textlatin{\textlangle}}
+% % to separate lemmas in different manuscripts:
+% \def\SEP{\enskip$\Vert$\enskip} 
+% \end{Verbatim}
+% 
+% For a real-life example of how to use ednotes with \arabxetex, see
+% the file ¦ednotes_example.tex¦ which comes with this package.
+% 
+% 
+% \section{Tabular overview of \arabtex\ encoding conventions} 
+% \label{conventiontable}
+% 
+% The table is arranged alphabetically following the most signicant letter of the
+% \ASCII\ input code.  Color convention: red means that the glyph is the default
+% for the given input code, and that it is available in all languages except
+% those where different glyphs are shown (in black). That default glyph is also
+% displayed in light gray under each language in which it is featured.  Glyphs in
+% blue are archaic forms (\eg old Urdu). An asterisk after the Unicode number
+% means that the character was not available with \arabtex.  Green glyphs are
+% special: either they are used to represent defective writing or they provide
+% characters for other languages.  Those shown in the column for Arabic are
+% available by default.  See the relevant notes at the end.
+% 
+% \begin{center}\footnotesize
+% \renewcommand{\arraystretch}{2}
+% ^^A                 1                 2      3        4       5        6          7         8         9       10 
+% ^^A\tablefirsthead{%
+% ^^Acode    &       arab        	 & farsi & urdu & pashto & sindhi & ottoman & kurdish & kashmiri & malay & uighur \\\hline}
+% \tablehead{^^A
+% \hline
+% ^^A\tiny code    &\tiny       arab        	 &\tiny farsi &\tiny urdu &\tiny pashto &\tiny sindhi &\tiny ottoman &\tiny kurdish &\tiny kashmiri &\tiny malay &\tiny uighur \\\hline}
+% ^^A next line: language codes after ISO-639-1
+% code    &       ar        	 & fa & ur & ps & sd & tr & ku & ks & ms & ug \\\hline}
+% \tabletail{\hline}
+% \begin{supertabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+% ^^A\tablelasttail{\hline}
+% ¦a¦	&	\GR{Ba}{064E}&&&&&&\GN[kurdish]{a/Ba}{}&&&\\  
+% ¦A¦	&	\GR{BA}{0627}&&&&&&\GN[kurdish]{A/BA}{}&&&\\    
+% ¦.a¦	&	&&&&&&&\GN[kashmiri]{B.a}{0654}&&\\
+% ¦.A¦	&	&&&&&&&\GN[kashmiri]{B.A}{0672}&&\\ ^^A(kashmiri)  
+% ¦_a¦	&	\GN{B_a}{0670}&&&&&&&&&\\  
+% ¦_A¦	&	\GN{B_A}{}&&&&&&&&&\\  
+% ¦:a¦	&	&&&&&&&&&\GN[uighur]{:a}{} \\
+% ¦b¦	&	\GR{b}{0628}&\GG{b}&\GG{b}&\GG{b}&\GG{b}&\GG{b}&\GG{b}&\GG{b}&\GG{b}&\GG{b} \\
+% ¦B¦	&	\GR{B}{0640}&&&&&&&&&\\
+% ¦.b¦	&	\GV{.b}{066E}&&&&&&&&&\\
+% ¦:b¦	&	&&&&\GR[sindhi]{:b}{067B}&&&&&\\ ^^A(sindhi)  
+% ¦bh¦	&       &&&&\GN[sindhi]{bh}{0680}&&&&&\\
+% ¦c¦	&	&&&&\GR[sindhi]{c}{0681}&\GN[turk]{c}{062C}&&&\GN[malay]{c}{0686}&\\
+% ^^A¦.c¦	&	\GN{.c}{}&&&&&&&&&\\ 
+% ¦,c¦	&	&&&\GR[pashto]{,c}{0685}&&\GN[turk]{,c}{0686}&\GN[kurdish]{,c}{0686}&&&\\
+% ¦^c¦	&	\GG{^c}&\GR{^c}{0686}&\GG{^c}&\GG{^c}&\GG{^c}&\GG{^c}&\GG{^c}&\GG{^c}&\GG{^c}&\GG{^c} \\  
+% ¦^ch¦	&	&&&&\GN[sindhi]{^ch}{0687}&&&&&\\
+% ¦:c¦	&	&&&\GR[pashto]{:c}{0682*}&&&&&&\\
+% ¦.^c¦	&	\GV{.^c}{06BF*}&&&&&&&&&\\
+% ¦d¦	&	\GR{d}{062F}&\GG{d}&\GG{d}&\GG{d}&\GG{d}&\GG{d}&\GG{d}&\GG{d}&\GG{d}&\GG{d} \\
+% ¦.d¦	&	\GR{.d}{0636}&\GG{.d}&\GG{.d}&\GG{.d}&\GG{.d}&\GG{.d}&\GG{.d}&\GG{.d}&\GG{.d}&\GG{.d} \\
+% ¦,d¦	&       &&\GN[urdu]{,d}{0688}&\GN[pashto]{,d}{0689}&\GR[sindhi]{,d}{068A}&&&&&\\ ^^Aurdu
+% ¦.,d¦	&	&&\GV{.,d}{068B*}$^a$&&&&&&&\\ ^^AWestern Punjabi
+% ¦^d¦	&	\GV{^d}{06EE*}&&&&\GB[sindhi]{^d}{068E*}&&&&&\\ 
+% ¦_d¦	&	\GR{_d}{0630}&\GG{_d}&\GG{_d}&\GG{_d}&\GG{_d}&\GG{_d}&\GG{_d}&\GG{_d}&\GG{_d}&\\ 
+% ¦:d¦	&       &&&&\GR[sindhi]{:d}{068F}&&&&&\\ ^^A(sindhi)  
+% ¦::d¦	&       &&\GB[urdu]{::d}{0690*}&&&&&&&\\
+% ¦dh¦	&	&&&&\GN[sindhi]{dh}{068C}&&&&&\\
+% ¦,dh¦	&	&&&&\GN[sindhi]{,dh}{068D}&&&&&\\
+% ¦e¦	&	&\GR{Be}{}&\GG{Be}&\GN[pashto]{Be}{0659}&\GG{Be}&&\GN[kurdish]{e/Be}{}&\GN[kashmiri]{Be}{06D2+0658}&&\GN[uighur]{Be}{06D0} \\
+% ¦E¦	&	&\GR{BE}{}&\GN[urdu]{BE}{06D2}&\GN[pashto]{BE}{06D0}&&&\GN[kurdish]{E/BE}{}&\GN[kashmiri]{BE}{06D2}&&\\ 
+% ¦ee¦	&	&&&\GN[pashto]{Bee}{}&&&&&&\\
+% ¦ae¦	&	\GN{Bae}{}&&\GN[urdu]{Bae}{}&\GN[pashto]{Bae}{}&\GN[sindhi]{Bae}{}&&&&&\\ 
+% ¦Ee¦	&	&&&\GN[pashto]{BEe}{06CD}&&&&&&\\ 
+% ^^A¦.e¦	&	\GN{B.e}{}&&&&&&&&&\\  
+% ^^A¦^e¦	&	\GN{B^e}{}&&&&&&&&&\\ 
+% ¦_e¦	&	&\GR{B_e}{}&&&&&&&&\\ 
+% ¦`e¦    &       &&&&&&\GN[kurdish]{`e}{}&&&\\
+% ¦'E¦	&	&&\GR[urdu]{B'E}{06D3}&&&&&&&\\ 
+% ^^A¦:e¦	&	\GN{B:e}{}&&&&&&&&&\\ 
+% ¦f¦	&	\GR{f}{0641}&\GG{f}&\GG{f}&\GG{f}&\GG{f}&\GG{f}&\GG{f}&\GG{f}&\GG{f}&\GG{f} \\ ^^A maghribi: \GN[maghribi]{f}{}  
+% ¦.f¦	&	\GV{.f}{06A1}&&&&&&&&&\\ 
+% ¦g¦	&	&\GR{g}{06AF}&\GG{g}&\GG{g}&\GG{g}&\GG{g}&\GG{g}&\GG{g}&\GN[malay]{g}{0762}&\GG{g} \\
+% ¦G¦	&	&&&\GR[pashto]{G}{06AB}&&&&&&\\  
+% ¦.g¦	&	\GR{.g}{063A}&\GG{.g}&\GG{.g}&\GG{.g}&\GG{.g}&\GG{.g}&\GG{.g}&\GG{.g}&\GG{.g}&\\ 
+% ¦:g¦	&	&&&&\GR[sindhi]{:g}{06B3}&&&&&\\   
+% ¦.:g¦	&	&&&&\GB[sindhi]{.:g}{06B4*}&&&&&\\   
+% ¦,g¦	&	\GV{,g}{06AC}$^b$ &&&&&&&&&\\ 
+% ¦^g¦	&	\GR{^g}{062C}&\GG{j}&\GG{j}&\GG{j}&\GG{j}&\GN[turk]{^g}{06A0}&\GN[kurdish]{^g}{063A}&\GG{j}&\GN[malay]{^g}{06A0}&\GN[uighur]{^g}{063A} \\
+% ¦gh¦	&	&&&&\GN[sindhi]{gh}{}&&&&&\\
+% ¦h¦	&	\GR{h}{0647}&\GG{h}&\GN[urdu]{h}{06BE}&\GG{h}&\GG{h}&\GG{h}&\GG{h}&\GG{h}&\GG{h}&\GG{h} \\ 
+% ¦H¦	&	&\GN[farsi]{-H}{0647}&\GN[urdu]{-H}{06C3}&\GN[pashto]{-H}{0647}&&&&&&\\
+% ¦.h¦	&	\GR{.h}{062D}&\GG{.h}&\GG{.h}&\GG{.h}&\GG{.h}&\GG{.h}&\GG{.h}&\GG{.h}&\GG{.h}&\\  
+% ¦,h¦	&	&&\GR[urdu]{,h}{06C1}&&&&&\GN[kashmiri]{,h}{}&&\\ 
+% ¦_h¦	&	\GR{_h}{062E}&\GG{x}&\GG{x}&\GG{x}&\GG{x}&\GG{x}&\GG{x}&\GG{x}&\GG{x}&\\ 
+% ¦i¦	&	\GR{Bi}{0650}&&&&&&&&&\GN[uighur]{-i-}{066E} \\   
+% ¦I¦	&	\GN{BI}{064A}&\GR[farsi]{BI}{06CC}&\GG[urdu]{BI}&\GG[pashto]{BI}&\GN[sindhi]{BI}{}&\GG[turk]{BI}&\GN[kurdish]{I/BI}{}&\GG[kashmiri]{BI}&\GN[malay]{BI}{}&\\
+% ¦.I¦	&	\GR{B.I}{06CC*}&&&&&&&&&\\  
+% ^^A¦.i¦	&	\GN{B.i}{}&&&&&&&&&\\     
+% ¦_i¦	&	\GR{B_i}{0656}&&&&&&&&&\\ 
+% ^^A¦:i¦	&	\GN{B:i}{}&&&&&&&&&\\  
+% ¦j¦	&	\GR{j}{062C}&\GG{j}&\GG{j}&\GG{j}&\GG{j}&\GN[turk]{j}{0698}&\GG{j}&\GG{j}&\GG{j}&\GG{j} \\
+% ¦:j¦	&	&&&&\GR[sindhi]{:j}{0684}&&&&&\\ ^^A(sindhi)  
+% ¦jh¦	&	&&&&\GN[sindhi]{jh}{06A9}&&&&&\\
+% ¦k¦	&	\GR{k}{0643}&\GG{k}&\GG{k}&\GG{k}&\GN[sindhi]{k}{06AA}&\GG{k}&\GG{k}&\GG{k}&\GG{k}&\GG{k} \\
+% ^^A¦K¦	&	\GN{K}{}&&&&&&&&&\\ 
+% ¦.k¦	&	\GV{.k}{06A9}&&&&&\GN[turk]{.k}{0642}&&&&\\
+% ¦_k¦	&	\GR{_k}{063A}&&&&&&&&&\\
+% ¦kh¦	&	&&&&\GN[sindhi]{kh}{}&&&&&\\
+% ¦l¦	&	\GR{l}{0644}&\GG{l}&\GG{l}&\GG{l}&\GG{l}&\GG{l}&\GG{l}&\GG{l}&\GG{l}&\GG{l} \\ 
+% ¦.l¦	&       &&&&&&\GR[kurdish]{.l}{06B6*}&&&\\ 
+% ¦^l¦	&       &&&&&&\GR[kurdish]{^l}{06B5}&&&\\^^A(kurdish)  
+% ¦m¦	&	\GR{m}{0645}&\GG{m}&\GG{m}&\GG{m}&\GG{m}&\GG{m}&\GG{m}&\GG{m}&\GG{m}&\GG{m} \\  
+% ^^A¦M¦	&	\GN{M}{}&&&&&&&&\GN[malay]{M}{}&\\
+% {\tiny ¦.mIN¦}	& 	&&&&\GN[sindhi]{.mIN}{06FE}&&&&&\\ 
+% {\tiny ¦'|IN¦}	&	&&&&\GN[sindhi]{'|IN}{06FD}&&&&&\\ 
+% ¦n¦	&	\GR{n}{0646}&\GG{n}&\GG{n}&\GG{n}&\GG{n}&\GG{n}&\GG{n}&\GG{n}&\GG{n}&\GG{n} \\ 
+% ¦aN¦	&	\GR{BaN}{064B}&&&&&&&&&\\
+% ¦uN¦	&	\GR{BuN}{064C}&&&&&&&&&\\ 
+% ¦iN¦	&	\GR{BiN}{064D}&&&&&&&&&\\
+% ¦.n¦	&	 &&\GR{.n}{06BA}&&&&&&&\\
+% ¦..n¦	&       &&&&\GB[sindhi]{..n}{06B2*}&&&&&\\
+% ¦,n¦	&	&&&\GR[pashto]{,n}{06BC}&\GN[sindhi]{,n}{06BB}&&&&&\\
+% ¦^n¦	&	&&&&\GN[sindhi]{^n}{0683}&&&&\GN[malay]{^n}{06BD}&\GR[uighur]{^n}{06AD} \\
+% ¦:n¦	&	&&&&\GR[sindhi]{:n}{06B1}&&&&&\\
+% ¦o¦	&	&\GR[farsi]{Bo}{}&&\GN[pashto]{Bo}{0657}&&&\GN[kurdish]{o/Bo}{}&\GN[kashmiri]{Bo}{06C6}&&\GN[uighur]{Bo}{} \\
+% ¦O¦	&		&\GN[farsi]{BO}{}&\GN[urdu]{BO}{}&\GN[pashto]{BO}{}&&&\GN[kurdish]{O/BO}{}&\GN[kashmiri]{BO}{}&&\\
+% ¦ao¦	&	&&\GR[urdu]{Bao}{}&&\GR[sindhi]{Bao}{}&&&&&\\  
+% ¦.o¦	&	&&&&&&&\GN[kashmiri]{B.o}{06C4}&&\\
+% ¦.O¦	&	&&&&&&&\GN[kashmiri]{B.O}{}&&\\   
+% ¦_o¦	&	&\GR{B_o}{}&&&&&&&&\\ 
+% ¦_O¦	&	&\GR{B_O}{}&&&&&&&&\\
+% ¦:o¦	&	&&&&&&&&&\GN[uighur]{:o/B:o}{06C6} \\
+% ¦:O¦	&	\GV{:O}{06FC}&&&&&&&&&\\  
+% ¦p¦	&	&\GR{p}{067E}&\GG{p}&\GG{p}&\GG{p}&\GG{p}&\GG{p}&\GG{p}&\GN[malay]{p}{06A8}&\GG{p} \\
+% ^^A¦.p¦	&	\GN{.p}{}	&&&&&&&&&\\
+% ¦ph¦	&	&&&&\GN[sindhi]{ph}{06A6}&&&&&\\
+% ¦q¦	&	\GR{q}{0642}&\GG{q}&\GG{q}&\GG{q}&\GG{q}&\GG{q}&\GG{q}&\GG{q}&\GG{q}&\GG{q} \\ ^^A\GN[maghribi]{q}{} 
+% ¦.q¦	&	\GV{.q}{066F}&&&&&&&&&\\  
+% ¦r¦	&	\GR{r}{0631}&\GG{r}&\GG{r}&\GG{r}&\GG{r}&\GG{r}&\GG{r}&\GG{r}&\GG{r}&\GG{r} \\  
+% ¦.r¦	&	\GV{.r}{0694*}&&&&&&\GN[kurdish]{.r}{0695}&&&\\ 
+% ¦,r¦	&	&&\GR[urdu]{,r}{0691}&\GN[pashto]{,r}{0693}&\GN[sindhi]{,r}{0699}&&\GN[kurdish]{,r}{0694*}&&&\\
+% ¦^r¦	&	\GV{^r}{06EF*}&&&&&&\GN[kurdish]{^r}{0692*}&&&\\
+% ¦:r¦	&	\GV{:r}{0697*}$^c$&&&&&&&&&\\ ^^ADarwa in Dagestan
+% ¦s¦	&	\GR{s}{0633}&\GG{s}&\GG{s}&\GG{s}&\GG{s}&\GG{s}&\GG{s}&\GG{s}&\GG{s}&\GG{s} \\ 
+% ^^A¦S¦	&	\GN{S}{}&&&&&&&&&\\ 
+% ¦.s¦	&	\GR{.s}{0635}&\GG{.s}&\GG{.s}&\GG{.s}&\GG{.s}&\GG{.s}&\GG{.s}&\GG{.s}&\GG{.s}&\\ 
+% ¦,s¦	&	&&&\GR[pashto]{,s}{069A}&&\GN[turk]{,s}{0634}&&&&\\
+% ¦^s¦	&	\GR{^s}{0634}&\GG{^s}&\GG{^s}&\GG{^s}&\GG{^s}&\GG{^s}&\GG{^s}&\GG{^s}&\GG{^s}&\GG{^s} \\  
+% ¦_s¦	&	&&&&\GR{_s}{062B}&&&&&\\ 
+% ¦:s¦	&	\GV{:s}{069B}&&&&&&&&&\\
+% ¦t¦	&	\GR{t}{062A}&\GG{t}&\GG{t}&\GG{t}&\GG{t}&\GG{t}&\GG{t}&\GG{t}&\GG{t}&\GG{t} \\ 
+% ¦T¦	&	\GR{T}{062A}&&&&&&&\GG{T}&&\\
+% ¦.t¦	&	\GR{.t}{0637}&\GG{.t}&\GG{.t}&\GG{.t}&\GG{.t}&\GG{.t}&\GG{.t}&\GG{.t}&\GG{.t}&\\
+% ^^A¦.T¦	&	\GN{.T}{}&&&&&&&&&\\  
+% ¦,t¦	&	&&\GR[urdu]{,t}{0679}&\GN[pashto]{,t}{067C}&\GN[sindhi]{,t}{067D}&&&&&\\
+% ¦_t¦	&	\GR{_t}{062B}&\GG{_t}&\GG{_t}&&\GG{_t}&\GG{_t}&\GG{_t}&\GG{_t}&\GG{_t}&\\  
+% ^^A¦:t¦	&	\GN{:t}{}&&&&&&&&&\\  
+% ¦th¦	&	&&&&\GN[sindhi]{th}{067F}&&&&&\\
+% ¦,th¦	&	&&&&\GN[sindhi]{,th}{067A}&&&&&\\
+% ¦u¦	&	\GR{Bu}{064F}&\GG{Bu}&\GG{Bu}&\GG{Bu}&\GG{Bu}&\GG{Bu}&\GN[kurdish]{u/Bu}{}&\GG{Bu}&\GG{Bu}&\GN[uighur]{u/Bu}{06C7} \\  
+% ¦U¦	&	\GR{BU}{}&\GG{BU}&\GG{BU}&\GG{BU}&\GG{BU}&\GG{BU}&\GN[kurdish]{U/BU}{}&\GN[kashmiri]{BU}{0648+0657}&\GG{BU}&\\ 
+% ¦.u¦	&	&&&&&&&\GN[kashmiri]{B.u}{0655}&&\\
+% ¦.U¦	&	&&&&&&&\GN[kashmiri]{B.U}{0673}&&\\  
+% ^^A¦^u¦	&	\GN{B^u}{}&&&&&&&&&\\   
+% ¦_u¦	&	\GR{B_u}{0657}&&&&&&&&&\\  
+% ^^A¦_U¦	&	\GN{B_U}{}&&&&&&&&&\\ 
+% ¦:u¦	&       &&&&&&&&&\GN[uighur]{:u/B:u}{06C8} \\
+% ¦:U¦	&	\GV{:U}{06C7}$^d$&&&&&&&&&\\ 
+% ¦v¦	&	\GR{v}{06A4}$^e$&&&&&&&&\GN[malay]{v}{06CF}&\\ ^^A\GN[maghribi]{v}{06A5} 
+% ^^A¦V¦	&	\GN{V}{}&&&&&&&&&\\ 
+% ^^A¦.v¦	&	\GN{.v}{}&&&&&&&&&\\ 
+% ¦w¦	&	\GR{w}{0648}&\GG{w}&\GG{w}&\GG{w}&\GG{w}&\GG{w}&\GG{w}&\GG{w}&\GG{w}&\GN[uighur]{w}{06CB} \\
+% ¦W¦	&	\GR{W}{}&&&&&&&&&\\  
+% ¦^w¦	&	\GV{^w}{06C9*}&&&&&&&&&\\
+% ¦:w¦	&	\GV{:w}{06CA*}&&&&&&&&&\\
+% ¦x¦	&	\GR{x}{062E}&\GG{x}&\GG{x}&\GG{x}&\GG{x}&\GG{x}&\GG{x}&\GG{x}&\GG{x}&\GN[uighur]{x}{} \\ 
+% ¦y¦	&	\GR{y}{064A}&\GN[farsi]{y}{06CC}&\GG[urdu]{y}&\GG[pashto]{y}&\GG{y}&\GG[turk]{y}&\GG{y}&\GG[kashmiri]{y}&\GG{y}&\GG{y} \\  
+% ¦Y¦	&	\GR{"Y}{0649}&&&&&&&&&\\  
+% ¦.y¦	&       &&&&&&&\GN[kashmiri]{B.yB}{}&&\\  
+% ¦z¦	&	\GR{z}{0632}&\GG{z}&\GG{z}&\GG{z}&\GG{z}&\GG{z}&\GG{z}&\GG{z}&\GG{z}&\GG{z} \\ 
+% ¦.z¦	&	\GR{.z}{0638}&\GG{.z}&\GG{.z}&\GG{.z}&\GG{.z}&\GG{.z}&\GG{.z}&\GG{.z}&\GG{.z}&\\ 
+% ¦,z¦	&	 &&&\GR[pashto]{,z}{0696}&&\GN[turk]{,z}{0636}&&&&\\
+% ¦^z¦	&	 &\GR{^z}{0698}&\GG{^z}&\GG{^z}&&&&\GG{^z}&&\GG{^z} \\ 
+% ¦_z¦	&	\GR{_z}{0630}$^f$&&&&&&&&&\\
+% ¦:z¦	&	&&&&&&&\GN[kashmiri]{:z}{0636}&&\\ 
+% ¦'¦	&	\GR{'}{0621}&\GG{'}&\GG{'}&\GG{'}&\GG{'}&\GG{'}&\GG{'}&\GG{'}&\GG{'}&\GG{ئ-} \\
+% ¦`¦	&	\GR{`}{0639}&\GG{`}&\GG{`}&\GG{`}&\GG{`}&\GG{`}&\GG{`}&\GG{`}&\GG{`}&\\
+% &&&&&&&&&& \\
+% \end{supertabular}
+% \end{center}
+% \footnotesize
+% 
+% $^a$ For Western Punjabi (Lahnda).\\
+% $^b$ Alternative form of \textmalay{g} in Malay.\\
+% $^c$ For Darwa (language of Dagestan).\\
+% $^d$ For Kirgiz (and Uighur).\\
+% $^e$ To transliterate dialects and foreign words.\\
+% $^f$ Alternative to ¦_d¦.\\
+% \normalsize\bigskip
+% 
+% Maghribi Arabic is identical to Arabic except for the three letters ¦f¦, ¦q¦
+% and ¦v¦ which yield the glyphs \textmaghribi{f} (U+06A2), \textmaghribi{q}
+% (U+06A7), and \textmaghribi{v} (U+06A5), respectively.
+% 
+% ^^A TODO : implement the following ??
+% ^^A perhaps unnecessary coz it can be coded by means of Urdu
+% ^^A yet it might be nice to code pashto in a standard way and 
+% ^^A be able to switch the representation to Pakistani
+% ^^A Differences between standard Pashto and Pakistani Pashto (from inspection of the Omega OTP files)
+% ^^A064A -> 06D2
+% ^^A069A -> 062E ??
+% ^^A06A9 -> 0643
+% ^^A06AF -> 06AB
+% ^^A06CD -> 06D2
+% ^^A06D0 -> 06D2
+% ^^A0626 -> 06D2
+% ^^A0649 -> 06D2
+% ^^A067C -> 0679
+% ^^A0693 -> 0691
+% ^^A0696 -> 06AF
+% ^^A06BC -> 0646 0631
+% ^^A0689 -> 0688
+% ^^A
+% 
+% \section{Unicode-Encoding concordance}
+% \parindent 0pt
+% \let\oldbaselineskip=\baselineskip
+% \baselineskip=20pt
+% \begin{multicols}{2}
+% \begin{tabbing}
+% \textsf{060B} \qquad \=  {\arabicfont\char"060B} \qquad \= \kill
+% \textsf{060B}   \>   {\arabicfont\char"060B} \\
+% \textsf{060C}   \>   {\arabicfont\char"060C} \>	¦,¦ \\
+% \textsf{060D}   \>   {\arabicfont\char"060D} \\
+% \textsf{060E}   \>   {\arabicfont\char"060E} \\
+% \textsf{060F}   \>   {\arabicfont\char"060F} \\
+% \textsf{0610}   \>   {\arabicfont\char"0610} \\
+% \textsf{0611}   \>   {\arabicfont\char"0611} \\
+% \textsf{0612}   \>   {\arabicfont\char"0612} \\
+% \textsf{0613}   \>   {\arabicfont\char"0613} \\
+% \textsf{0614}   \>   {\arabicfont\char"0614} \\
+% \textsf{0615}   \>   {\arabicfont\char"0615} \\
+% ^^AU+0616\\ %\textarab{\char"0616} \\
+% ^^AU+0617\\ %\textarab{\char"0617} \\
+% ^^AU+0618\\ %\textarab{\char"0618} \\
+% ^^AU+0619\\ %\textarab{\char"0619} \\
+% ^^AU+061A\\ %\textarab{\char"061A} \\
+% \textsf{061B}   \>   {\arabicfont\char"061B}	\>	¦;¦    \\ ^^A\textarab{ ; }   \\
+% ^^AU+061C\\ %\textarab{\char"061C} \\
+% ^^AU+061D\\ %\textarab{\char"061D} \\
+% \textsf{061E}   \>   {\arabicfont\char"061E}	\>	¦::¦/¦DOTS¦ \\
+% \textsf{061F}   \>   {\arabicfont\char"061F}	\>	¦?¦    \\ ^^A\textarab{ ? }   \\
+% ^^AU+0620\\ %\textarab{\char"0620} \\
+% \textsf{0621}   \>   {\arabicfont\char"0621}	\>	¦|"'¦  \textit{or context}  \\ ^^A\textverb{ '| }   \\
+% \textsf{0622}   \>   {\arabicfont\char"0622}	\>	¦A"'¦  \textit{or context}  \\ ^^A\textverb{ 'A }   \\
+% \textsf{0623}   \>   {\arabicfont\char"0623}	\>	¦a"'¦  \textit{or context}  \\ ^^A\textverb{ 'a }   \\
+% \textsf{0624}   \>   {\arabicfont\char"0624}	\>	¦w"'¦  \textit{or context}  \\ ^^A\textverb{ 'w }   \\
+% \textsf{0625}   \>   {\arabicfont\char"0625}	\>	¦i"'¦  \textit{or context}  \\ ^^A\textverb{ 'i }   \\
+% \textsf{0626}   \>   {\arabicfont\char"0626}	\>	¦y"'¦  \textit{or context}  \\ ^^A\textverb{ 'y }   \\
+% \textsf{0627}   \>   {\arabicfont\char"0627}	\>	¦A¦    \\ ^^A\textarab{ A }   \\
+% \textsf{0628}   \>   {\arabicfont\char"0628}	\>	¦b¦    \\ ^^A\textarab{ b }   \\
+% \textsf{0629}   \>   {\arabicfont\char"0629}	\>	¦T¦    \\ ^^A\textarab{ T }   \\
+% \textsf{062A}   \>   {\arabicfont\char"062A}	\>	¦t¦    \\ ^^A\textarab{ t }   \\
+% \textsf{062B}   \>   {\arabicfont\char"062B}	\>	¦_t¦    \\ ^^A\textarab{ _t } \\
+% \textsf{062C}   \>   {\arabicfont\char"062C}	\>	¦^g¦/¦j¦    \\ ^^A\textarab{ j } \\
+% \textsf{062D}   \>   {\arabicfont\char"062D}	\>	¦.h¦    \\ ^^A\textarab{ .h }   \\
+% \textsf{062E}   \>   {\arabicfont\char"062E}	\>	¦_h¦/¦x¦    \\ ^^A\textarab{ x } \\
+% \textsf{062F}   \>   {\arabicfont\char"062F}	\>	¦d¦    \\ ^^A\textarab{ d }   \\
+% \textsf{0630}   \>   {\arabicfont\char"0630}	\>	¦_d¦    \\ ^^A\textarab{ _d }  \\
+% \textsf{0631}   \>   {\arabicfont\char"0631}	\>	¦r¦    \\ ^^A\textarab{ r }   \\
+% \textsf{0632}   \>   {\arabicfont\char"0632}	\>	¦z¦    \\ ^^A\textarab{ z }   \\
+% \textsf{0633}   \>   {\arabicfont\char"0633}	\>	¦s¦    \\ ^^A\textarab{ s }   \\
+% \textsf{0634}   \>   {\arabicfont\char"0634}	\>	¦^s¦    \\ ^^A\textarab{ ^s }  \\
+% \textsf{0635}   \>   {\arabicfont\char"0635}	\>	¦.s¦    \\ ^^A\textarab{ .s }   \\
+% \textsf{0636}   \>   {\arabicfont\char"0636}	\>	¦.d¦    \\ ^^A\textarab{ .d } \\
+% \textsf{0637}   \>   {\arabicfont\char"0637}	\>	¦.t¦    \\ ^^A\textarab{ .t } \\
+% \textsf{0638}   \>   {\arabicfont\char"0638}	\>	¦.z¦    \\ ^^A\textarab{ .z } \\
+% \textsf{0639}   \>   {\arabicfont\char"0639}	\>	¦`¦    \\ ^^A\textarab{ ` } \\
+% \textsf{063A}   \>   {\arabicfont\char"063A}	\>	¦.g¦    \\ ^^A\textarab{ .g } \\
+% \textsf{0640}   \>   {\arabicfont\char"0640}	\>	¦B¦    \\ ^^A\textarab{ B } \\
+% \textsf{0641}   \>   {\arabicfont\char"0641}	\>	¦f¦    \\ ^^A\textarab{ f } \\
+% \textsf{0642}   \>   {\arabicfont\char"0642}	\>	¦q¦    \\ ^^A\textarab{ q } \\
+% \textsf{0643}   \>   {\arabicfont\char"0643}	\>	¦k¦    \\ ^^A\textarab{ k } \\
+% \textsf{0644}   \>   {\arabicfont\char"0644}	\>	¦l¦    \\ ^^A\textarab{ l } \\
+% \textsf{0645}   \>   {\arabicfont\char"0645}	\>	¦m¦    \\ ^^A\textarab{ m } \\
+% \textsf{0646}   \>   {\arabicfont\char"0646}	\>	¦n¦    \\ ^^A\textarab{ n } \\
+% \textsf{0647}   \>   {\arabicfont\char"0647}	\>	¦h¦    \\ ^^A\textarab{ h } \\
+% \textsf{0648}   \>   {\arabicfont\char"0648}	\>	¦w¦    \\ ^^A\textarab{ w } \\
+% \textsf{0649}   \>   {\arabicfont\char"0649}	\>	¦Y¦    \\ ^^A\textarab{ Y } \\
+% \textsf{064A}   \>   {\arabicfont\char"064A}	\>	¦y¦    \\ ^^A\textarab{ y } \\
+% \textsf{064B}   \>   {\arabicfont\char"064B}	\>	¦aN¦    \\ ^^A\textarab{ |BaN } \\
+% \textsf{064C}   \>   {\arabicfont\char"064C}	\>	¦uN¦    \\ ^^A\textarab{ |BuN } \\
+% \textsf{064D}   \>   {\arabicfont\char"064D}	\>	¦iN¦    \\ ^^A\textarab{ |BiN } \\
+% \textsf{064E}   \>   {\arabicfont\char"064E}	\>	¦a¦    \\ ^^A\textarab{ |Ba } \\
+% \textsf{064F}   \>   {\arabicfont\char"064F}	\>	¦u¦    \\ ^^A\textarab{ |Bu } \\
+% \textsf{0650}   \>   {\arabicfont\char"0650}	\>	¦i¦    \\ ^^A\textarab{ |Bi } \\
+% \textsf{0651}   \>   {\arabicfont\char"0651}\\ ^^A\textarab{ |BB }\\
+% \textsf{0652}   \>   {\arabicfont\char"0652}	\>	¦"¦ \textit{after a consonant or} ¦°¦ \\
+% \textsf{0653}   \>   {\arabicfont\char"0653}	\>	¦^U¦   \\
+% \textsf{0654}   \>   {\arabicfont\char"0654}	\>	¦'B¦    \\ ^^A\textverb{ 'B } \\
+% \textsf{0655}   \>   {\arabicfont\char"0655}	\>	¦.u¦  \textit{kashmiri}  \\
+% \textsf{0656}   \>   {\arabicfont\char"0656}	\>	¦I¦  \textit{kashmiri}  \\
+% \textsf{0657}   \>   {\arabicfont\char"0657}	\>	¦o¦  \textit{pashto}  \\ ^^A\textpashto{ Bo }  \\
+% \textsf{0658}   \>   {\arabicfont\char"0658}	\>	\textit{see kashmiri} ¦e¦   \\
+% \textsf{0659}   \>   {\arabicfont\char"0659}	\>	¦e¦  \textit{pashto}  \\
+% \textsf{065A}   \>   {\arabicfont\char"065A}   \\
+% \textsf{065B}   \>   {\arabicfont\char"065B}   \\
+% \textsf{065C}   \>   {\arabicfont\char"065C}   \\
+% \textsf{065D}   \>   {\arabicfont\char"065D}   \\
+% \textsf{065E}   \>   {\arabicfont\char"065E}   \\
+% \textsf{0660}   \>   {\arabicfont\char"0660}	\>	¦0¦    \\ ^^A\textarab{ 0 } \\
+% \textsf{0661}   \>   {\arabicfont\char"0661}	\>	¦1¦    \\ ^^A\textarab{ 1 } \\
+% \textsf{0662}   \>   {\arabicfont\char"0662}	\>	¦2¦    \\ ^^A\textarab{ 2 } \\
+% \textsf{0663}   \>   {\arabicfont\char"0663}	\>	¦3¦    \\ ^^A\textarab{ 3 } \\
+% \textsf{0664}   \>   {\arabicfont\char"0664}	\>	¦4¦    \\ ^^A\textarab{ 4 } \\
+% \textsf{0665}   \>   {\arabicfont\char"0665}	\>	¦5¦    \\ ^^A\textarab{ 5 } \\
+% \textsf{0666}   \>   {\arabicfont\char"0666}	\>	¦6¦    \\ ^^A\textarab{ 6 } \\
+% \textsf{0667}   \>   {\arabicfont\char"0667}	\>	¦7¦    \\ ^^A\textarab{ 7 } \\
+% \textsf{0668}   \>   {\arabicfont\char"0668}	\>	¦8¦    \\ ^^A\textarab{ 8 } \\
+% \textsf{0669}   \>   {\arabicfont\char"0669}	\>	¦9¦    \\ ^^A\textarab{ 9 } \\
+% \textsf{066A}   \>   {\arabicfont\char"066A}	\>	¦\^^A¦    \\ %\textarab{ \% } \\
+% \textsf{066B}   \>   {\arabicfont\char"066B}	\>	    \\ ^^A\textarab{ , }  \\
+% \textsf{066C}   \>   {\arabicfont\char"066C}	\>	¦,¦    \\ ^^A\textarab{ , }  \\
+% \textsf{066D}   \>   {\arabicfont\char"066D}	\>	¦*¦    \\ ^^A\textarab{ * }  \\
+% \textsf{066E}   \>   {\arabicfont\char"066E}	\>	¦.b¦, \quad ¦i¦  \textit{uighur} \\ ^^A\textarab{ .b }  \\
+% \textsf{066F}   \>   {\arabicfont\char"066F}	\>	¦.f¦    \\ ^^A\textarab{ .f }  \\
+% \textsf{0670}   \>   {\arabicfont\char"0670}	\>	¦_a¦    \\ ^^A\textarab{ B_a }  \\
+% \textsf{0671}   \>   {\arabicfont\char"0671}	\>	\textit{automatic}    \\
+% \textsf{0672}   \>   {\arabicfont\char"0672}	\>	¦.A¦  \textit{kashmiri}  \\
+% \textsf{0673}   \>   {\arabicfont\char"0673}	\>	¦.U¦  \textit{kashmiri}  \\
+% \textsf{0674}   \>   {\arabicfont\char"0674}   \\
+% \textsf{0675}   \>   {\arabicfont\char"0675}   \\
+% \textsf{0676}   \>   {\arabicfont\char"0676}   \\
+% \textsf{0677}   \>   {\arabicfont\char"0677}   \\
+% \textsf{0678}   \>   {\arabicfont\char"0678}   \\
+% \textsf{0679}   \>   {\arabicfont\char"0679}	\>	¦,t¦    \\ ^^A\textarab{ ,t } \\
+% \textsf{067A}   \>   {\arabicfont\char"067A}	\>	¦,th¦    \\ ^^A\textsindhi{ ,th }  \\
+% \textsf{067B}   \>   {\arabicfont\char"067B}	\>	¦:b¦    \\ ^^A\textsindhi{ :b }  \\
+% \textsf{067C}   \>   {\arabicfont\char"067C}	\>	¦,t¦    \\ ^^A\textpashto{ ,t }  \\
+% \textsf{067D}   \>   {\arabicfont\char"067D}	\>	¦,t¦    \\ ^^A\textsindhi{ ,t }  \\
+% \textsf{067E}   \>   {\arabicfont\char"067E}	\>	¦p¦    \\ ^^A\textarab{ p }  \\
+% \textsf{067F}   \>   {\arabicfont\char"067F}	\>	¦th¦    \\ ^^A\textsindhi{ th }  \\
+% \textsf{0680}   \>   {\arabicfont\char"0680}	\>	¦bh¦    \\ ^^A\textsindhi{ bh } \\
+% \textsf{0681}   \>   {\arabicfont\char"0681}	\>	¦c¦    \\ ^^A\textarab{ c }  \\
+% \textsf{0682}   \>   {\arabicfont\char"0682}	\>	¦:c¦   \\ ^^A (old pashto)
+% \textsf{0683}   \>   {\arabicfont\char"0683}	\>	¦^n¦    \\ ^^A\textsindhi{ ^n }  \\
+% \textsf{0684}   \>   {\arabicfont\char"0684}	\>	¦:j¦    \\ ^^A\textarab{ :j }  %sindhi\\
+% \textsf{0685}   \>   {\arabicfont\char"0685}	\>	¦,c¦    \\ ^^A\textarab{ ,c }  %pashto\\
+% \textsf{0686}   \>   {\arabicfont\char"0686}	\>	¦^c¦, \quad ¦c¦  \textit{malay} \\ ^^A\textarab{ ^c }  %farsi+\\
+% \textsf{0687}   \>   {\arabicfont\char"0687}	\>	¦^ch¦  \textit{sindhi}  \\ ^^A\textsindhi{ ^ch }  \\
+% \textsf{0688}   \>   {\arabicfont\char"0688}	\>	¦,d¦    \\ ^^A\textarab{ ,d }   %urdu\\
+% \textsf{0689}   \>   {\arabicfont\char"0689}	\>	¦,d¦  \textit{pashto}  \\ ^^A\textpashto{ ,d }  \\
+% \textsf{068A}   \>   {\arabicfont\char"068A}	\>	¦,d¦  \textit{sindhi}  \\ ^^A\textsindhi{ ,d }  \\
+% \textsf{068B}   \>   {\arabicfont\char"068B}	\>	¦.,d¦  \\ ^^A(Western punjabi)
+% \textsf{068C}   \>   {\arabicfont\char"068C}	\>	¦dh¦  \textit{sindhi}  \\ ^^A\textsindhi{ dh }  \\
+% \textsf{068D}   \>   {\arabicfont\char"068D}	\>	¦,dh¦  \textit{sindhi}  \\ ^^A\textsindhi{ ,dh }  \\
+% \textsf{068E}   \>   {\arabicfont\char"068E}	\>	¦^d¦  \textit{sindhi}  \\
+% \textsf{068F}   \>   {\arabicfont\char"068F}	\>	¦:d¦    \\ ^^A\textarab{ :d }  \\
+% \textsf{0690}   \>   {\arabicfont\char"0690}	\>	¦::d¦  \textit{urdu}  \\
+% \textsf{0691}   \>   {\arabicfont\char"0691}	\>	¦,r¦    \\ ^^A\textarab{ ,r }  \\
+% \textsf{0692}   \>   {\arabicfont\char"0692}	\>	¦^r¦  \textit{kurdish}    \\ ^^ANEW-> ^r\\
+% \textsf{0693}   \>   {\arabicfont\char"0693}	\>	¦,r¦  \textit{pashto}  \\ ^^A\textpashto{ ,r }  \\
+% \textsf{0694}   \>   {\arabicfont\char"0694}	\>	¦.r¦, \quad ¦,r¦  \textit{kurdish}  \\ ^^ANEW-> kurdish ,r\\
+% \textsf{0695}   \>   {\arabicfont\char"0695}	\>	¦.r¦  \textit{kurdish}   \\ ^^A\textarab{ .r} \\
+% \textsf{0696}   \>   {\arabicfont\char"0696}	\>	¦,z¦    \\ ^^A\textarab{ ,z }  \\
+% \textsf{0697}   \>   {\arabicfont\char"0697}	\>	¦:r¦  \\
+% \textsf{0698}   \>   {\arabicfont\char"0698}	\>	¦^z¦, \quad ¦j¦  \textit{ottoman} \\ ^^A\textarab{ ^z }  \\
+% \textsf{0699}   \>   {\arabicfont\char"0699}	\>	¦:s¦  \\ ^^A\textarab{ :s }  \\
+% \textsf{069A}   \>   {\arabicfont\char"069A}	\>	¦,s¦  \\
+% \textsf{069B}   \>   {\arabicfont\char"069B}	\>	¦:s¦  \\ 
+% \textsf{069C}   \>   {\arabicfont\char"069C} \\
+% \textsf{069D}   \>   {\arabicfont\char"069D} \\
+% \textsf{069E}   \>   {\arabicfont\char"069E} \\
+% \textsf{069F}   \>   {\arabicfont\char"069F} \\
+% \textsf{06A0}   \>   {\arabicfont\char"06A0}	\>	¦^g¦  \textit{ottoman+malay}  \\ ^^A\textmalay{ ^g }  \\
+% \textsf{06A1}   \>   {\arabicfont\char"06A1}	\>	¦.f¦   \\ ^^A\textarab{ .f }  \\
+% \textsf{06A2}   \>   {\arabicfont\char"06A2}	\>	¦f¦    \\ ^^A\textarab{ f }  \\
+% \textsf{06A3}   \>   {\arabicfont\char"06A3}   \\
+% \textsf{06A4}   \>   {\arabicfont\char"06A4}	\>	¦v¦, \quad ¦p¦  \textit{malay}  \\ ^^A\textarab{ V }  \\
+% \textsf{06A5}   \>   {\arabicfont\char"06A5}	\>	¦v¦   \textit{maghribi}  \\ ^^A\textarab{ v }  \\
+% \textsf{06A6}   \>   {\arabicfont\char"06A6}	\>	¦ph¦  \textit{sindhi}  \\ ^^A\textarab{ ph }  \\
+% \textsf{06A7}   \>   {\arabicfont\char"06A7}	\>	¦q¦    \\ ^^A\textarab{ q }  \\
+% \textsf{06A8}   \>   {\arabicfont\char"06A8}	\>	¦p¦    \\ ^^A\textarab{ p }  \\
+% \textsf{06A9}   \>   {\arabicfont\char"06A9}	\>	¦.k¦    \\ ^^A\textarab{ .k }   % also M\\
+% \textsf{06AA}   \>   {\arabicfont\char"06AA}	\>	¦k¦    \\ ^^A\textarab{ k }  \\
+% \textsf{06AB}   \>   {\arabicfont\char"06AB}	\>	¦G¦    \\ ^^A\textarab{ G }  \\
+% \textsf{06AC}   \>   {\arabicfont\char"06AC}	\>	¦,g¦    \\ ^^A\textarab{ ,g }  \\
+% \textsf{06AD}   \>   {\arabicfont\char"06AD}	\>	¦^n¦    \\ ^^A\textarab{ ^n }   % also K\\
+% \textsf{06AE}   \>   {\arabicfont\char"06AE}   \\
+% \textsf{06AF}   \>   {\arabicfont\char"06AF}	\>	¦g¦    \\ ^^A\textarab{ g }  \\
+% \textsf{06B0}   \>   {\arabicfont\char"06B0}   \\
+% \textsf{06B1}   \>   {\arabicfont\char"06B1}	\>	¦:n¦    \\ ^^A\textarab{ :n }  \\
+% \textsf{06B2}   \>   {\arabicfont\char"06B2}	\>	¦..n¦  \textit{sindhi}  \\
+% \textsf{06B3}   \>   {\arabicfont\char"06B3}	\>	¦:g¦    \\ ^^A\textarab{ :g }  \\
+% \textsf{06B4}   \>   {\arabicfont\char"06B4}	\>	¦.:g¦  \textit{sindhi}  \\
+% \textsf{06B5}   \>   {\arabicfont\char"06B5}	\>	¦^l¦    \\ ^^A\textarab{ ^l }   % also .l -> prob a bug for the next glyph\\
+% \textsf{06B6}   \>   {\arabicfont\char"06B6}	\>	¦.l¦     \\ ^^ANEW -> .l\\
+% \textsf{06B7}   \>   {\arabicfont\char"06B7}     \\ ^^ANEW -    \\ %NEW -> :l U+0651 ;;SHADDA\\
+% \textsf{06B8}   \>   {\arabicfont\char"06B8}   \\
+% \textsf{06B9}   \>   {\arabicfont\char"06B9}   \\
+% \textsf{06BA}   \>   {\arabicfont\char"06BA}	\>	¦.n¦ \\ ^^A\textarab{ .n }  \\
+% \textsf{06BB}   \>   {\arabicfont\char"06BB}	\>	¦,n¦  \textit{sindhi}  \\ ^^A\textsindhi{ .n }  \\
+% \textsf{06BC}   \>   {\arabicfont\char"06BC}	\>	¦,n¦ \\ ^^A\textpashto{ .n }  \\
+% \textsf{06BD}   \>   {\arabicfont\char"06BD}	\>	¦^n¦  \textit{malay}  \\ ^^A\textmalay{ ny } %??? with \setmalay ^n ArabTeX produces nun with 3 dots below, but this is not in Unicode\\
+% \textsf{06BE}   \>   {\arabicfont\char"06BE}	\>	¦h¦  \textit{urdu}  \\ ^^A\texturdu{ h }  \\
+% \textsf{06BF}   \>   {\arabicfont\char"06BF}	\>	¦.^c¦  \\ ^^ANEW -> .^c\\
+% \textsf{06C0}   \>   {\arabicfont\char"06C0}	\>	¦h"'¦  \textit{or context}  \\ ^^A\textverb{ 'h }  %verbatim ???\\
+% \textsf{06C1}   \>   {\arabicfont\char"06C1}	\>	¦,h¦ \\
+% \textsf{06C2}   \>   {\arabicfont\char"06C2}	\>	¦H-¦ (\textit{+ ezafe})\footnote{ Or is it ¦,h¦+ezafe?} \textit{urdu} \\ 
+% \textsf{06C3}   \>   {\arabicfont\char"06C3}	\>	¦H¦  \textit{urdu}  \\ ^^A\texturdu{ T }  %???\\
+% \textsf{06C4}   \>   {\arabicfont\char"06C4}	\>	¦.o¦ \textit{kashmiri}  \\ ^^A\textkashmiri{ |.o }  \\
+% \textsf{06C5}   \>   {\arabicfont\char"06C5}   		\\
+% \textsf{06C6}   \>   {\arabicfont\char"06C6}	\>	¦o¦ \textit{kashmiri} ,\quad ¦:o¦  \textit{uighur} \\ ^^A\textkashmiri{ |o }  \\
+% \textsf{06C7}   \>   {\arabicfont\char"06C7}	\>	¦:U¦, \quad ¦u¦  \textit{uighur}  \\ ^^A\textuighur{ u }  \\
+% \textsf{06C8}   \>   {\arabicfont\char"06C8}	\>	¦:u¦  \textit{uighur}  \\ ^^A\textuighur{ |:u }  \\
+% \textsf{06C9}   \>   {\arabicfont\char"06C9}   	\>	¦^w¦ \\ ^^AArabTeX internals \a@roof\\
+% \textsf{06CA}   \>   {\arabicfont\char"06CA}   	\>	¦:w¦ \\ ^^ANEW
+% \textsf{06CB}   \>   {\arabicfont\char"06CB}	\>	¦w¦  \textit{uighur}  \\ ^^A\textuighur{ w }  \\
+% \textsf{06CC}   \>   {\arabicfont\char"06CC}	\>	¦y¦/¦I¦  \textit{farsi, etc.},\\
+%                 \>                              \>      ¦.I¦ \textit{arabic, sindhi, malay}  \\ 
+% \textsf{06CD}   \>   {\arabicfont\char"06CD}	\>	¦Ee¦  \textit{pashto}  \\ ^^A\textpashto{\novocalize BEe }  \\
+% \textsf{06CE}   \>   {\arabicfont\char"06CE}   \\
+% \textsf{06CF}   \>   {\arabicfont\char"06CF}	\>	¦v¦  \textit{malay}  \\ ^^A\textmalay{ v }  \\
+% \textsf{06D0}   \>   {\arabicfont\char"06D0}	\>	¦E¦  \textit{pashto}, \quad ¦e¦  \textit{uighur} \\ ^^A\textuighur{ |e } \\
+% \textsf{06D1}   \>   {\arabicfont\char"06D1}   \\
+% \textsf{06D2}   \>   {\arabicfont\char"06D2}	\>	¦E¦  \textit{urdu+kashmiri}  \\ ^^A\texturdu{ |E }  \\
+% \textsf{06D3}   \>   {\arabicfont\char"06D3}	\>	¦'E¦  \textit{urdu}  \\ ^^A\texturdu{ |'E }  \\
+% \textsf{06D4}   \>   {\arabicfont\char"06D4}	\>	¦..¦  \textit{urdu}  \\
+% \textsf{06D5}   \>   {\arabicfont\char"06D5}   \\
+% \textsf{06D6}   \>   {\arabicfont\char"06D6}	\>	¦^SLY¦   \\
+% \textsf{06D7}   \>   {\arabicfont\char"06D7}	\>	¦^QLY¦   \\
+% \textsf{06D8}   \>   {\arabicfont\char"06D8}	\>	¦^MIM¦   \\
+% \textsf{06D9}   \>   {\arabicfont\char"06D9}	\>	¦^LA¦   \\
+% \textsf{06DA}   \>   {\arabicfont\char"06DA}	\>	¦^JIM¦   \\
+% \textsf{06DB}   \>   {\arabicfont\char"06DB}	\>	¦^DOTS¦   \\
+% \textsf{06DC}   \>   {\arabicfont\char"06DC}	\>	¦^SIN¦   \\
+% \textsf{06DD}   \>   {\arabicfont\char"06DD}	\>	¦[[<digits>]]¦   \\
+% \textsf{06DE}   \>   {\arabicfont\char"06DE}	\>	¦HIZB¦   \\
+% \textsf{06DF}   \>   {\arabicfont\char"06DF}	\>	¦CIRCZERO¦   \\
+% \textsf{06E0}   \>   {\arabicfont\char"06E0}	\>	¦RECTZERO¦   \\
+% \textsf{06E1}   \>   {\arabicfont\char"06E1}   \>	¦^JAZM¦  \\
+% \textsf{06E2}   \>   {\arabicfont\char"06E2}   \>	¦^MIM¦   \\
+% \textsf{06E3}   \>   {\arabicfont\char"06E3}   \>	¦_SIN¦   \\
+% \textsf{06E4}   \>   {\arabicfont\char"06E4}   \>	¦^MADDA¦ \\
+% \textsf{06E5}   \>   {\arabicfont\char"06E5}   \>	¦WAW¦    \\
+% \textsf{06E6}   \>   {\arabicfont\char"06E6}   \>	¦YEH¦    \\
+% \textsf{06E7}   \>   {\arabicfont\char"06E7}   \>	¦^YEH¦   \\
+% \textsf{06E8}   \>   {\arabicfont\char"06E8}   \>	¦^NUN¦   \\
+% \textsf{06E9}   \>   {\arabicfont\char"06E9}   \>	¦SAJDA¦   \\
+% \textsf{06EA}   \>   {\arabicfont\char"06EA}   \>	¦_STOP¦  \\
+% \textsf{06EB}   \>   {\arabicfont\char"06EB}   \>	¦^STOP¦  \\
+% \textsf{06EC}   \>   {\arabicfont\char"06EC}   \>	¦^RSTOP¦ \\
+% \textsf{06ED}   \>   {\arabicfont\char"06ED}   \>	¦_MIM¦   \\
+% \textsf{06EE}   \>   {\arabicfont\char"06EE}   \>  	¦^d¦ \\
+% \textsf{06EF}   \>   {\arabicfont\char"06EF}   \> 	¦^r¦ \\
+% \textsf{06F0}   \>   {\arabicfont\char"06F0}   \>	¦0¦  \textit{persian, urdu, etc.}  \\
+% \textsf{06F1}   \>   {\arabicfont\char"06F1}   \>	¦1¦  \textit{persian, urdu, etc.}  \\
+% \textsf{06F2}   \>   {\arabicfont\char"06F2}   \>	¦2¦  \textit{persian, urdu, etc.}  \\
+% \textsf{06F3}   \>   {\arabicfont\char"06F3}   \>	¦3¦  \textit{persian, urdu, etc.}  \\
+% \textsf{06F4}   \>   {\arabicfont\char"06F4}   \>	¦4¦  \textit{persian, urdu, etc.}  \\
+% \textsf{06F5}   \>   {\arabicfont\char"06F5}   \>	¦5¦  \textit{persian, urdu, etc.}  \\
+% \textsf{06F6}   \>   {\arabicfont\char"06F6}   \>	¦6¦  \textit{persian, urdu, etc.}  \\
+% \textsf{06F7}   \>   {\arabicfont\char"06F7}   \>	¦7¦  \textit{persian, urdu, etc.}  \\
+% \textsf{06F8}   \>   {\arabicfont\char"06F8}   \>	¦8¦  \textit{persian, urdu, etc.}  \\
+% \textsf{06F9}   \>   {\arabicfont\char"06F9}   \>	¦9¦  \textit{persian, urdu, etc.}  \\
+% \textsf{06FA}   \>   {\arabicfont\char"06FA}   \\
+% \textsf{06FB}   \>   {\arabicfont\char"06FB}   \\
+% \textsf{06FC}   \>   {\arabicfont\char"06FC}	\>	¦:O¦   \\
+% \textsf{06FD}   \>   {\arabicfont\char"06FD}	\>	¦.|IN¦  \textit{sindhi}  \\ ^^AArabTeX internal \a@bars\\
+% \textsf{06FE}   \>   {\arabicfont\char"06FE}	\>	¦.MIN¦  \textit{sindhi}  \\
+% \textsf{06FF}   \>   {\arabicfont\char"06FF}   \\
+% \textbf{Arabic Supplement}   \\
+% \textsf{0750}   \>   {\arabicfont\char"0750}   \\
+% \textsf{0751}   \>   {\arabicfont\char"0751}   \\
+% \textsf{0752}   \>   {\arabicfont\char"0752}   \\
+% \textsf{0753}   \>   {\arabicfont\char"0753}   \\
+% \textsf{0754}   \>   {\arabicfont\char"0754}   \\
+% \textsf{0755}   \>   {\arabicfont\char"0755}   \\
+% \textsf{0756}   \>   {\arabicfont\char"0756}   \\
+% \textsf{0757}   \>   {\arabicfont\char"0757}   \\
+% \textsf{0758}   \>   {\arabicfont\char"0758}   \\
+% \textsf{0759}   \>   {\arabicfont\char"0759}   \\
+% \textsf{075A}   \>   {\arabicfont\char"075A}   \\
+% \textsf{075B}   \>   {\arabicfont\char"075B}   \\
+% \textsf{075C}   \>   {\arabicfont\char"075C}   \\
+% \textsf{075D}   \>   {\arabicfont\char"075D}   \\
+% \textsf{075E}   \>   {\arabicfont\char"075E}   \\
+% \textsf{075F}   \>   {\arabicfont\char"075F}   \\
+% \textsf{0760}   \>   {\arabicfont\char"0760}   \\
+% \textsf{0761}   \>   {\arabicfont\char"0761}   \\
+% \textsf{0762}   \>   {\arabicfont\char"0762}	\>	¦g¦  \textit{malay}  \\ ^^A\textmalay{ g }  \\
+% \textsf{0763}   \>   {\arabicfont\char"0763}   \\
+% \textsf{0764}   \>   {\arabicfont\char"0764}   \\
+% \textsf{0765}   \>   {\arabicfont\char"0765}   \\
+% \textsf{0766}   \>   {\arabicfont\char"0766}   \\
+% \textsf{0767}   \>   {\arabicfont\char"0767}   \\
+% \textsf{0768}   \>   {\arabicfont\char"0768}   \\
+% \textsf{0769}   \>   {\arabicfont\char"0769}   \\
+% \textsf{076A}   \>   {\arabicfont\char"076A}   \\
+% \textsf{076B}   \>   {\arabicfont\char"076B}   \\
+% \textsf{076C}   \>   {\arabicfont\char"076C}   \\
+% \textsf{076D}   \>   {\arabicfont\char"076D}   \\
+% \textbf{Presentation Forms} * \\
+% \textsf{FD3E}	\>   {\arabicfont\char"FD3E} 	\>	¦))¦ \\
+% \textsf{FD3F}	\>   {\arabicfont\char"FD3F} 	\>	¦((¦ \\
+% \textsf{FDF0}	\>   {\arialuni\char"FDF0} 	\>	¦SALLASTOP¦ \\
+% \textsf{FDF1}	\>   {\arialuni\char"FDF1} 	\>	¦QALA¦ \\
+% \textsf{FDF2}	\>   {\arabicfont\char"FDF2}   	\>	¦al-ll_ah¦ or ¦ALLAH¦ ** \\
+% \textsf{FDF3}	\>   {\arialuni\char"FDF3} 	\>	¦AKBAR¦ \\
+% \textsf{FDF4}	\>   {\arialuni\char"FDF4} 	\>	¦MUHAMMAD¦ \\
+% \textsf{FDF5}	\>   {\arialuni\char"FDF5} 	\>	¦SALAM¦ \\
+% \textsf{FDF6}	\>   {\arialuni\char"FDF6} 	\>	¦RASUL¦ or ¦RASOUL¦ \\
+% \textsf{FDF7}	\>   {\arialuni\char"FDF7} 	\>	¦ALAYHI¦ or ¦ALAYHE¦ \\
+% \textsf{FDF8}	\>   {\arialuni\char"FDF8} 	\>	¦WASALLAM¦ \\
+% \textsf{FDF9}	\>   {\arialuni\char"FDF9} 	\>	¦SALLA¦ \\
+% \textsf{FDFA}	\>   {\adobearabic\char"FDFA} 	\>	¦SLM¦ \\
+% \textsf{FDFB}	\>   {\arialuni\char"FDFB} 	\>	¦JALLA¦ \\
+% \textsf{FDFC}	\>   {\arabicfont\char"FDFC} 	\>	¦RIYAL¦ \\
+% \textsf{FDFD}	\>   {\Huge\arabesque\char"F050} \>	¦BASMALA¦ \\ 
+% \textbf{Non-Unicode Ligatures} \\
+% 		 \>  {\tradarabic\char"FDF2}	\>	¦ll_ah¦ or ¦LLAH¦ ** \\
+% 		 \>  {\adobearabic فَلِله} 	\> 	¦FALILLAH¦ ***
+% \end{tabbing}
+% \end{multicols}
+% \parindentoff
+% 
+% \baselineskip 14pt 
+% \textit{Notes}\\
+% * Since most of these glyphs are not present in Scheherazade 
+% (and, with a few exceptions, are very rarely featured in other fonts), 
+% for illustration purposes we have taken \textsf{FDF0}, \textsf{FDF1}, 
+% \textsf{FDF3}--\textsf{FDF9} and \textsf{FDFB} from Arial Unicode MS, 
+% \textsf{FDFA} from Adobe Arabic, and \textsf{FDFD} from AGA Arabesque.
+% 
+% ** See §~\ref{allahliga} 
+% 
+% *** Specific to the font Adobe Arabic
+% 
+% \newpage
+% \appendix
+% \small
+% \section{Notes on available free and commercial fonts for the Perso-Arabic script} 
+% \label{arabicfont}
+% \texttt{TO BE COMPLETED}
+% 
+% 
+% ^^AThere are few free good quality fonts that support the Arabic script.
+% 
+% \begin{compactitem}[\textbf{·}]
+% \item ‘Scheherazade’ and ‘Lateef’ from SIL
+% 
+% \item ‘Adobe Arabic’
+% 
+% \item Free fonts from \href{http://www.arabeyes.org}{Arabeyes.org}:
+% 
+% \item \ldots
+% 
+% ^^AAdobe Arabic, dlig: (discretionary ligatures)
+% ^^A
+% ^^Aﻓ  َ ﻠ  ِ ﻠ ﻪ falilh > uni0641064E0644065006440647
+% ^^A
+% ^^Aﻟ ﻠ ﻪ l-l-h > uni064406440647
+% ^^A
+% ^^AA-l-l-h > FDF2
+% 
+% \item Arabic fonts on Mac~OS~X: ‘Geeza Pro’, ‘DecoType Naskh’, \ldots more?\\
+% 	\textcolor{red}{$\rightarrow$ \texttt{Help needed to test those fonts!}}
+% 
+% \item ‘Arabic Typesetting’ and other Arabic fonts licensed to Microsoft
+% 
+% \item Commercial fonts by vendors: 
+% 	\begin{compactitem}[\textbf{--}]
+% 		\item Linotype GmbH: 
+% 		\item AGFA Monotype: 
+% 		\item ParaType: 
+% 		\item \ldots
+% 	\end{compactitem}
+% \end{compactitem}
+% 
+% 
+% 
+% \section{Recommended Unicode fonts for transliterating Oriental languages} 
+% \label{latinextfonts}
+% 
+% Here follows a list of open source and freeware fonts with full 
+% \textsc{Latin Extended Additional} coverage.\footnote{ ^^A
+% 	See this \href{http://www.alanwood.net/unicode/fonts.html\#general}{webpage} for more details.}
+% \begin{compactitem}[\textbf{·}]
+% \item  Gentium, Doulos, Charis:  \url{http://scripts.sil.org/FontDownloads}
+% 
+% \item  Junicode: \url{http://junicode.sourceforge.net/}
+% 
+% \item  jGaramond: \url{http://www.janthor.de/jGaramond/}
+% 
+% \item  LinuxLibertine: \url{http://linuxlibertine.sourceforge.net/}
+% 
+% \item  Roman Unicode: \url{http://everywitchway.net/linguistics/fonts/roman.html}
+% 
+% \item  Chrisanthi Unicode: \url{http://everywitchway.net/linguistics/fonts/chrysuni.html}
+% 
+% \item  DejaVu Serif / Sans / Sans Mono: \url{http://dejavu.sourceforge.net/wiki/index.php/Main_Page}
+% 
+% \item  Lucida Grande: Mac~OS~X
+% 
+% \item  FreeSerif / FreeSans / FreeMono: \url{http://savannah.nongnu.org/projects/freefont/}
+% 
+% \item  Thryomanes: \url{ftp://ftp.io.com/pub/usr/hmiller/fonts/Thryomanes12.zip}
+% 
+% \item  HindSight Unicode (not very nice): \url{http://dartcanada.tripod.com/Objets/Zips/HindUnic.zip}
+% 
+% \item  TITUS Cyberbit Basic: \url{http://titus.fkidg1.uni-frankfurt.de/unicode/tituut.asp}
+% 
+% \item  AbRoman: \url{http://www.languagegeek.com/font/fontdownload.html}
+% 
+% \item  Everson Mono Unicode (shareware): \url{http://www.evertype.com/emono/}
+% 
+% \item  Arial Unicode MS: Windows 
+% 
+% \item  Microsoft Sans Serif: Windows
+% 
+% \item  Garava: \url{http://www.aimwell.org/Fonts/fonts.html}
+% 
+% \item  Verajja  (based on Bitstream Vera Sans, so very similar to DejaVu Sans): 
+% 	\url{http://www.aimwell.org/Fonts/fonts.html}
+% 
+% \item  Legendum (by Rogier van Dalen): \url{http://home.kabelfoon.nl/~slam/fonts/fonts.html}
+% 
+% \item  Code2000 (shareware): \url{http://www.code2000.net}
+% \end{compactitem}
+% 
+% 
+% \section{Implementation}
+%\iffalse
+%<*package>
+%\fi
+%    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{arabxetex}
+  [2007/04/14 v1.0 ArabTeX-like interface for XeLaTeX]
+%
+\DeclareOption{fullvoc}{\def\ax@mode{fullvoc}}
+\DeclareOption{voc}{\def\ax@mode{voc}}
+\DeclareOption{novoc}{\def\ax@mode{novoc}}
+\DeclareOption{trans}{\def\ax@mode{trans}}
+\DeclareOption{utf}{\def\ax@mode{utf}}
+\DeclareOption{fdf2alif}{\def\ax@font@allah{fdf2alif}}
+\DeclareOption{fdf2noalif}{\def\ax@font@allah{fdf2noalif}}
+\ExecuteOptions{novoc,fdf2alif}
+\ProcessOptions
+\def\ax@mode@fullvoc{fullvoc}
+\def\ax@mode@voc{voc}
+\def\ax@mode@novoc{novoc}
+\def\ax@mode@trans{trans}
+\def\ax@mode@utf{utf}
+\newif\ifax@mode@defined
+\def\ax@ismode@defined#1{%
+	\ifcsname ax@mode@#1\endcsname%
+		\ax@mode@definedtrue%
+	\else%
+		\ax@mode@definedfalse%
+	\fi}
+\def\ax@lang{arab}%default language (for macros like \aemph)
+\RequirePackage{bidi}
+\RequirePackage{amsmath}%because of macro \overline used in \aemph
+\RequirePackage{fontspec}
+\AtBeginDocument{\ifdefined\arabicfont\relax\else%
+	\newfontfamily\arabicfont[Script=Arabic,Scale=2]{Scheherazade}\fi}%
+\def\ax@trans@style{\itshape}%
+\newcommand{\SetTransliterationStyle}[1]{\def\ax@trans@style{#1}}
+\newcommand{\SetAllahWithAlif}{\def\ax@font@allah{fdf2alif}}
+\newcommand{\SetAllahWithoutAlif}{\def\ax@font@allah{fdf2noalif}}
+\def\arabtex@codes{\catcode`^=11\relax\catcode`_=11\relax}
+\def\UC{\char"E000} % this is used to capitalize the following letter (ignoring article al-) in transliteration
+%%%
+\newenvironment{arab}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{arab}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+\let\Arabic=\arab%
+%%%
+\newenvironment{maghribi}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{maghribi}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\@tempa}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\ax@mode}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+%%%
+\newenvironment{farsi}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{farsi}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-farsi-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\@tempa}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\ax@mode}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+\let\persian=\farsi
+%%%
+\newenvironment{urdu}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{urdu}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-urdu-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Language=Urdu}%Mapping=arabtex-utf}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\@tempa}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\ax@mode}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+%%%
+\newenvironment{pashto}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{pashto}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-pashto-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\@tempa}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\ax@mode}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+%%%
+\newenvironment{sindhi}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{sindhi}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	\ifx\@tempa\ax@mode@trans%
+		\par\arabtex@codes\ax@trans@style%
+		\addfontfeature{Mapping=arabtex-sindhi-trans}%
+	\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Language=Sindhi}%Mapping=arabtex-utf}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\@tempa,Language=Sindhi}%
+	\fi\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\ax@mode,Language=Sindhi}%
+\fi}
+{\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
+%%%
+\newenvironment{turk}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{turk}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	%\ifx\@tempa\ax@mode@trans%
+	%	\par\arabtex@codes\ax@trans@style%
+	%	\addfontfeature{Mapping=arabtex-turk-trans}%
+	%\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\@tempa}%
+	\fi%\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\ax@mode}%
+\fi}
+{%\ifx\@tempa\ax@mode@trans\relax\else
+\unsetRL%\fi
+\par}
+\let\ottoman=\turk
+%%%
+\newenvironment{kurdish}[1][]%
+{\def\ax@lang{kurdish}%
+%\edef\@tempa{#1}%
+%\ifx\@tempa\ax@mode@trans%
+%	\par\arabtex@codes\ax@trans@style%
+%	\addfontfeature{Mapping=arabtex-kurdish-trans}%
+%\else%
+\ifx\@tempa\ax@mode@utf%
+	\par\setRL\arabicfont\addfontfeature{Language=Kurdish}%Mapping=arabtex-utf}%
+\else%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-kurdish,Language=Kurdish}%
+\fi}
+{%\ifx\@tempa\ax@mode@trans\relax\else
+\unsetRL%\fi
+\par}
+%%%
+\newenvironment{kashmiri}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{kashmiri}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	%\ifx\@tempa\ax@mode@trans%
+	%	\par\arabtex@codes\ax@trans@style%
+	%	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-trans}%
+	%\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\@tempa}%
+	\fi%\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\ax@mode}%
+\fi}
+{%\ifx\@tempa\ax@mode@trans\relax\else
+\unsetRL%\fi
+\par}
+%%%
+\newenvironment{malay}[1][\ax@mode]%
+{\edef\@tempa{#1}%
+\def\ax@lang{malay}%
+\ax@ismode@defined{\@tempa}%
+\ifax@mode@defined%
+	%\ifx\@tempa\ax@mode@trans%
+	%	\par\arabtex@codes\ax@trans@style%
+	%	\addfontfeature{Mapping=arabtex-malay-trans}%
+	%\else%
+	\ifx\@tempa\ax@mode@utf%
+		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+	\else%
+		\par\setRL\arabicfont\arabtex@codes%
+		\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\@tempa}%
+	\fi%\fi%
+\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\ax@mode}%
+\fi}
+{%\ifx\@tempa\ax@mode@trans\relax\else
+\unsetRL%\fi
+\par}
+\let\jawi=\malay
+%%%
+\newenvironment{uighur}[1]%
+{%\edef\@tempa{#1}%
+\def\ax@lang{uighur}%
+%\ifx\@tempa\ax@mode@trans%
+%	\par\arabtex@codes\ax@trans@style%
+%	\addfontfeature{Mapping=arabtex-uighur-trans}%
+%\else%
+\ifx\@tempa\ax@mode@utf%
+	\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+\else%
+	\par\setRL\arabicfont\arabtex@codes%
+	\addfontfeature{Mapping=arabtex-\ax@font@allah-uighur}%
+\fi}
+{%\ifx\@tempa\ax@mode@trans\relax\else
+\unsetRL%\fi
+\par}
+%%%
+\def\textarab{\bgroup\arabtex@codes\text@arab}
+\let\textarabic=\textarab
+\def\textmaghribi{\bgroup\arabtex@codes\text@maghribi}
+\def\textfarsi{\bgroup\arabtex@codes\text@farsi}
+\let\textpersian=\textfarsi
+\def\texturdu{\bgroup\arabtex@codes\text@urdu}
+\def\textsindhi{\bgroup\arabtex@codes\text@sindhi}
+\def\textpashto{\bgroup\arabtex@codes\text@pashto}
+\def\textturk{\bgroup\arabtex@codes\text@turk}
+\let\textottoman=\textturk
+\def\textkurdish{\bgroup\arabtex@codes\text@kurdish}
+\def\textkashmiri{\bgroup\arabtex@codes\text@kashmiri}
+\def\textmalay{\bgroup\arabtex@codes\text@malay}
+\let\textjawi=\textmalay
+\def\textuighur{\bgroup\arabtex@codes\text@uighur}
+\newcommand\text@arab[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{arab}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}
+		\else%
+			\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}#2}%
+		\fi\fi
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@maghribi[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{maghribi}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\@tempa}#2}%
+		\fi\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@farsi[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{farsi}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-farsi-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\@tempa}#2}%
+		\fi\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@urdu[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{urdu}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-urdu-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Language=Urdu}#2}%eventually Mapping=arabtex-utf
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\@tempa,Language=Urdu}#2}%
+		\fi\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\ax@mode,Language=Urdu}#2}%
+	\fi\egroup}
+\newcommand\text@sindhi[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{sindhi}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-sindhi-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Language=Sindhi} #2}%eventually Mapping=arabtex-utf
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\@tempa,Language=Sindhi}#2}%
+		\fi\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\ax@mode,Language=Sindhi}#2}%
+	\fi\egroup}
+\newcommand\text@pashto[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{pashto}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		\ifx\@tempa\ax@mode@trans%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-pashto-trans}#2}%
+		\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\@tempa}#2}%
+		\fi\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@turk[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{turk}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		% UNCOMMENT when transliteration mapping is done
+		%\ifx\@tempa\ax@mode@trans%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-turk-trans}#2}%
+		%\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\@tempa}#2}%
+		\fi%\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@kurdish[2][]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{kurdish}%
+		% UNCOMMENT when transliteration mapping is done
+		%\ifx\@tempa\ax@mode@trans%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kurdish-trans}#2}%
+		%\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-kurdish,Language=Kurdish}#2}%
+		\fi%\fi%
+	\egroup}
+\newcommand\text@kashmiri[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{kashmiri}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		% UNCOMMENT when transliteration mapping is done
+		%\ifx\@tempa\ax@mode@trans%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kashmiri-trans}#2}%
+		%\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\@tempa}#2}%
+		\fi%\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@malay[2][\ax@mode]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{malay}%
+	\ax@ismode@defined{\@tempa}%
+	\ifax@mode@defined%
+		% UNCOMMENT when transliteration mapping is done
+		%\ifx\@tempa\ax@mode@trans%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-malay-trans}#2}%
+		%\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\@tempa}#2}%
+		\fi%\fi%
+	\else%
+	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\ax@mode}#2}%
+	\fi\egroup}
+\newcommand\text@uighur[2][]{%
+	\edef\@tempa{#1}%
+	\def\ax@lang{uighur}%
+		% UNCOMMENT when transliteration mapping is done
+		%\ifx\@tempa\ax@mode@trans%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-uighur-trans}#2}%
+		%\else%
+		\ifx\@tempa\ax@mode@utf%
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+		\else%
+			\RL{\arabicfont%
+			\addfontfeature{Mapping=arabtex-\ax@font@allah-uighur}#2}%
+		\fi%\fi%
+	\egroup}
+%
+\newcommand{\textlatin}[1]{\LR{\rmfamily #1}}
+%\newcommand{\aemph}[1]{$\overline{\text{\textarab{#1}}}$} %%TODO generalize to all languages
+%% implement a parameter \ax@lang
+\newcommand{\aemph}[1]{%
+  \edef\@tempb{\expandafter\noexpand\csname text\ax@lang\endcsname}%
+  $\overline{\text{\@tempb{#1}}}$}
+%
+% experimental: this surely does not work!
+% this would make possible to define commands that accept args containing \arabtex@codes
+%\def\newarabxetexcommand#1#2{%
+%	\edef\ax@tcomm@nd{\expandafter\relax\csname #1@\endcsname}
+%	\expandafter\def\string#1{%
+%	\bgroup\arabtex@codes\ax@tcomm@nd}
+%	\def\ax@tcomm@nd{#2\egroup}}
+%    \end{macrocode}
+%
+%\iffalse
+%</package>
+%\fi
+% 
+% \subsection{Some notes on the TECkit mappings}
+% 
+% \texttt{To be done \dots}
+% 
+% 
+% 
+% ^^A\section{Recommendations to the Unicode Consortium}
+% ^^A
+% ^^ASome glyphs are missing in Unicode:
+% ^^A
+% ^^A- wavy Hamza below as combining diacritic (for Kashmiri)
+% ^^A
+% ^^A- .b with ring below (for Kashmiri) (NB: can be poorly rendered by U+066E U+06EA)
+% ^^A
+% ^^A- hamza directly above baseline (for Qur'an) : 0654 is too high!
+% ^^A  \def\hamzaB{\raisebox[-1ex]{\char"0654} is ok
+% ^^A
+% ^^A- Clarify the U+FDF2 mess: OK to leave it as is, but it would be advisable to 
+% ^^A  codify the LLAH ligature as well: leaving it in the Private Use Area is really 
+% ^^A  a bad idea! Perhaps the FALILLAH ligature could be added as well.
+%
+% ^^A\clearpage
+% ^^A\PrintChanges
+%
+% ^^A\clearpage
+% ^^A\PrintIndex
+%
+% \Finale
+%
+%\iffalse
+%<*dtx-style>
+%    \begin{macrocode}
+\ProvidesPackage{arabxetex-dtx-style}
+\usepackage{fontspec,xltxtra}
+\usepackage{array,supertabular,xspace,multicol,fancyvrb,paralist}
+\usepackage[voc]{arabxetex}
+\usepackage[dvipdfm]{color}
+\definecolor{myblue}{rgb}{0.02,0.04,0.48}
+\definecolor{myred}{rgb}{0.65,0.04,0.07}
+\definecolor{darkgray}{gray}{0.3}
+\definecolor{lightgray}{gray}{0.6}
+\definecolor{IslamicGreen}{rgb}{0,.43,0}
+\usepackage[dvipdfm,
+    bookmarks=true,
+    colorlinks=true,
+    linkcolor=myblue,
+    urlcolor=myblue,
+    citecolor=myblue,
+    hyperindex=false,
+    hyperfootnotes=false,
+    pdftitle={The ArabXeTeX package},
+    pdfauthor={F Charette <firmicus@gmx.net>},
+    pdfsubject={An ArabTeX-like interface for typesetting languages in Arabic script with XeLaTeX},
+    pdfkeywords={ArabTeX, XeTeX, XeLaTeX, Arabic, Maghribi, Persian, Farsi, Urdu, Sindhi, 
+    	Pashto, Turkish, Ottoman, Kurdish, Kashmiri, Malay, Jawi, Uighur}
+    ]{hyperref}
+% NB some of this preamble is taken or adapted from fontspec-doc-style.sty
+\newcommand*\pkg[1]{\textsf{#1}}
+\def\eg{\textit{e.g.,}\xspace}
+\def\ie{\textit{i.e.,}\xspace}
+\def\ca{\textit{ca.}\@\xspace}
+\def\Eg{\textit{E.g.,}\xspace}
+\def\Ie{\textit{I.e.,}\xspace}
+\def\etc{\@ifnextchar.{\textit{etc}}{\textit{etc.}\@\xspace}}
+
+\newlength{\oldparindent}
+\newcommand{\parindentoff}{\setlength{\oldparindent}{\parindent} \setlength{\parindent}{0pt}}
+\newcommand{\parindenton}{\setlength{\parindent}{\oldparindent}}
+
+%% LOGOS, tuned for Palatino:
+\makeatletter
+\TeX@logo@spacing{-0.12em}{-0.12em}%
+  {0.5ex}{-0.3em}{-0.12em}{-0.1em}
+\makeatother
+\def\arabxetex{Arab\XeTeX}
+\def\arabtex{Arab\TeX}
+\def\arabxetexAr{\RL{\fontspec[Script=Arabic,Scale=1.5]{DecoType Thuluth} عرب زيتخ}}
+\def\MacOSX{Mac~OS~X}
+\def\ASCII{\textsc{ascii}} % ii small caps does not work with Junicode!
+
+%% fontspec declarations:
+\setromanfont[Mapping=tex-text]{Junicode}%{FPL Neu}
+\defaultfontfeatures{Scale=MatchLowercase}
+\setmonofont{Inconsolata}%{Latin Modern Typewriter Proportional}%{Luxi Mono}%{Courier New}
+\setsansfont{Lucida Sans Unicode}
+%\setmathrm{Optima Regular}
+%\setboldmathrm[BoldFont=Optima ExtraBlack]{Optima Bold}
+%\defaultfontfeatures{Mapping=tex-text}
+\newfontfamily\arabicfont[Script=Arabic,Scale=1.5]{Scheherazade}
+\newfontfamily\lateeffont[Script=Arabic,Scale=1.5]{Lateef}
+\newfontfamily\lotusfont[Script=Arabic,Scale=1.5]{Lotus Linotype}
+\newfontfamily\arabtype[Script=Arabic,Scale=1.5]{Arabic Typesetting}
+\newfontfamily\adobearabic[Script=Arabic,Scale=1.5]{Adobe Arabic}
+\newfontfamily\tradarabic[Script=Arabic,Scale=1.5]{Traditional Arabic}
+%\newfontfamily\nafeesfont[Script=Arabic]{Nafees Pakistani Naskh}
+\newfontfamily\arabesque{AGA Arabesque}
+\newfontfamily\arialuni{Arial Unicode MS}
+\newfontfamily\gentium{Gentium}
+
+\linespread{1.05}      % Palatino needs more space between lines
+\frenchspacing         % Remove ugly extra space after punctuation
+%\newenvironment{MYitemize}{%
+%\renewcommand\labelitemi{\cdot}%
+%\begin{list}{}{\setlength{\itemsep}{.15\parsep}}}%
+%%\setlength{\labelwidth}{0pt}\setlength{\leftmargin}{0pt}\setlength{\itemindent}{0pt}}
+%{\end{list}}
+%\addtolength{\textheight}{3cm}
+%\setlength{\leftmargin}{1cm}
+%\setlength{\topmargin}{0cm}
+%\newcommand{\Tarab}[2][black]{\textcolor{#1}{\textarab{ #2 }}}
+%\newcommand{\Tfarsi}[2][black]{\textcolor{#1}{\textfarsi{ #2 }}}
+%\newcommand{\Turdu}[2][black]{\textcolor{#1}{\texturdu{ #2 }}}
+%\newcommand{\Tsindhi}[2][black]{\textcolor{#1}{\textsindhi{ #2 }}}
+%\newcommand{\Tpashto}[2][black]{\textcolor{#1}{\textpashto{ #2 }}}
+%\newcommand{\Tkashmiri}[2][black]{\textcolor{#1}{\textkashmiri{ #2 }}}
+%\newcommand{\Tkurdish}[2][black]{\textcolor{#1}{\textkurdish{ #2 }}}
+%\newcommand{\Tturk}[2][black]{\textcolor{#1}{\textturk{ #2 }}}
+%\newcommand{\Tmalay}[2][black]{\textcolor{#1}{\textmalay{ #2 }}}
+%\newcommand{\Tuighur}[2][black]{\textcolor{#1}{\textuighur{ #2 }}}
+%%%
+\def\GN{\bgroup\catcode`\_=11\relax\catcode`\^=11\relax\GNX}
+\def\GR{\bgroup\catcode`\_=11\relax\catcode`\^=11\relax\GRX}
+\def\GB{\bgroup\catcode`\_=11\relax\catcode`\^=11\relax\GBX}
+\def\GG{\bgroup\catcode`\_=11\relax\catcode`\^=11\relax\GGX}
+\def\GV{\bgroup\catcode`\_=11\relax\catcode`\^=11\relax\GVX}
+\newcommand{\GNX}[3][arab]{%
+	\edef\@tempa{\expandafter\noexpand\csname text#1\endcsname}
+	\parbox[c]{7.5mm}{\centering{\@tempa{#2}}\\[1pt]\ttfamily\fontsize{5}{5}\selectfont{#3}}\egroup}
+\newcommand{\GRX}[3][arab]{%
+	\edef\@tempa{\expandafter\noexpand\csname text#1\endcsname}
+	\parbox[c]{7.5mm}{\centering{\textcolor{myred}{\@tempa{#2}}}\\[1pt]\ttfamily\fontsize{5}{5}\selectfont{#3}}\egroup}
+\newcommand{\GBX}[3][arab]{%
+	\edef\@tempa{\expandafter\noexpand\csname text#1\endcsname}
+	\parbox[c]{7.5mm}{\centering{\textcolor{myblue}{\@tempa{#2}}}\\[1pt]\ttfamily\fontsize{5}{5}\selectfont{#3}}\egroup}
+\newcommand{\GVX}[3][arab]{%
+	\edef\@tempa{\expandafter\noexpand\csname text#1\endcsname}
+	\parbox[c]{7.5mm}{\centering{\textcolor{IslamicGreen}{\@tempa{#2}}}\\[1pt]\ttfamily\fontsize{5}{5}\selectfont{#3}}\egroup}
+\newcommand{\GGX}[2][arab]{%
+	\edef\@tempa{\expandafter\noexpand\csname text#1\endcsname}
+	\parbox[c]{7.5mm}{\centering{\textcolor{lightgray}{\@tempa{#2}}}}\egroup}
+
+\newcommand{\hamzaB}{\char"200D\char"0640\raise-.95ex\hbox{\char"0654}\char"200D}
+%    \end{macrocode}
+%</dtx-style>
+%\fi
+%
+%
+% \typeout{*************************************************************}
+% \typeout{*}
+% \typeout{* To finish the installation you have to move the following}
+% \typeout{* file into a directory searched by XeTeX:}
+% \typeout{*}
+% \typeout{* \space\space\space arabxetex.sty}
+% \typeout{*}
+% \typeout{* and move all *.tec and *.map files to}
+% \typeout{* .../fonts/misc/xetex/fontmapping/arabxetex/}
+% \typeout{*************************************************************}
+%
+\endinput
+
