@@ -156,8 +156,8 @@ z z	  > U+0632 U+0651  ;;SHADDA
 z	  > U+0632 
 Y Y	  > U+0649 U+0651  ;;SHADDA
 Y	  > U+0649 
-w w	  > U+06CB U+0651 ;;SHADDA
-w 	  > U+06CB
+w w	  > U+0648 U+0651 ;;SHADDA
+w 	  > U+0648
 y y	  > U+064A U+0651  ;;SHADDA
 y	  > U+064A 
 v v	  > U+06A4 U+0651  ;;SHADDA
@@ -221,6 +221,8 @@ c c       > U+062C U+0651  ;;SHADDA
 c	  > U+062C 
 x x	  > U+062E U+0651  ;;SHADDA
 x	  > U+062E 
+j j	  > U+062C U+0651  ;;SHADDA
+j	  > U+062C 
 UL h UL h > U+062E U+0651  ;;SHADDA
 UL h	  > U+062E 
 P h P h	  > U+062D U+0651  ;;SHADDA
