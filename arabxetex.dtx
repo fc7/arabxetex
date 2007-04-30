@@ -1790,7 +1790,9 @@ François Charette
 		\fi%\fi%
 	\egroup}
 %
-\newcommand{\textlatin}[1]{\LR{\rmfamily #1}}
+\@ifpackageloaded{babel}{\renewcommand{\textlatin}[1]{\LR{\rmfamily #1}}
+	\PackageWarning{babel}{You have loaded Babel. ArabXeTeX has now redefined \textlatin !}}%
+	{\newcommand{\textlatin}[1]{\LR{\rmfamily #1}}}%
 %\newcommand{\aemph}[1]{$\overline{\text{\textarab{#1}}}$} %%TODO generalize to all languages
 %% implement a parameter \ax@lang
 \newcommand{\aemph}[1]{%
