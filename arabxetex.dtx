@@ -180,7 +180,7 @@ François Charette
 % For details on \arabtex\ and its input convention the reader is referred to 
 % Lagally's detailed manual.\footnote{ ^^A
 % 	\url{http://129.69.218.213/arabtex/doc/arabdoc.pdf}}
-% \arabxetex introduces several additions, and a few minor modifications, 
+% \arabxetex\ introduces several additions, and a few minor modifications, 
 % to \arabtex's conventions. These are documented in tabular form in 
 % Section~\ref{conventiontable}.  \arabxetex\ relies on the package \pkg{bidi}
 % which contains the macros necessary for bidirectional typesetting --
@@ -229,7 +229,8 @@ François Charette
 % \section{Usage}
 % 
 % For short insertions (say within a LR text), use ¦\text<language>[option]{...}¦
-% where ¦<language>¦ is one of the following:  
+% \DescribeMacro{\textarab}\DescribeMacro{\textfarsi}\marginpar{\raggedleft\small etc.}
+% where ¦<language>¦ is one of the following (alternative names are given in brackets):
 % \begin{compactitem}[\textbf{·}]
 % 	\item ¦arab¦ (¦Arabic¦),\footnote{ ^^A
 % 		Since the command \cmd\arabic\ is already defined in \LaTeX, we chose
@@ -240,13 +241,14 @@ François Charette
 % 	\item ¦urdu¦, 
 % 	\item ¦sindhi¦, 
 % 	\item ¦pashto¦, 
-% 	\item ¦ottoman¦ (¦turk¦), 
+% 	\item ¦ottoman¦ (¦turk¦),
 % 	\item ¦kurdish¦,
 % 	\item ¦kashmiri¦, 
 % 	\item ¦malay¦ (¦jawi¦), and 
 % 	\item ¦uighur¦.
 % \end{compactitem}
 % For typesetting whole paragraphs in Arabic script, use 
+% \DescribeMacro{\begin\{arab\}}\DescribeMacro{\begin\{farsi\}}\marginpar{\raggedleft\small etc.}
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
 %   \begin{<language>}[option] 
 %   ...
@@ -272,8 +274,14 @@ François Charette
 % easy access to special glyphs and some useful features. See further below.
 % 
 % Latin (LR) insertions within Arabic environment can be made by means of the
-% command \cmd\textlatin¦{…}¦.  Emphasis in Arabic is traditionally indicated by
+% \DescribeMacro{\textroman} 
+% command \cmd\textroman¦{…}¦.\new{1.1}\footnote{ %
+%	In version 1.0 this was called \cmd\textlatin. The latter still works 
+%	but its usage is deprecated, because \pkg{babel} defines a command 
+%	of the same name.}
+% Emphasis in Arabic is traditionally indicated by
 % overlining the text, and this can be achieved with the command
+% \DescribeMacro{\aemph} 
 % \cmd\aemph:\footnote{ ^^A
 % 	This macro makes use of the mathematical command \cmd\overline,
 % 	which explains why \pkg{arabxetex} requires the \pkg{amsmath} package.
@@ -300,6 +308,7 @@ François Charette
 %\subsection{Font setup}
 %
 % \arabxetex\ requires the user to define an \cmd\arabicfont\ in the preamble.  
+% \DescribeMacro{\arabicfont}
 % The recommended procedure, by means of \pkg{fontspec}, is to define it as follows:
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
 %     \newfontfamily\arabicfont[Script=Arabic]{<fontname>}
@@ -310,8 +319,8 @@ François Charette
 % 	Available from \url{http://scripts.sil.org/ArabicFonts}. For
 % 	typesetting Sindhi and Kashmiri, the font \textbf{Lateef}, available at
 % 	the same place, is also recommended.}
-% % You can also define specific fonts for all other languages, by similarly defining
-% ¦<language>font¦, such as for example:
+% You can also define specific fonts \new{1.1} for all other languages, by similarly defining
+% ¦\<language>font¦, such as for example:
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
 %     \newfontfamily\urdufont[Script=Arabic]{Nafees Pakistani Naskh}
 % \end{Verbatim}
@@ -325,13 +334,11 @@ François Charette
 % 
 % \subsection{Examples}
 % 
-% \texttt{THIS SECTION IS INCOMPLETE}
-% 
 % \subsubsection{Contextual analysis of \textit{hamza}}
 %
-% Like with \arabtex, a contextual analysis of the input encoding is performed
+% As with \arabtex, a contextual analysis of the input encoding is performed
 % (at the font-mapping level) to automatically determine the carrier of the 
-% \textit{hamza}, as illustrated in the following examples:
+% \textit{hamza}, as illustrated by the following examples:
 % 
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
 % \begin{arab}
@@ -547,8 +554,10 @@ François Charette
 % By default we assume the canonical situation where \textsf{U+FDF2} corresponds to 
 % {\tradarabic اﷲ}, but the user can change this by choosing one of the package options
 % ¦fdf2alif¦ or ¦fdf2noalif¦; it can also be changed locally by means of the commands
+% \DescribeMacro{\SetAllahWithAlif}
+% \DescribeMacro{\SetAllahWithoutAlif}
 % \cmd\SetAllahWithAlif\ and \cmd\SetAllahWithoutAlif\ \textit{before} making use of 
-% \cmd\arabicfont. In a future version we hope to implement a database of Arabic fonts 
+% \cmd\arabicfont. In a future version we might perhaps implement a database of Arabic fonts 
 % within \arabxetex, so that this would work automatically in the most common cases.
 % 
 % The font Adobe Arabic has in addition the ligature \textit{fa-li-llāh}: 
@@ -611,8 +620,10 @@ François Charette
 % It is also planned to implement alternative transliteration conventions
 % for each language, as with \arabtex, \eg ZDMG, Encyclopedia Iranica, etc.
 % Transliteration is set in italics by default. This can be changed by declaring, e.g.,
+% \DescribeMacro{\SetTranslitStyle}
 % ¦\SetTranslitStyle{\upshape}¦.
 % To transliterate proper nouns with capitals, prefix the words to be capitalized with \cmd\UC:
+% \DescribeMacro{\UC}
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
 % \begin{arab}[trans]
 % al-^say_h al-`Alim \UC na.sIr \UC al-dIn \UC al-.tUsI
@@ -689,14 +700,14 @@ François Charette
 % %Custom macros to enter variants, additions, omissions, illegible passages,
 % % text above the line, marginal notes, lacunae, and restorations:
 % \newcommand{\VAR}[2]{\Anote{\textarab{#1}}{\textarab{#2}}}
-% \newcommand{\ADD}{\textlatin{\textbf{+}}\,}% or \textarab{zAyid fI}\ 
-% \newcommand{\OM}{\textlatin{\textbf{\char"2013}}\,}% or \textarab{nAqi.s fI}\ 
+% \newcommand{\ADD}{\textroman{\textbf{+}}\,}% or \textarab{zAyid fI}\ 
+% \newcommand{\OM}{\textroman{\textbf{\char"2013}}\,}% or \textarab{nAqi.s fI}\ 
 % \newcommand{\ILLEG}{\textarab{.gayr maqrU' fI}\ }
 % \newcommand{\BLANK}{\textarab{bayA.d fI}\ }
 % \newcommand{\SUPERLIN}{\textarab{ta.ht al-sa.tr fI}\ }
 % \newcommand{\MARG}{\textarab{bi-al-hAmi^s fI}\ }
-% \newcommand{\LACUNA}{\textlatin{\textlangle~{\dots}~\textrangle}}
-% \newcommand{\RESTOR}[1]{\textlatin{\textrangle}#1\textlatin{\textlangle}}
+% \newcommand{\LACUNA}{\textroman{\textlangle~{\dots}~\textrangle}}
+% \newcommand{\RESTOR}[1]{\textroman{\textrangle}#1\textroman{\textlangle}}
 % % to separate lemmas in different manuscripts:
 % \def\SEP{\enskip$\Vert$\enskip} 
 % \end{Verbatim}
@@ -793,8 +804,8 @@ François Charette
 % ^^A¦.i¦	&	\GN{B.i}{}&&&&&&&&&\\     
 % ¦_i¦	&	\GR{B_i}{0656}&&&&&&&&&\\ 
 % ^^A¦:i¦	&	\GN{B:i}{}&&&&&&&&&\\  
-% ¦j¦	&	\GR{j}{062C}&\GG{j}&\GG{j}&\GG{j}&\GG{j}&\GN[turk]{j}{0698}&\GG{j}&\GG{j}&\GG{j}&\GG{j} \\
-% ¦:j¦	&	&&&&\GR[sindhi]{:j}{0684}&&&&&\\ ^^A(sindhi)  
+% ¦j¦	&	\GR{j}{062C}&\GG{j}&\GG{j}&\GG{j}&\GG{j}&\GN[turk]{j}{0698}&\GN[kurdish]{j}{0698}&\GG{j}&\GG{j}&\GG{j} \\
+% ¦:j¦	&	&&&&\GR[sindhi]{:j}{0684}&&&&&\\ ^^A(sindhi) 
 % ¦jh¦	&	&&&&\GN[sindhi]{jh}{06A9}&&&&&\\
 % ¦k¦	&	\GR{k}{0643}&\GG{k}&\GG{k}&\GG{k}&\GN[sindhi]{k}{06AA}&\GG{k}&\GG{k}&\GG{k}&\GG{k}&\GG{k} \\
 % ^^A¦K¦	&	\GN{K}{}&&&&&&&&&\\ 
@@ -1832,15 +1843,17 @@ François Charette
 		\fi%\fi%
 	\egroup}
 %
-\@ifpackageloaded{babel}{\renewcommand{\textlatin}[1]{\LR{\rmfamily #1}}
+\newcommand{\textroman}[1]{\LR{\rmfamily #1}}
+\@ifpackageloaded{babel}{%
+	\renewcommand{\textlatin}[1]{\textroman{#1}}
 	\PackageWarning{babel}{You have loaded Babel. ArabXeTeX has now redefined \textlatin !}}%
-	{\newcommand{\textlatin}[1]{\LR{\rmfamily #1}}}%
+	{\newcommand{\textlatin}[1]{\textroman{#1}}}%
 \newcommand{\aemph}[1]{%
   \edef\@tempb{\expandafter\noexpand\csname text\ax@lang\endcsname}%
   $\overline{\text{\@tempb{#1}}}$}
 %
 % experimental: this surely does not work!
-% this would make possible to define commands that accept args containing \arabtex@codes
+% I want a mechanism to enable defining commands that accept args containing \arabtex@codes
 %\def\newarabxetexcommand#1#2{%
 %	\edef\ax@tcomm@nd{\expandafter\relax\csname #1@\endcsname}
 %	\expandafter\def\string#1{%
@@ -1854,7 +1867,7 @@ François Charette
 % 
 % \subsection{Some notes on the TECkit mappings}
 % 
-% \texttt{To be done \dots}
+% \texttt{TO BE DONE \dots}
 % 
 % 
 % ^^A\section{Unicode Matters} ---> TODO CONTACT ROOZBEH ABOUT THIS
@@ -1930,6 +1943,29 @@ François Charette
 \def\arabxetexAr{\RL{\fontspec[Script=Arabic,Scale=1.5]{DecoType Thuluth} عرب زيتخ}}
 \def\MacOSX{Mac~OS~X}
 \def\ASCII{\textsc{ascii}} % ii small caps does not work with Junicode!
+
+%% Sidenotes  << copied from fontspec.dtx
+\newcommand\warn[2]{%
+  \edef\thisversion{#1}%
+  \ifhmode\unskip~\fi{\ifx\thisversion\fileversion\color{red}\fi
+  $\leftarrow$}%
+  \marginpar{\raggedleft
+    \small%
+      {\ifx\thisversion\fileversion\color{red}\fi$\rightarrow$}%
+      \,{\notefont #1:~#2}}}
+
+\newcommand\new[1]{%
+  \edef\thisversion{#1}%
+  \ifhmode\unskip~\fi{\ifx\thisversion\fileversion\color{blue}\else\color[gray]{0.5}\fi
+  $\leftarrow$}%
+  \marginpar{\raggedleft
+    \small\ifx\thisversion\fileversion\color{blue}\else\color[gray]{0.5}\fi
+    $\rightarrow$\,{\notefont #1:~New!}}}
+
+%% Sidenote font
+\newfontfamily\notefont[Scale=MatchLowercase]{Lucida Sans Unicode}
+
+%%%
 
 %% fontspec declarations:
 \setromanfont[Mapping=tex-text]{Junicode}%{FPL Neu}
