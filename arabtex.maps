@@ -146,6 +146,7 @@ Class [Digits] = (U+0030..U+0039)
 
 Define BEG  (#|Z|[BRACKETS])
 Define END  (#|[BRACKETS]|[PUNCT] U+0020|[PUNCT] #)
+Define ENDZ (#|[BRACKETS]|[PUNCT] U+0020|[PUNCT] #|Z)
 
 ; special ligatures
 ;; 1. Standard ArabTeX input
@@ -269,9 +270,9 @@ CO U > U+06C7 ;
 #-A U+0048 Z UL? (Q? (i|e))=vv / _ END > U+06C0 @vv U+200C ;H-i -> heh+hamza final; what about 06C2 in Urdu ?<<<
 #-A U+0048 Z Q?=qq (I|E)=vv / _ END > h U+0020 U+0627 @qq i @vv ; H-I
 #-A Q?=q1 (I|E) Z UL? Q?=q2 (i|e) / _ END > @q1 i U+0626 @q2 i U+200C ; ...I-e
-#-A Z Q?=qq I  / (A|U) _ (Z|END) > U+0626 @qq i y ; ...A-I or ...U-I
+#-A Z Q?=qq I  / (A|U) _ ENDZ > U+0626 @qq i y ; ...A-I or ...U-I
 #-A Z UL? (Q? (i|e))=vv / (A|U) _ END >  U+0649 @vv ; ...A-i or ...U-i
-#-A Z Q?=q1 (e|i) / _ (END|Z) > @q1 i ; ...-i
+#-A Z Q?=q1 (e|i) / _ ENDZ > @q1 i ; ...-i
 #-A Z / U+0048 _ > U+0020 ;
 #-A b Q?=q1 (e|i) Q?=q2 U / # _ > b @q1 i U+0627 @q2 u w ;; special case of prep be without hyphen
 
@@ -740,8 +741,9 @@ U+003F    > U+061F  ;?
 U+003B    > U+061B  ;;
 U+003A U+003A > U+061E ;; '::' ligature 'DOTS' also defined above...
 U+002C    > U+060C  ;,
-U+005D / . _ .   > U+200D U+005D U+200D ; keep shaping when inserting ...[...]...
-U+005B / . _ .   > U+200D U+005B U+200D ; ... (but of course this screws up contextual analysis, so quoting of hamzas etc may be necessary)
+U+005D / [LTR] _ [LTR]   > U+200D U+005D U+200D ; keep shaping when inserting ...[...]... ... 
+U+005B / [LTR] _ [LTR]   > U+200D U+005B U+200D ; (but of course this screws up contextual 
+                                                ; analysis, so quoting of hamzas etc may be necessary
 ;U+005D    > U+005B  ;]  these are automatically mirrored, following Unicode rules
 ;U+005B    > U+005D  ;[
 #n [VWL]    >   ;stripoff vowels
@@ -762,7 +764,7 @@ BAR       >   ;|
 #v Class [VWL]  = (U+0627 U+0648..U+0650 U+0670);
 #v
 #f [CONS]=k1 / _ Z? [CONS] ^U+0651 > @k1 U+0652  ; hack: 2nd consonant has no shadda
-#f U+064E (U+064A|U+0648|U+0649)=hc / _ (^[VWLX]|#) > U+064E @hc U+0652 ; ay and aw diphtongs
+#f U+064E (U+064A|U+0648)=hc / _ (^[VWLX]|#) > U+064E @hc U+0652 ; ay and aw diphtongs
 @Av U+0627 [VWL]?  / [VWL] Z _ > U+0627 ; e.g. fa-isti_hraj -> initial alif has no vowel 
 @Bv U+0627 [VWL]?  / [VWL] Z _ > U+0627 ; e.g. fa-isti_hraj -> initial alif has no vowel 
 #Af U+0627 [VWL]?  / [VWL] Z _ > U+0671 ; e.g. fa-isti_hraj -> wasla on initial alif 
