@@ -744,6 +744,7 @@ U+005D / . _ .   > U+200D U+005D U+200D ; keep shaping when inserting ...[...]..
 U+005B / . _ .   > U+200D U+005B U+200D ; ... (but of course this screws up contextual analysis, so quoting of hamzas etc may be necessary)
 ;U+005D    > U+005B  ;]  these are automatically mirrored, following Unicode rules
 ;U+005B    > U+005D  ;[
+#n [VWL]    >   ;stripoff vowels
 #v Q [VWL]   >   ;stripoff quoted vowels
 #n Q	  > U+0652 
 @v Q 	  > U+0652
@@ -758,9 +759,8 @@ BAR       >   ;|
 #v  
 #v Class [CONS] = (U+0621 U+0623 U+0624 U+0626 U+0628 U+062A..U+063A U+0641..U+0647 U+066E U+066F U+0672 U+0675 U+0676 U+0678..U+06BF U+06EE U+06EF U+06FA..U+06FF U+0750..U+076D) ; to be improved: not sure that all glyphs listed (esp for Urdu,Sindhi,etc are really "consonants" in the sense that they can carry a sukun, not to mention that some of these languages may not have a sukun at all ;-)
 #v Class [VWLX] = (U+0627 U+0648..U+065E U+0670) ; long vowels, vowel signs, shadda, sukun etc.
-Class [VWL]  = (U+0627 U+0648..U+0650 U+0670);
-
-#n [VWL]    >   ;stripoff vowels
+#v Class [VWL]  = (U+0627 U+0648..U+0650 U+0670);
+#v
 #f [CONS]=k1 / _ Z? [CONS] ^U+0651 > @k1 U+0652  ; hack: 2nd consonant has no shadda
 #f U+064E (U+064A|U+0648|U+0649)=hc / _ (^[VWLX]|#) > U+064E @hc U+0652 ; ay and aw diphtongs
 @Av U+0627 [VWL]?  / [VWL] Z _ > U+0627 ; e.g. fa-isti_hraj -> initial alif has no vowel 
