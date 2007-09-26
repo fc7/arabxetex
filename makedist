@@ -1,0 +1,45 @@
+#!/bin/bash
+
+if [ "$1" = "-h" ]; then 
+echo "usage: makedist [option]"
+echo "Option -m forces generating the mappings"
+exit 0
+fi
+
+mapcount=`ls mappings/*.tec 2> /dev/null | wc -w`
+
+if [ "$1" = "-m" -o ! -d mappings -o $mapcount = 0 ]; then
+perl makemaps.pl
+fi
+
+#mapsdir="dist/fonts/misc/xetex/fontmapping/arabxetex/"
+#docdir="dist/doc/xelatex/arabxetex/"
+#srcdir="dist/source/xelatex/arabxetex/"
+#texdir="dist/tex/xelatex/"
+mapsdir="dist/fontmapping/"
+docdir="dist/doc/"
+srcdir="dist/source/"
+texdir="dist/xelatex/"
+
+mkdir -p $mapsdir
+mkdir -p $docdir
+mkdir -p $srcdir
+mkdir -p $texdir
+
+mv mappings/*.{map,tec} $mapsdir
+rmdir mappings
+cp *-trans*.map $srcdir 
+cp *.maps $srcdir
+cp makemaps.pl $srcdir
+cp arabxetex.pdf $docdir
+cp arabxetex.dtx $srcdir
+cp ednotes_example.{tex,pdf} $docdir
+cp arabxetex.sty $texdir
+[ -f arabxetex.zip ] && mv arabxetex.zip arabxetex.zip.bak
+cd dist
+zip -r arabxetex.zip *
+mv arabxetex.zip ../
+cd ..
+rm -fr dist/
+# find . -type f -delete
+
