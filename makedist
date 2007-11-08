@@ -22,11 +22,11 @@ locsrcdir="loc/source/xelatex/arabxetex/"
 loctexdir="loc/tex/xelatex/"
 
 mkdir -p $locmapsdir
-mkdir -p $locdocdir
+mkdir -p $locdocdir/examples
 mkdir -p $locsrcdir
 mkdir -p $loctexdir
 mkdir -p $mapsdir
-mkdir -p $docdir
+mkdir -p $docdir/examples
 mkdir -p $srcdir
 mkdir -p $texdir
 
@@ -39,7 +39,8 @@ cp *.maps $srcdir
 cp makemaps.pl $srcdir
 cp arabxetex.pdf $docdir
 cp arabxetex.dtx $srcdir
-cp ednotes_example.{tex,pdf} $docdir
+cp ednotes_example.{tex,pdf} $docdir/examples
+cp minimal.tex $docdir/examples
 cp arabxetex.sty $texdir
 cp README.txt dist/
 
@@ -48,9 +49,10 @@ cp *.maps $locsrcdir
 cp makemaps.pl $locsrcdir
 cp arabxetex.pdf $locdocdir
 cp arabxetex.dtx $locsrcdir
-cp ednotes_example.{tex,pdf} $locdocdir
+cp ednotes_example.{tex,pdf} $locdocdir/examples
+cp minimal.tex $locdocdir/examples
 cp arabxetex.sty $loctexdir
-cp README.txt loc/
+cp README.txt $locdocdir
 
 [ -f arabxetex.zip ] && mv arabxetex.zip arabxetex.zip.bak
 cd dist
