@@ -31,8 +31,8 @@ mkdir -p $srcdir
 mkdir -p $texdir
 
 cp mappings/*.{map,tec} $mapsdir
-cp mappings/*.{map,tec} $locmapsdir
-rmdir mappings
+mv mappings/*.{map,tec} $locmapsdir
+rm -rf mappings/
 
 cp *-trans*.map $srcdir 
 cp *.maps $srcdir
@@ -70,8 +70,11 @@ mv arabxetex-local.zip ../
 cd ..
 rm -fr loc/
 
-unzip -uo arabxetex-local.zip -d /opt/texlive/texmf-local/
-
-texconfig-sys rehash
+echo "Install to /opt/texlive/texmf-local ? [y/n]"
+read -en 1 INSTALL_Q
+if [ "$INSTALL_Q" = "y" ] || [ "$INSTALL_Q" = "Y" ]; then
+	unzip -uo arabxetex-local.zip -d /opt/texlive/texmf-local/ 
+	texconfig-sys rehash
+fi
 
 echo "update completed"

@@ -1,5 +1,5 @@
 --------------------------
-THE ARABXETEX PACKAGE v1.2
+THE ARABXETEX PACKAGE v1.1.1
 
 This package provides a convenient ArabTeX-like user-interface for typesetting
 languages using the Arabic script in XeLaTeX, with flexible access to font
