@@ -276,6 +276,7 @@ CO U > U+06C7 ;
 #-A Z / U+0048 _ > U+0020 ;
 #-A b Q?=q1 (e|i) Q?=q2 U / # _ > b @q1 i U+0627 @q2 u w ;; special case of prep be without hyphen
 
+;; initial characters ...
 a l Z / BEG _ > U+0627 l Z
 #An H l Z / BEG _ > U+0627 l Z
 @Av H l Z / BEG _ > U+0627 l Z
@@ -345,7 +346,8 @@ a l Z / BEG _ > U+0627 l Z
 #-S H / A _ Q? [VWL]? N? (#|^[LTR]) > HBAR
 #-S H / [Uw] _ Q? [VWL]? N? (#|^[LTR]) > HBAR
 #-S H / [Iy] _ Q? (i N?|u N?)? (#|^[LTR]) > HBAR ; not AN ...
-#-S H / a _ Q? (i N?|u N?)? (#|^[LTR]) > HBAR ; not AN... 
+#-S H / a _ Q? (#|^[LTR]) > Ha ; not AN... 
+#-S H / a _ Q? (u|i) N? (#|^[LTR]) > Ha ; not AN... 
 #-S H / i _ Q? [VWL]? N? (#|^[LTR]) > Hy
 #-S H / u _ Q? [VWL]? N? (#|^[LTR]) > Hw
 #-S 

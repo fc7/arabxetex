@@ -1,0 +1,22 @@
+\documentclass{minimal}
+\usepackage{arabxetex} % default options are "novoc" and "fdf2alif", 
+                       % other options are "voc", "fullvoc", "utf", "trans" and "fdf2noalif"
+% arabxetex loads bidi.sty and fontspec.sty		       
+ 
+\newfontfamily\arabicfont[Script=Arabic, Scale=1.5]{Scheherazade}
+% you can also define \farsifont, \uighurfont, etc if you want
+\begin{document}
+This is some text in English with Arabic insertion \textarab{`arabI}.
+
+This is some text in English with Arabic insertion \textarab[utf]{عربي}.
+
+This is some text in English with Arabic insertion \textarab[voc]{`arabI}.
+
+\begin{arab}
+wa-ha_dihi fiqraT"uN bi-al-`arabI ma`a kalimaT inklIziyaT (\textroman{English}).
+\end{arab}
+
+\begin{arab}[utf]
+وهذه فقرةٌ بالعربي مع كلمة انكليزية (\textroman{English}).
+\end{arab}
+\end{document}
