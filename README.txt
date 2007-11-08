@@ -12,6 +12,10 @@ ArabXeTeX is really performant.
 The TECkit fontmapping files (*.map and *.tec) should be copied to
 <TEXMF>/fonts/misc/xetex/fontmapping/arabxetex/
 
+Version 1.1.1 is a bugfix release. No new functionality was added since version 1.1.
+A minimal example is now under doc/examples, together with the more complex
+demonstration of an Arabic critical edition with ednotes.
+
 -------------------------
 François Charette
 2007
