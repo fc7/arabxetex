@@ -34,6 +34,15 @@ cp mappings/*.{map,tec} $mapsdir
 mv mappings/*.{map,tec} $locmapsdir
 rm -rf mappings/
 
+
+echo "Recompile arabxetex.dtx? [y/N]"
+read -en 1 RECOMPILE_Q
+if [ "$RECOMPILE_Q" = "y" ] || [ "$RECOMPILE_Q" = "Y" ]; then
+	xelatex arabxetex.dtx
+	xelatex arabxetex.dtx
+	xelatex arabxetex.dtx
+fi
+
 cp *-trans*.map $srcdir 
 cp *.maps $srcdir
 cp makemaps.pl $srcdir
@@ -70,7 +79,7 @@ mv arabxetex-local.zip ../
 cd ..
 rm -fr loc/
 
-echo "Install to /opt/texlive/texmf-local ? [y/n]"
+echo "Install to /opt/texlive/texmf-local ? [y/N]"
 read -en 1 INSTALL_Q
 if [ "$INSTALL_Q" = "y" ] || [ "$INSTALL_Q" = "Y" ]; then
 	unzip -uo arabxetex-local.zip -d /opt/texlive/texmf-local/ 
