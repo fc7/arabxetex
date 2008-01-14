@@ -1659,10 +1659,10 @@ François Charette
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}
+			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%
 		\else%
 			\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}#2}%
-		\fi\fi
+		\fi\fi%
 	\else%
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}#2}%
