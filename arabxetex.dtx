@@ -1375,6 +1375,8 @@ François Charette
 	}%
 \def\ax@trans@style{\itshape}%
 \newcommand{\SetTranslitStyle}[1]{\def\ax@trans@style{#1}}
+\newcommand{\SetTranslitConvention}[1]{\def\ax@trans@convention{#1}}
+\def\ax@trans@convention{loc}% Library of Congress is default
 \newcommand{\SetAllahWithAlif}{\def\ax@font@allah{fdf2alif}}
 \newcommand{\SetAllahWithoutAlif}{\def\ax@font@allah{fdf2noalif}}
 \def\arabtex@codes{\catcode`^=11\relax\catcode`_=11\relax}
@@ -1400,7 +1402,7 @@ François Charette
 \ifax@mode@defined%
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
-		\addfontfeature{Mapping=arabtex-trans}%
+		\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
@@ -1423,7 +1425,7 @@ François Charette
 \ifax@mode@defined%
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
-		\addfontfeature{Mapping=arabtex-trans}%
+		\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@maghribi@font\addfontfeature{Mapping=arabicfixes}%
@@ -1445,7 +1447,7 @@ François Charette
 \ifax@mode@defined%
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
-		\addfontfeature{Mapping=arabtex-farsi-trans}%
+		\addfontfeature{Mapping=arabtex-farsi-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@farsi@font\addfontfeature{Mapping=arabicfixes}%
@@ -1468,7 +1470,7 @@ François Charette
 \ifax@mode@defined%
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
-		\addfontfeature{Mapping=arabtex-urdu-trans}%
+		\addfontfeature{Mapping=arabtex-urdu-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@urdu@font\addfontfeature{Language=Urdu}%Mapping=arabtex-utf}%
@@ -1490,7 +1492,7 @@ François Charette
 \ifax@mode@defined%
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
-		\addfontfeature{Mapping=arabtex-pashto-trans}%
+		\addfontfeature{Mapping=arabtex-pashto-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@pashto@font\addfontfeature{Mapping=arabicfixes}%
@@ -1512,7 +1514,7 @@ François Charette
 \ifax@mode@defined%
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
-		\addfontfeature{Mapping=arabtex-sindhi-trans}%
+		\addfontfeature{Mapping=arabtex-sindhi-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@sindhi@font\addfontfeature{Language=Sindhi}%Mapping=arabtex-utf}%
@@ -1534,7 +1536,7 @@ François Charette
 \ifax@mode@defined%
 	%\ifx\@tempa\ax@mode@trans%
 	%	\par\arabtex@codes\ax@trans@style%
-	%	\addfontfeature{Mapping=arabtex-turk-trans}%
+	%	\addfontfeature{Mapping=arabtex-turk-trans-\ax@trans@convention}%
 	%\else%
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@ottoman@font\addfontfeature{Mapping=arabicfixes}%
@@ -1557,7 +1559,7 @@ François Charette
 %\edef\@tempa{#1}%
 %\ifx\@tempa\ax@mode@trans%
 %	\par\arabtex@codes\ax@trans@style%
-%	\addfontfeature{Mapping=arabtex-kurdish-trans}%
+%	\addfontfeature{Mapping=arabtex-kurdish-trans-\ax@trans@convention}%
 %\else%
 \ifx\@tempa\ax@mode@utf%
 	\par\setRL\ax@kurdish@font\addfontfeature{Language=Kurdish}%Mapping=arabtex-utf}%
@@ -1576,7 +1578,7 @@ François Charette
 \ifax@mode@defined%
 	%\ifx\@tempa\ax@mode@trans%
 	%	\par\arabtex@codes\ax@trans@style%
-	%	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-trans}%
+	%	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-trans-\ax@trans@convention}%
 	%\else%
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@kashmiri@font\addfontfeature{Mapping=arabicfixes}%
@@ -1600,7 +1602,7 @@ François Charette
 \ifax@mode@defined%
 	%\ifx\@tempa\ax@mode@trans%
 	%	\par\arabtex@codes\ax@trans@style%
-	%	\addfontfeature{Mapping=arabtex-malay-trans}%
+	%	\addfontfeature{Mapping=arabtex-malay-trans-\ax@trans@convention}%
 	%\else%
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@malay@font\addfontfeature{Mapping=arabicfixes}%
@@ -1623,7 +1625,7 @@ François Charette
 \def\ax@lang{uighur}%
 %\ifx\@tempa\ax@mode@trans%
 %	\par\arabtex@codes\ax@trans@style%
-%	\addfontfeature{Mapping=arabtex-uighur-trans}%
+%	\addfontfeature{Mapping=arabtex-uighur-trans-\ax@trans@convention}%
 %\else%
 \ifx\@tempa\ax@mode@utf%
 	\par\setRL\ax@uighur@font\addfontfeature{Mapping=arabicfixes}%
@@ -1656,7 +1658,7 @@ François Charette
 	\ax@ismode@defined{\@tempa}%
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
-			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans}#2}%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%
@@ -1673,7 +1675,7 @@ François Charette
 	\ax@ismode@defined{\@tempa}%
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
-			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans}#2}%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@maghribi@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
@@ -1691,7 +1693,7 @@ François Charette
 	\ax@ismode@defined{\@tempa}%
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
-			{\ax@trans@style\addfontfeature{Mapping=arabtex-farsi-trans}#2}%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-farsi-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@farsi@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
@@ -1709,7 +1711,7 @@ François Charette
 	\ax@ismode@defined{\@tempa}%
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
-			{\ax@trans@style\addfontfeature{Mapping=arabtex-urdu-trans}#2}%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-urdu-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@urdu@font\addfontfeature{Language=Urdu}#2}%eventually Mapping=arabtex-utf
@@ -1727,7 +1729,7 @@ François Charette
 	\ax@ismode@defined{\@tempa}%
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
-			{\ax@trans@style\addfontfeature{Mapping=arabtex-sindhi-trans}#2}%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-sindhi-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@sindhi@font\addfontfeature{Language=Sindhi} #2}%eventually Mapping=arabtex-utf
@@ -1745,7 +1747,7 @@ François Charette
 	\ax@ismode@defined{\@tempa}%
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
-			{\ax@trans@style\addfontfeature{Mapping=arabtex-pashto-trans}#2}%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-pashto-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@pashto@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
@@ -1764,7 +1766,7 @@ François Charette
 	\ifax@mode@defined%
 		% UNCOMMENT when transliteration mapping is done
 		%\ifx\@tempa\ax@mode@trans%
-		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-turk-trans}#2}%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-turk-trans-\ax@trans@convention}#2}%
 		%\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@ottoman@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
@@ -1781,7 +1783,7 @@ François Charette
 	\def\ax@lang{kurdish}%
 		% UNCOMMENT when transliteration mapping is done
 		%\ifx\@tempa\ax@mode@trans%
-		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kurdish-trans}#2}%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kurdish-trans-\ax@trans@convention}#2}%
 		%\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@kurdish@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
@@ -1797,7 +1799,7 @@ François Charette
 	\ifax@mode@defined%
 		% UNCOMMENT when transliteration mapping is done
 		%\ifx\@tempa\ax@mode@trans%
-		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kashmiri-trans}#2}%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kashmiri-trans-\ax@trans@convention}#2}%
 		%\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@kashmiri@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
@@ -1816,7 +1818,7 @@ François Charette
 	\ifax@mode@defined%
 		% UNCOMMENT when transliteration mapping is done
 		%\ifx\@tempa\ax@mode@trans%
-		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-malay-trans}#2}%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-malay-trans-\ax@trans@convention}#2}%
 		%\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@malay@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
@@ -1833,7 +1835,7 @@ François Charette
 	\def\ax@lang{uighur}%
 		% UNCOMMENT when transliteration mapping is done
 		%\ifx\@tempa\ax@mode@trans%
-		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-uighur-trans}#2}%
+		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-uighur-trans-\ax@trans@convention}#2}%
 		%\else%
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@uighur@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
