@@ -2,7 +2,7 @@
 %
 %!TEX encoding = UTF-8 Unicode
 %
-% Copyright (C) 2007 by François Charette <firmicus at gmx dot net>
+% Copyright (C) 2007-2008 by François Charette <firmicus at gmx dot net>
 % 
 % Distributable under the LaTeX Project Public License,
 % version 1.3c or higher (your choice). The latest version of
@@ -23,14 +23,14 @@
 
   ____________________________
   The arabxetex package         
-  (C) 2007  François Charette    
+  (C) 2007-2008  François Charette    
   License information appended
 
 
 \endpreamble
 \postamble
 
-Copyright (C) 2007 by François Charette <firmicus at gmx dot net>
+Copyright (C) 2007-2008 by François Charette <firmicus at gmx dot net>
 
 Distributable under the LaTeX Project Public License,
 version 1.3c or higher (your choice). The latest version of
@@ -68,7 +68,7 @@ as well as an extensive collection of TECKit files
 %
 %<*readme>
 --------------------------
-THE ARABXETEX PACKAGE v1.1.1
+THE ARABXETEX PACKAGE v1.1.2
 
 This package provides a convenient ArabTeX-like user-interface for typesetting
 languages using the Arabic script in XeLaTeX, with flexible access to font
@@ -83,7 +83,7 @@ The TECkit fontmapping files (*.map and *.tec) should be copied to
 
 -------------------------
 François Charette
-2007
+2007-2008
 %</readme>
 %
 % \fi
@@ -273,19 +273,20 @@ François Charette
 % ¦novoc¦, ¦voc¦ and ¦fullvoc¦ modes) even with UTF-8 encoding, as it provides
 % easy access to special glyphs and some useful features. See further below.
 % 
-% Latin (LR) insertions within Arabic environment can be made by means of the
-% \DescribeMacro{\textroman} 
-% command \cmd\textroman¦{…}¦.\new{1.1}\footnote{ %
-%	In version 1.0 this was called \cmd\textlatin. The latter still works 
-%	but its usage is deprecated, because \pkg{babel} defines a command 
-%	of the same name.}
+% Left-to-right insertions in Latin script within an Arabic environment 
+% can be made by means of the \DescribeMacro{\textLR} 
+% command \cmd\textLR¦{…}¦.\new{1.1.2}\footnote{ %
+%	In version 1.0 this was called \cmd\textlatin, which was renamed \cmd\textroman
+%	in version 1.1. But the former conflicted with \pkg{Babel}, 
+%	and the latter with \pkg{Beamer}. Hopefully \cmd\textLR\ 
+%	won't be as short-lived!}
 % Emphasis in Arabic is traditionally indicated by
 % overlining the text, and this can be achieved with the command
 % \DescribeMacro{\aemph} 
 % \cmd\aemph:\footnote{ ^^A
 % 	This macro makes use of the mathematical command \cmd\overline,
 % 	which explains why \pkg{arabxetex} requires the \pkg{amsmath} package.
-% 	I welcome any suggestion that would make it possible to circumvent this
+% 	I welcome any suggestion that would make it possible to circumvent this dependency
 % 	by emulating \cmd\overline\ directly.}
 % 
 % \parindentoff
@@ -511,7 +512,7 @@ François Charette
 % 	The glyph {\tradarabic اﷲ} is taken from the font Traditional Arabic.
 % 	In Scheherazade its design is rather suboptimal: {\arabicfont\char"FDF2}.}
 % 
-% However, the majority of real-world fonts rather represent that 
+% However, a substantial portion of real-world fonts rather represent that 
 % ligature \textit{without} the initial alif.\footnote{ ^^A
 % 	My research on Arabic fonts available or known to me yields the following picture: 
 % 	The fonts that do not display the initial alif in the ligature \textsf{FDF2} 
@@ -529,7 +530,8 @@ François Charette
 % 	\href{http://scripts.sil.org/ArabicFonts}{SIL}'s Scheherazade, 
 % 	\href{http://www.tdc.org/news/2006Results/AdobeArabic.html}{Adobe Arabic} 
 % 	(distributed with the \href{http://www.adobe.com/ceea/}{Middle-Eastern version} 
-% 	of the latest \href{http://www.adobe.com/products/acrobat/readermain.html}{Adobe Reader 7}),  	    Arial Unicode MS, and \href{http://sakkal.com/type/typesetting.html}{Arabic Typesetting}
+% 	of the latest \href{http://www.adobe.com/products/acrobat/readermain.html}{Adobe Reader 7}),
+% 	Arial Unicode MS, and \href{http://sakkal.com/type/typesetting.html}{Arabic Typesetting}
 % 	(distributed with \href{http://www.microsoft.com/typography/VOLT.mspx}{VOLT} 
 % 	and with \href{http://www.microsoft.com/office/editions/prodinfo/language/proofingtools.mspx}{Microsoft Office Proofing Tools 2003}).}
 % The confusion probably has to do with Unicode’s omission to include the ALLAH
@@ -616,9 +618,19 @@ François Charette
 % \subsection{Transliteration}
 % 
 % At the moment transliteration mappings are provided for Arabic, Persian, Urdu, 
-% Sindhi and Pashto. The rest will be provided in a forthcoming version.
-% It is also planned to implement alternative transliteration conventions
-% for each language, as with \arabtex, \eg ZDMG, Encyclopedia Iranica, etc.
+% Sindhi and Pashto. The rest may be provided in a future version.
+% As a rule the default conventions provided are those of the Library of Congress.
+% \new{1.1.2}For Arabic the alternative transliteration of the 
+% \href{http://www.orientasia.info/download/arab_trans.pdf}{Deutsche Morgenländische Gesellschaft}
+% is also available (but should be still considered experimental). 
+% You can set it with the command \DescribeMacro{\SetTranslitConvention}
+% ¦\SetTranslitConvention{dmg}¦.
+% To switch back to the Library of Congress transliteration, type
+% ¦\SetTranslitConvention{loc}¦.
+% Additional conventions for other languages, as with \arabtex, \eg 
+% Encyclopedia of Islam, Encyclopedia Iranica, etc., might be added later.\footnote{ %
+%     It is suggested that you contact the author if you have such needs.}
+%
 % Transliteration is set in italics by default. This can be changed by declaring, e.g.,
 % \DescribeMacro{\SetTranslitStyle}
 % ¦\SetTranslitStyle{\upshape}¦.
@@ -639,8 +651,7 @@ François Charette
 % 	See Appendix~\ref{latinextfonts} for a list of recommended Unicode fonts that cover the 
 % 	full \textsc{latin extended additional} plane.}
 % 
-% ^^AThe above example was set in Gentium (since FPL Neu does not provide all
-% ^^Arequired glyphs) If your default roman font does not have the required
+% ^^AIf your default roman font does not have the required
 % ^^Adiacritics, you can declare for instance
 % ^^A¦\SetTranslitStyle{\fontspec{Gentium}\itshape}¦.
 % 
@@ -1342,7 +1353,7 @@ François Charette
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{arabxetex}
-  [2007/11/08 v1.1.1 ArabTeX-like interface for XeLaTeX]
+  [2008/07/16 v1.1.2 ArabTeX-like interface for XeLaTeX]
 %
 \DeclareOption{fullvoc}{\def\ax@mode{fullvoc}}
 \DeclareOption{voc}{\def\ax@mode{voc}}
@@ -1845,11 +1856,7 @@ François Charette
 		\fi%\fi%
 	\egroup}
 %
-\newcommand{\textroman}[1]{\LR{\rmfamily #1}}
-\@ifpackageloaded{babel}{%
-	\renewcommand{\textlatin}[1]{\textroman{#1}}
-	\PackageWarning{babel}{You have loaded Babel. ArabXeTeX has now redefined \textlatin !}}%
-	{\newcommand{\textlatin}[1]{\textroman{#1}}}%
+\newcommand{\textLR}[1]{\LR{\rmfamily #1}}
 \newcommand{\aemph}[1]{%
   \edef\@tempb{\expandafter\noexpand\csname text\ax@lang\endcsname}%
   $\overline{\text{\@tempb{#1}}}$}
@@ -1883,9 +1890,8 @@ François Charette
 % ^^A- hamza directly above baseline (for Qur'an) : 0654 is too high!
 % ^^A  \def\hamzaB{\raisebox[-1ex]{\char"0654} is ok
 % ^^A
-% ^^A- Clarify the U+FDF2 mess: OK to leave it as is, but it would be advisable to 
-% ^^A  codify the LLAH ligature as well: leaving it in the Private Use Area is really 
-% ^^A  a bad idea! Perhaps the FALILLAH ligature could be added as well.
+% ^^A- U+FDF2: codify the LLAH ligature as well?
+% ^^A          Perhaps the FALILLAH ligature could be added as well?
 %
 % ^^A\clearpage
 % ^^A\PrintChanges

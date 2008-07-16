@@ -154,8 +154,9 @@ Define ENDZ (#|[BRACKETS]|[PUNCT] U+0020|[PUNCT] #|Z)
 ;; a) Those that are Unicode-compliant and include the initial alif in glyph U+FDF2 
 ;;    For these the ligature llah can be accessed by the sequence lam-lam-ha
 ;; b) Those that do not have the initial alif in U+FDF2
-#0 (a|A) l Z LLAH > U+0627 U+FDF2 ;; 'al-ll_ah' or 'Al-ll_ah'
-#1 (a|A) l Z LLAH > U+FDF2 ;; 'al-ll_ah' or 'Al-ll_ah'
+;; The BAR is used in the DMG transliteration to suppress the initial A
+#0 (a|A) BAR? l Z LLAH > U+0627 U+FDF2 ;; 'al-ll_ah' or 'Al-ll_ah'
+#1 (a|A) BAR? l Z LLAH > U+FDF2 ;; 'al-ll_ah' or 'Al-ll_ah'
 #0 LLAH > U+FDF2 ;; 'll_ah' > U+FDF2
 #1 LLAH > U+0644 U+0644 U+0647  ;; 'll_ah' -> 'l l h'
 ;; UPPERCASE mnemonics for various ligatures or special glyphs

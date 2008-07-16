@@ -83,7 +83,7 @@ echo "Install to /opt/texlive/texmf-local ? [y/N]"
 read -en 1 INSTALL_Q
 if [ "$INSTALL_Q" = "y" ] || [ "$INSTALL_Q" = "Y" ]; then
 	unzip -uo arabxetex-local.zip -d /opt/texlive/texmf-local/ 
-	texconfig-sys rehash
+	sudo texconfig-sys rehash
 fi
 
 echo "update completed"
