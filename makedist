@@ -51,7 +51,7 @@ cp arabxetex.dtx $srcdir
 cp ednotes_example.{tex,pdf} $docdir/examples
 cp minimal.tex $docdir/examples
 cp arabxetex.sty $texdir
-cp README.txt dist/
+cp README dist/
 
 cp *-trans*.map $locsrcdir 
 cp *.maps $locsrcdir
@@ -61,7 +61,7 @@ cp arabxetex.dtx $locsrcdir
 cp ednotes_example.{tex,pdf} $locdocdir/examples
 cp minimal.tex $locdocdir/examples
 cp arabxetex.sty $loctexdir
-cp README.txt $locdocdir
+cp README $locdocdir
 
 [ -f arabxetex.zip ] && mv arabxetex.zip arabxetex.zip.bak
 cd dist
