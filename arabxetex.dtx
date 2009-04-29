@@ -1362,6 +1362,8 @@ François Charette
 \DeclareOption{utf}{\def\ax@mode{utf}}
 \DeclareOption{fdf2alif}{\def\ax@font@allah{fdf2alif}}
 \DeclareOption{fdf2noalif}{\def\ax@font@allah{fdf2noalif}}
+\newif\ifmirror@punct\mirror@punctfalse
+\DeclareOption{mirrorpunct}{\mirror@puncttrue}
 \ExecuteOptions{novoc,fdf2alif}
 \ProcessOptions
 \def\ax@mode@fullvoc{fullvoc}
@@ -1382,7 +1384,10 @@ François Charette
 \RequirePackage{fontspec}
 \AtBeginDocument{\ifdefined\arabicfont\relax\else%
 	\PackageWarning{arabxetex}{\string\arabicfont\ is not defined!^^JI will try to load Scheherazade}%
-	\newfontfamily\arabicfont[Script=Arabic,Scale=2]{Scheherazade}\fi
+	\newfontfamily\arabicfont[Script=Arabic,Scale=2]{Scheherazade}%
+	\let\tmp@baselineskip=\baselineskip%
+	\baselineskip=2*\tmp@baselineskip%
+	\fi%
 	}%
 \def\ax@trans@style{\itshape}%
 \newcommand{\SetTranslitStyle}[1]{\def\ax@trans@style{#1}}
@@ -1390,6 +1395,7 @@ François Charette
 \def\ax@trans@convention{loc}% Library of Congress is default
 \newcommand{\SetAllahWithAlif}{\def\ax@font@allah{fdf2alif}}
 \newcommand{\SetAllahWithoutAlif}{\def\ax@font@allah{fdf2noalif}}
+\def\arabic@font@utf{\arabicfont\ifmirror@punct\addfontfeature{Mapping=mirrorpunctuation}\fi}
 \def\arabtex@codes{\catcode`^=11\relax\catcode`_=11\relax}
 \def\UC{\char"E000} % This is used to capitalize the following letter (ignoring
 		    % article al-) in transliteration mode
@@ -1416,7 +1422,7 @@ François Charette
 		\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
-		\par\setRL\arabicfont\addfontfeature{Mapping=arabicfixes}%
+		\par\setRL\arabic@font@utf%
 	\else%
 		\par\setRL\arabicfont\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}%
@@ -1672,7 +1678,7 @@ François Charette
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\arabicfont\addfontfeature{Mapping=arabicfixes} #2}%
+			\RL{\arabic@font@utf #2}%
 		\else%
 			\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}#2}%
 		\fi\fi%
