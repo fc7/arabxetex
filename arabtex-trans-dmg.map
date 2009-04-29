@@ -148,6 +148,7 @@ C c > U+010D   ;
 CO b > b U+0324  
 P b > x ; ? undotted (b,t,th,n,y) ... 
 
+(A|Y|UL A) / _ (N|U|W) > ;
 Y > U+0101 ;ā -> LOC: á : check DMG
 
 
@@ -168,20 +169,18 @@ Q > ;
 
 pass(Unicode)
 
-Class [LOWERCASE]   = ( U+0061..U+007A U+0101 U+0113 U+012B U+014D U+016B U+1E0D U+1E25 U+1E33 U+1E63 U+1E6D U+1E93 U+1E2B U+1E0F U+1E6F U+0121 U+01E7 )
-Class [UPPERCASE]   = ( U+0041..U+005A U+0100 U+0112 U+012A U+014C U+016A U+1E0C U+1E24 U+1E32 U+1E62 U+1E6C U+1E92 U+1E2A U+1E0E U+1E6E U+0120 U+01E6 )
+Class [LOWERCASE]   = ( U+0061..U+007A U+0101 U+0113 U+012B U+014D U+0161 U+016B U+1E0D U+1E25 U+1E33 U+1E63 U+1E6D U+1E93 U+1E2B U+1E0F U+1E6F U+0121 U+01E7 )
+Class [UPPERCASE]   = ( U+0041..U+005A U+0100 U+0112 U+012A U+014C U+0160 U+016A U+1E0C U+1E24 U+1E32 U+1E62 U+1E6C U+1E92 U+1E2A U+1E0E U+1E6E U+0120 U+01E6 )
 Class [LETTER] = (U+0041..U+01FF)
 Class [VWL]         = (U+0061  U+0065  U+0069  U+006F  U+0075) ; (a e i o u) 
 Class [SUNCONS]     = (U+0064 U+1E0F U+0074 U+1E6F U+0072 U+007A U+0073 U+0161 U+1E63 U+1E0D U+1E6D U+1E93 U+006E) 
 Class [BRACKETS]    = (U+003C U+003E U+00AB U+00BB U+0028 U+0029 U+005B U+005D U+2018 U+2019 U+201C U+201D); < > () « » [ ] ‘ ’ “ ”
-
-[LOWERCASE] / U+E000 _ > [UPPERCASE]
 [LOWERCASE] / U+E000 a l Z _ > [UPPERCASE]
-l Z ([SUNCONS]=sc){2,2} > @sc Z @sc  
-l Z [SUNCONS]=sc > @sc Z @sc  
-a / [VWL] Z _ l Z > ;
-;; [VWL] / [VWL] BEG _ ^l > U+2019  ; vowel at beg of word replaced by apostr when prec word end with vowel
-(A|Y|UL A) / _ (N|U|W) > ;
+[LOWERCASE] / U+E000 _ > [UPPERCASE]
+;l Z ([SUNCONS]=sc){2,2} > @sc Z @sc ;; FIXME
+;l Z [SUNCONS]=sc > @sc Z @sc ;; FIXME
+a / [VWL] Z _ l Z > ;; bi-al- -> bi-l-
+;; [VWL] / [VWL] BEG _ ^l > U+2019  ;; vowel at beg of word replaced by apostr when prec word end with vowel
 [LETTER] BAR	  >   ;;
 
 pass(Unicode)
