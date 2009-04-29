@@ -1,6 +1,4 @@
-;; LHSName  "ArabTeX-ZDMG"
 LHSName  "ArabTeX-LOC"
-;; LHSName  "ArabTeX-EI"
 RHSName  "UNICODE"
 
 Define a U+0061  ;a
@@ -94,9 +92,6 @@ U+0044 U+004F U+0054 U+0053 > ;; DOTS
 ;; #P UL h w > U+1E2B  
 ;; #P U+0048 > h ; capital H > h
 ;;
-;; #zdmg l Z [SUNCONS]=sc / (a | H) _ > @sc Z @sc ; 
-;; #zdmg [VWL] / [VWL] BEG _ > U+2019  ; vowel at beg of word replaced by apostr when prec word end with vowel
-;; #zdmg (A|Y|UL A) / _ (N|U|W) > ;
 
 ; problem of "T": It should be omitted when at end of word and when not
 ; the 1st member of a definite construct: al-madInaT al-`a.zImaT > al-madīna al-ʿaẓīma
@@ -120,13 +115,10 @@ Q > ;
 
 P z > U+1E93
 V z > U+017A
-;; #zdmg C z > U+017E  ;check
 C z > z h ;check
 V t > t U+0301
 P t > U+1E6D
-;; #zdmg UL t > U+1E6F  
 UL t > t h
-;; #zdmg C s > U+0161  
 C s > s h
 UL s > U+1E6F ; sindhi
 V r > U+0155
@@ -143,19 +135,15 @@ CO d > d U+0324
 P d > U+1E0D
 V s > U+015B
 P s > U+1E63  
-;; #zdmg (j|C g) > U+01E7  ;
 (j|C g) > j ;
 CO j > U+0237 U+0308
 P h > U+1E25  
 V h > h
-;; #zdmg (UL h|x) > U+1E2B  
 (UL h|x) > k h
 G > g
 P g > U+0121  
 P f > f ; ?
-;; #zdmg UL d > U+1E0F  
 UL d > d h
-;; #zdmg C c > U+010D   ;
 C c > c h ;
 CO b > b U+0324  
 P b > x ; ? undotted (b,t,th,n,y) ... 
