@@ -1395,7 +1395,7 @@ François Charette
 \def\ax@trans@convention{loc}% Library of Congress is default
 \newcommand{\SetAllahWithAlif}{\def\ax@font@allah{fdf2alif}}
 \newcommand{\SetAllahWithoutAlif}{\def\ax@font@allah{fdf2noalif}}
-\def\arabic@font@utf{\arabicfont\ifmirror@punct\addfontfeature{Mapping=mirrorpunctuation}\fi}
+\def\utf@fontfeature{\ifmirror@punct\addfontfeature{Mapping=mirrorpunct}\else\relax\fi}
 \def\arabtex@codes{\catcode`^=11\relax\catcode`_=11\relax}
 \def\UC{\char"E000} % This is used to capitalize the following letter (ignoring
 		    % article al-) in transliteration mode
@@ -1422,7 +1422,7 @@ François Charette
 		\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
-		\par\setRL\arabic@font@utf%
+		\par\setRL\arabicfont\utf@fontfeature%
 	\else%
 		\par\setRL\arabicfont\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}%
@@ -1445,7 +1445,7 @@ François Charette
 		\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
-		\par\setRL\ax@maghribi@font\addfontfeature{Mapping=arabicfixes}%
+		\par\setRL\ax@maghribi@font\utf@fontfeature%
 	\else%
 		\par\setRL\ax@maghribi@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\@tempa}%
@@ -1467,7 +1467,7 @@ François Charette
 		\addfontfeature{Mapping=arabtex-farsi-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
-		\par\setRL\ax@farsi@font\addfontfeature{Mapping=arabicfixes}%
+		\par\setRL\ax@farsi@font\utf@fontfeature%
 	\else%
 		\par\setRL\ax@farsi@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\@tempa}%
@@ -1512,7 +1512,7 @@ François Charette
 		\addfontfeature{Mapping=arabtex-pashto-trans-\ax@trans@convention}%
 	\else%
 	\ifx\@tempa\ax@mode@utf%
-		\par\setRL\ax@pashto@font\addfontfeature{Mapping=arabicfixes}%
+		\par\setRL\ax@pashto@font\utf@fontfeature%
 	\else%
 		\par\setRL\ax@pashto@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\@tempa}%
@@ -1556,7 +1556,7 @@ François Charette
 	%	\addfontfeature{Mapping=arabtex-turk-trans-\ax@trans@convention}%
 	%\else%
 	\ifx\@tempa\ax@mode@utf%
-		\par\setRL\ax@ottoman@font\addfontfeature{Mapping=arabicfixes}%
+		\par\setRL\ax@ottoman@font\utf@fontfeature%
 	\else%
 		\par\setRL\ax@ottoman@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\@tempa}%
@@ -1598,7 +1598,7 @@ François Charette
 	%	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-trans-\ax@trans@convention}%
 	%\else%
 	\ifx\@tempa\ax@mode@utf%
-		\par\setRL\ax@kashmiri@font\addfontfeature{Mapping=arabicfixes}%
+		\par\setRL\ax@kashmiri@font\utf@fontfeature%
 	\else%
 		\par\setRL\ax@kashmiri@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\@tempa}%
@@ -1622,7 +1622,7 @@ François Charette
 	%	\addfontfeature{Mapping=arabtex-malay-trans-\ax@trans@convention}%
 	%\else%
 	\ifx\@tempa\ax@mode@utf%
-		\par\setRL\ax@malay@font\addfontfeature{Mapping=arabicfixes}%
+		\par\setRL\ax@malay@font\utf@fontfeature%
 	\else%
 		\par\setRL\ax@malay@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\@tempa}%
@@ -1645,7 +1645,7 @@ François Charette
 %	\addfontfeature{Mapping=arabtex-uighur-trans-\ax@trans@convention}%
 %\else%
 \ifx\@tempa\ax@mode@utf%
-	\par\setRL\ax@uighur@font\addfontfeature{Mapping=arabicfixes}%
+	\par\setRL\ax@uighur@font\utf@fontfeature%
 \else%
 	\par\setRL\ax@uighur@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-uighur}%
@@ -1678,7 +1678,7 @@ François Charette
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\arabic@font@utf #2}%
+			\RL{\arabicfont\utf@fontfeature #2}%
 		\else%
 			\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}#2}%
 		\fi\fi%
@@ -1695,7 +1695,7 @@ François Charette
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\ax@maghribi@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+			\RL{\ax@maghribi@font\utf@fontfeature #2}%
 		\else%
 			\RL{\ax@maghribi@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\@tempa}#2}%
@@ -1713,7 +1713,7 @@ François Charette
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-farsi-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\ax@farsi@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+			\RL{\ax@farsi@font\utf@fontfeature #2}%
 		\else%
 			\RL{\ax@farsi@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\@tempa}#2}%
@@ -1767,7 +1767,7 @@ François Charette
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-pashto-trans-\ax@trans@convention}#2}%
 		\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\ax@pashto@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+			\RL{\ax@pashto@font\utf@fontfeature #2}%
 		\else%
 			\RL{\ax@pashto@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\@tempa}#2}%
@@ -1786,7 +1786,7 @@ François Charette
 		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-turk-trans-\ax@trans@convention}#2}%
 		%\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\ax@ottoman@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+			\RL{\ax@ottoman@font\utf@fontfeature #2}%
 		\else%
 			\RL{\ax@ottoman@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\@tempa}#2}%
@@ -1803,7 +1803,7 @@ François Charette
 		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kurdish-trans-\ax@trans@convention}#2}%
 		%\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\ax@kurdish@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+			\RL{\ax@kurdish@font\utf@fontfeature #2}%
 		\else%
 			\RL{\ax@kurdish@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-kurdish,Language=Kurdish}#2}%
@@ -1819,7 +1819,7 @@ François Charette
 		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kashmiri-trans-\ax@trans@convention}#2}%
 		%\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\ax@kashmiri@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+			\RL{\ax@kashmiri@font\utf@fontfeature #2}%
 		\else%
 			\RL{\ax@kashmiri@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\@tempa}#2}%
@@ -1838,7 +1838,7 @@ François Charette
 		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-malay-trans-\ax@trans@convention}#2}%
 		%\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\ax@malay@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+			\RL{\ax@malay@font\utf@fontfeature #2}%
 		\else%
 			\RL{\ax@malay@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\@tempa}#2}%
@@ -1855,7 +1855,7 @@ François Charette
 		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-uighur-trans-\ax@trans@convention}#2}%
 		%\else%
 		\ifx\@tempa\ax@mode@utf%
-			\RL{\ax@uighur@font\addfontfeature{Mapping=arabicfixes} #2}%evtl {Mapping=arabtex-utf}
+			\RL{\ax@uighur@font\utf@fontfeature #2}%
 		\else%
 			\RL{\ax@uighur@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-uighur}#2}%
