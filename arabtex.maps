@@ -283,6 +283,8 @@ a l Z / BEG _ > U+0627 l Z
 @Av H l Z / BEG _ > U+0627 l Z
 @Bv H l Z / BEG _ > U+0627 l Z
 #Af H l Z / BEG _ > U+0671 l Z ; THIS IS NOT AN ARABTEX CONVENTION! it's a work-around coz pattern-matching across word boundaries does not work in teckit , so min al- must be written mina 'l- in fullvocalize mode
+;; wasla on initial alif : NEW! NOT TESTED!
+#Af [VWL]=v1 Z / BEG _ > @v1 U+0671 ; THIS IS NOT AN ARABTEX CONVENTION! it's a work-around coz pattern-matching across word boundaries does not work in teckit , so huwa irtifA` must be written huwa i-rtifA` in fullvocalize mode
 #n H / BEG _ l l > U+0627 ; 
 #v H / BEG _ l l > U+0671 ; e.g. alla_dI -> 'lla_dI 
 #n [VWL]=v1 / BEG _ > A @v1
@@ -613,6 +615,8 @@ UL h	  > U+062E
 (P h|U+1E25) > U+062D 
 V h V h   > U+06C1 U+0651 ;;SHADDA
 V h       > U+06C1
+#U H H   > U+06C1 U+0651 ;;SHADDA
+#U H     > U+06C1
 #U h  h	  > U+06BE U+0651 ;;SHADDA
 #U h  	  > U+06BE ; urdu  
 #U ;; fix letter+h letter+h > letter+h shadda in URDU <<<
