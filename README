@@ -1,0 +1,17 @@
+--------------------------
+THE ARABXETEX PACKAGE v1.1.3
+
+This package provides a convenient ArabTeX-like user-interface for typesetting
+languages using the Arabic script in XeLaTeX, with flexible access to font
+features. Input in ArabTeX notation can be set in three different
+vocalization modes or in roman transliteration. Direct UTF-8 input is also
+supported.  Since most of the ‘real work’ -- namely parsing and converting
+ArabTeX input to Unicode -- is done at the level of TECkit mappings,
+ArabXeTeX is really performant.
+
+The TECkit fontmapping files (*.map and *.tec) should be copied to
+<TEXMF>/fonts/misc/xetex/fontmapping/arabxetex/
+
+-------------------------
+François Charette
+© 2007–2009
