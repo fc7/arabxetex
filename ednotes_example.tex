@@ -1,0 +1,211 @@
+%% THIS IS A SAMPLE LATEX FILE DEMONSTRATING HOW TO TYPESET 
+%% A CRITICAL EDITION WITH XeTeX, ednotes, and ArabXeTeX.
+%% THE TEMPLATE CAN ALSO BE APPLIED, WITH MINOR MODIFICATIONS, 
+%% TO CRITICAL EDITIONS INVOLVING RIGHT-TO-LEFT SCRIPTS IN GENERAL 
+%% (EITHER IN THE MAIN TEXT OR IN THE CRITICAL APPARATUS). 
+%% THUS THE USE OF ArabXeTeX IS NONMANDATORY, BUT THE PACKAGE bidi
+%% IS REQUIRED FOR BIDIRECTIONALITY.
+%% 
+%% François Charette, 13 December 2006
+%%
+%%
+\documentclass[12pt,a4paper,oneside]{memoir}
+\usepackage{fontspec}
+\setromanfont[Mapping=tex-text]{Junicode}
+\usepackage[novoc,fdf2alif]{arabxetex}
+\newfontfamily\arabicfont[Script=Arabic,Scale=1.2,WordSpace=2]{Scheherazade}
+%% OK, now we load ednotes with appropriate options. 
+%% For each extra level of notes in the critical apparatus we need to 
+%% initialize it with the appropriate option, in this case, "Bpara". 
+%% Options "modulo", "perpage" and "right" are for line numbers: 
+%% they will be printed at the right margin, at a certain interval 
+%% to be set by the command \modulolinenumber below, 
+%% and with the "perpage" option to start numeration anew on each page.
+%% The option "para*" is for having the notes in paragraph format without indentation.
+\usepackage[Bpara,modulo,right,perpage,para*]{ednotes}% relies on manyfoot and lineno
+
+%% This makes the footnoterule as wide as the \textwidth
+\makeatletter%
+\renewcommand{\footnoterule}{\kern-3\p@
+  \hrule width \textwidth \kern 2.6\p@}
+\makeatother
+
+%%EDNOTES SETUP
+%%
+%% Line numeration is printed every 5 lines:
+\modulolinenumbers[5]
+
+%% This is a little hack to set linenumbering in Arabic 
+%% (the mapping is provided with ArabXeTeX):
+\renewcommand{\linenumberfont}{\arabicfont\addfontfeature{Mapping=arabicdigits}\tiny}
+%%
+%% The following macros redefine the default formatting 
+%% of various aspects of the critical apparatus.
+%% Note that since the edition is contained in a Right-to-Left environment, 
+%% the notes should be set RL by default, but to be certain we declare
+\PrecedeLevelWith{A}{\setRL}
+%% which puts the appropriate "hook" at the beginning of the block A of notes.
+%% Here are the customized macros for the default apparatus:
+%% The uncommented lines below are changed for typesetting the apparatus in Arabic.
+% \renewcommand*{\sameline}[1]{\linesfmt{##1}}%
+\renewcommand*{\differentlines}[2]{\linesfmt{\RL{#1\textendash#2}}}% 
+\renewcommand*{\linesfmt}[1]{\raisebox{1ex}{\linenumberfont #1}~}% 
+\renewcommand{\lemmafmt}[1]{#1~[ }% 
+\renewcommand*{\pageandline}[2]{#2.\textlatin{#1}}% #1 page, #2 line. 
+% \renewcommand*{\repeatref}[1]{\raisebox{-.5ex}{$\Vert$}}% << not advisable 
+% \renewcommand{\lemmaellipsis}{\textsymmdots}%
+% \renewcommand{\notefmt}[1]{##1}%
+
+%% We do not want extra footnoterules between the different levels (see manyfoot doc):
+\renewcommand{\extrafootnoterule}{}
+\SelectFootnoteRule[0]{extra}
+
+%% We can also customize the critical apparatus for a *specific* level of notes. 
+%% In the following case we customize a level B of Left-to-Right notes.
+%% To achieve this with ednotes, with need to feed-in the appropriate command
+%% as a "hook" to manyfoot by means of:
+\PrecedeLevelWith{B}{\unsetRL}
+% Now we change the formatting of level B to take into account that it is set left-to-right:
+\newcommand{\Bnotefmt}{%
+  \renewcommand*{\differentlines}[2]{\linesfmt{##1\textendash##2}}%
+  \renewcommand{\lemmafmt}[1]{##1~]\enskip}%
+}
+
+%% In our example we define another level of notes, but this time as regular footnotes
+%% here keyed by fnsymbols. This customization is independant of ednotes, 
+%% and relates to manyfoot directly:
+\SetFootnoteHook{\unsetRL}%--> must appear immediately before \DeclareNewFootnote 
+\DeclareNewFootnote[para]{C}[fnsymbol]
+
+%% Finally, we define macros that make typing the critical edition as abstract as possible.
+%% First the apparatus for VARIANTS in the Arabic text (level A):
+\newcommand{\VAR}[2]{\Anote{\textarab{#1}}{\textarab{#2}}}
+%% This is for lemmas of the form \VAR{LEMMA1\<LEMMA2\>LEMMA3}{NOTE} 
+%% where LEMMA2 is the portion omitted in the note: this macro is necessary 
+%% because \< and \> cannot appear inside the argument of \textarab
+\newcommand{\VARX}[4]{\Anote{\textarab{#1}\ \<\textarab{#2}\>\ \textarab{#3}}{\textarab{#4}}}
+%% Second the comparisions to the Latin translation (level B):
+\newcommand{\VARB}[2]{\Bnote{\textarab{#1}}{#2}}
+%% Third, the level for plain footnotes (level C):
+\newcommand{\NOTE}[1]{\footnoteC{#1}}
+%% The typographical "object" that separates successive variants in one note:
+\newcommand{\SEP}{\enskip;\enskip} 
+%% The typographical "object" that indicates additions in a MS:
+\newcommand{\ADD}{\textlatin{\textbf{+}}\,}%
+%% The typographical "object" that indicates omissions in a MS:
+\newcommand{\OM}{\textlatin{\textbf{–}}\,}%
+%% The typographical "object" that indicates a correction not reflected in any MS:
+\newcommand{\CORR}{\textarab{.s.h.h-}}%
+%% The typographical "object" that indicates illegible passages in a MS:
+\newcommand{\ILLEG}{\textarab{.gayr maqrU'}}%
+%% The typographical "object" that indicates a blank in a MS:
+\newcommand{\BLANK}{\textarab{bayA.d}}%
+%% The typographical "object" that indicates a marginal passage in a MS:
+\newcommand{\MARG}{\textarab{bi-al-hAmi^s}}%
+%% The typographical "object" that indicates a supralinear passage in a MS:
+\newcommand{\SUPERLIN}{\textarab{ta.ht al-sa.tr}}%
+%% The typographical "object" in the main text that indicates a lacuna in all MSS:
+\newcommand{\LACUNA}{\textlatin{\textlangle\,\dots\textrangle}}
+%% The typographical "object" in the main text that indicates a restoration:
+\newcommand{\RESTOR}[1]{\}~#1~\{}
+%%
+%% Convenient abbreviations for referring to individual manuscripts
+\newcommand{\msE}{\textbf{أ}}
+\newcommand{\msB}{\textbf{ب}}
+\newcommand{\msN}{\textbf{ن}}
+\newcommand{\msL}{\textbf{ل}}
+\newcommand{\msT}{\textbf{ط}}
+\newcommand{\msM}{\textbf{م}}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}\Large
+	Extract from Abū Maʿšar, \textit{Kitāb al-Milal wa-l-Duwal},
+	Part 1, Chapter 1, §\,26\footnoteC{% 
+		Text, apparatus and references to the Latin translation taken
+		from: \textit{Abū Maʿšar on Historical Astrology. The Book of
+		Religions and Dynasties (On the Great Conjuntions)}.  Edited
+		and Translated by Keiji Yamamoto and Charles Burnett. 2 vols.
+		Leiden: Brill, 2000 (ISBN 90 04 11733 4).
+		Vol I pp.~22 and 24 (Arabic text) and Vol II pp.~15–16 (Latin
+		translation).  NB: This is for illustrative purposes only!}
+\end{center}
+\begin{arab}
+\resetlinenumber\pagewiselinenumbers
+wa-mi_tAl _dalika 'anna \VAR{al-qirAn}{ala_dI kAna \ADD \msN} al-dAll `alY
+al-.tUfAn \VAR{kAna}{\msE,\msN \SEP \OM \msB} qabl al-qirAn al-dAll `alY millaT
+al-`arab bi-_talA_taT 'AlAf sanaT wa-tis`ami'aT sanaT wa-_tamAn wa-_hamsIn
+\VAR{sanaT}{wa-ha_dihi .sUratuhA \ADD \msN}
+\VARB{\VAR{3950}{3958: \msE,\msN}}{3958}. 
+wa-kAna \VARB{wAlI al-dawr}{prefuit scilicet illi orbi}
+\VARB{fI _dalika \VAR{al-waqt}{\msE,\msN \SEP \OM \msB}}{om.} 
+zu.hal ma`a burj al-sara.tAn. wa-kAna al-.tUfAn ba`d _dalika 
+\VAR{\VAR{bi-mi'atayn}{li-mi'atayn 287: \msE \SEP _tamAnIn sanaT: \msN} 
+wa-sab`a \VAR{wa-_tamAnIn}{_tamAnIn: \msN}}{296: \msM}%
+\NOTE{T lacks a folio} 
+sanaT \VAR{287}{\OM \msE}.  
+fa-yakUn \VAR{bayna}{yawm al-jum`aT \ADD \msN} 
+'awwal yawm min sanaT al-.tUfAn wa-bayn 'awwal yawm min al-sanaT alatI kAna
+fIhA al-qirAn al-dAll `alY millaT al-`arab _talA_taT 'AlAf sanaT
+\VAR{wa-sittami'aT sanaT}{\OM \msE} wa-'i.hdY
+\VAR{wa-sab`In}{wa-sab`Un: \msE,\msN} 
+\VAR{sanaT}{`alY ha_dihi al-.sUraT \ADD \msN} 3671.  
+wa-qad _dakara \VARB{\VAR{Ab_tnUs}%
+{\msE,\msN \SEP mlbws: \msB \SEP \OM \msT \SEP Asws: \msM}}{Bentemiz} 
+wa-.gayruhu 'anna \VAR{bayna}{\OM \msN} 
+\VARB{ibtidA'}{om.} _half 'Adam \VAR{.salwAt al-ll_ah `alayhi}{\OM \msN}
+wa-bayna laylaT al-jum`aT alatI kAna fIhA al-.tUfAn 
+\VAR{'alfayn}{\msE \SEP alfAn: \msB,\msN} \VAR{wa-mi'atayn}{wa-mi'atA sanaT: \msN}
+\VAR{wa-sitta}{wa-sittaT: \msE,\msN} \VAR{wa-`i^srIn}{\CORR \SEP wa-`i^srUn:
+\msB,\msE,\msN \SEP \OM \msT \SEP 2226: \msM} sanaT 3671 \VAR{wa-^sahr"aN
+wA.hid"aN}{\msE \SEP wa-^sahr wA.hid: \msB,\msN} wa-\aemph{kj-} yawm"aN
+\VAR{wa-'arba`a}{j-: \msN} sA`At \VAR{2226}{\OM \msE,\msN}. fa-yakUn `alY
+ha_dihi al-jihaT mA bayna _halaf 'Adam \VAR{`alayhi al-salAm}{\OM \msN}
+wa-bayna \VAR{'awwal}{\OM \msE,\msN} yawm min al-sanaT alatI kAna fIhA al-qirAn
+al-dAll `alY millaT al-`arab \VAR{_hamsaT}{\msL,\msN \SEP _hamsa: \msB,\msE}
+\VAR{'AlAf}{'alf sanaT: \msN} wa-_tamAnami'aT 
+\VAR{\VAR{wa-sab`"aN}{\CORR \SEP wa-sab`a: \msB,\msE \SEP wa-sab`aT: \msN \SEP 
+\OM \msT \SEP 5778: \msM} \VAR{wa-tis`In}{\msE \SEP wa-tis`Un: \msB} 
+sanaT}{wa-tis`aT wa-sab`Un sanaT 5789: \msN} 
+\VAR{wa-^sahr"aN wA.hid"aN}{\msE \SEP wa-^sahr wA.hid: \msB,\msN}
+wa-\aemph{kj-} yawm"aN  \VAR{wa-'arba`a}{j-: \msN} sA`At 
+\VAR{5897}{\OM \msE,\msN}. 
+fa-'i_dA qasamnA al-sinIn alatI \VAR{bayna}{\msE,\msN \SEP Awl \ADD \msB} 
+qirAn al-.tUfAn wa-al-qirAn \VAR{al-dAll}{ala_dI dal: \msN} `alY
+\VAR{millaT}{\msL,\msE,\msN \SEP al-mlh: \msB} al-`arab `alY 
+\VAR{_tala_tami'aT wa-sittIn wa-'a_ha_dnA}{s.s: \msN} li-kull burjiN sanaT
+\VAR{wa-ibtada'nA}{wa-ibtadY: \msE,\msN} 
+\VAR{bi-al-.tar.h}{al-.tar.h li-isti_hrAj burj al-muntahY: \msN} 
+min al-.hamal intahat \VAR{al-sanaT}{\OM \msN} 'ilY \VAR{al-.hUt}{al-jawzA': \msN}.%
+\NOTE{Because 3950 = 360 × 10 + 350.}
+\VAR{fa-'in}{knA \ADD \msN} qasamnA tilka al-sinIn%
+\NOTE{That is, 3950.} 
+`alY _tala_tami'aT wa-sittIn wa-'a_ha_dnA li-kulli dawriN burj"aN
+\VARB{\VAR{wa-ibtada'nA}{wa-ibtadY: \msE,\msN} 
+      \VAR{bi-al-'ilqA'}{bi-al-.tar.h: \msN}}{proiecerimus} 
+min al-burj al-mudabbir \VAR{ala_dI}{\OM \msN} \VARB{kAna
+\VAR{li-l-dawr}{al-dawr: \msN}}{fuit orbis} fI _dalika 
+\VAR{al-waqt}{al-burj: \msN} 
+\VARB{\VAR{al-dAll `alY al-.tUfAn}{\OM \msE,\msN}}{om.} ala_dI huwa
+\VAR{al-sara.tAn \VAR{intahY}{wa-intihA': \msN}}{al-sara.tAnI intihA' intihA': \msE} 
+al-dawr \VAR{fI al-qirAn}{min al-burj: \msN} al-dAll `alY
+\VAR{al-millaT}{millaT al-`arab: \msN} 'ilY al-jawzA'. wa-'in 'a`.taynA li-kull
+kawkab dawr"aN min al-'adwAr wa-ibtada'nA \VAR{bi-al-'ilqA'}{bi-al-.tar.h: \msN} 
+min \VAR{al-kawkab}{al-kawAkib: \msN} 
+\VARB{ala_dI li-l-dawr}{cuius est orbis} 
+fI al-qirAn al-dAll `alY al-millaT intahY al-`adad 'ilY al-zuhraT.
+wa-'in 'alqaynA min .tAli` al-qirAn ala_dI kAna fI ra's al-.hamal li-kull
+darajaT sanaT intahY fI al-qirAn al-dAll `alY al-millaT 'ilY \aemph{k} darajaT
+min al-.hUt. \VAR{wa-kAna}{fa-kAna: \msE} al-mubtazz `alY al-dawr wa-`alY
+\VARX{.sA.hib al-.tAli` wa-.sA.hib}%
+{burj al-qirAn al-mirrI_h, wa-kAna al-tadbIr li-l-rub` al-'awwal 
+ \VAR{ala_dI huwa}{\msE \SEP \OM \msB,\msN} \aemph{.s} sanaT
+  min ibtidA' al-qirAn al-dAll}%
+{`alY}{\OM \msN} dawlaT al-`arab. wa-al-rub` al-_tAnI 
+\VAR{li-l-^sams wa-al-rub`}{w: \msN} al-_tAli_t li-`u.tArid
+\VAR{wa-al-rub`}{w: \msN} al-rAbi` li-zu.hal, wa-_dalika `alY qadr
+\VARB{ibtizAzAt}{dominium} al-kawAkib `alY .sA.hib al-dawr wa-`alY al-.tAli`
+wa-burj al-qirAn \VAR{wa-mu^sArikatihimA}{\msE \SEP wa-mu^sArikatihA: \msB,\msN} 
+li-.sA.hib al-dawr al-'awwal ala_dI huwa al-zuhraT.
+\end{arab}
+\end{document}
