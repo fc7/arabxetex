@@ -1,3 +1,13 @@
 ADD OPTION nodiac = noshadda for language Arabic which suppresses printing of shaddas
 
 EXPAND mappings for transliteration
+
+
+wa-[`alY]  or wa-[`al_A] 
+The `aïn shouldn't be considered as in the middle of the word. The sukûn isn't needed in the end.
+
+ya_hfY or ya_hf_A
+Here too, there should be no sukûn in the end.
+
+
+
