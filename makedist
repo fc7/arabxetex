@@ -12,10 +12,11 @@ if [ "$1" = "-m" -o ! -d mappings -o $mapcount = 0 ]; then
 perl makemaps.pl
 fi
 
+distdir="dist"
 mapsdir="dist/fontmapping/"
 docdir="dist/doc/"
 srcdir="dist/source/"
-texdir="dist/xelatex/"
+#texdir="dist/xelatex/"
 locmapsdir="loc/fonts/misc/xetex/fontmapping/arabxetex/"
 locdocdir="loc/doc/xelatex/arabxetex/"
 locsrcdir="loc/source/xelatex/arabxetex/"
@@ -26,14 +27,12 @@ mkdir -p $locdocdir/examples
 mkdir -p $locsrcdir
 mkdir -p $loctexdir
 mkdir -p $mapsdir
-mkdir -p $docdir/examples
-mkdir -p $srcdir
-mkdir -p $texdir
+mkdir -p dist/examples
+#mkdir -p $texdir
 
 cp mappings/*.{map,tec} $mapsdir
 mv mappings/*.{map,tec} $locmapsdir
 rm -rf mappings/
-
 
 echo "Recompile arabxetex.dtx? [y/N]"
 read -en 1 RECOMPILE_Q
@@ -46,11 +45,11 @@ fi
 cp *-trans*.map $srcdir 
 cp *.maps $srcdir
 cp makemaps.pl $srcdir
-cp arabxetex.pdf $docdir
-cp arabxetex.dtx $srcdir
-cp ednotes_example.{tex,pdf} $docdir/examples
-cp minimal.tex $docdir/examples
-cp arabxetex.sty $texdir
+cp arabxetex.pdf dist/
+cp arabxetex.dtx dist/
+cp ednotes_example.{tex,pdf} dist/examples
+cp minimal.tex dist/examples
+#cp arabxetex.sty $texdir
 cp README dist/
 
 cp *-trans*.map $locsrcdir 
@@ -64,26 +63,26 @@ cp arabxetex.sty $loctexdir
 cp README $locdocdir
 
 [ -f arabxetex.zip ] && mv arabxetex.zip arabxetex.zip.bak
+cd loc
+zip -r arabxetex.tds.zip *
+mv arabxetex.tds.zip ../
+cd ..
+rm -fr loc/
 cd dist
 zip -r arabxetex.zip *
 mv arabxetex.zip ../
 cd ..
+zip arabxetex.zip arabxetex.tds.zip
 rm -fr dist/
 
 echo "arabxetex.zip can be uploaded on CTAN..."
 
-[ -f arabxetex-local.zip ] && mv arabxetex-local.zip arabxetex-local.zip.bak
-cd loc
-zip -r arabxetex-local.zip *
-mv arabxetex-local.zip ../
-cd ..
-rm -fr loc/
-
-echo "Install to /opt/texlive/texmf-local ? [y/N]"
+echo "Install to ~/texmf/ ? [y/N]"
 read -en 1 INSTALL_Q
 if [ "$INSTALL_Q" = "y" ] || [ "$INSTALL_Q" = "Y" ]; then
-	unzip -uo arabxetex-local.zip -d /opt/texlive/texmf-local/ 
-	sudo texconfig-sys rehash
+	unzip -uo arabxetex.tds.zip -d $HOME/texmf/ 
+	texconfig rehash
+    echo "update completed"
 fi
+rm arabxetex.tds.zip
 
-echo "update completed"
