@@ -132,6 +132,7 @@ U+E000 > ; eliminate special code for capitalization in transliterations
 pass(Unicode)
 
 Class [VWL]         = (U+0061  U+0065  U+0069  U+006F  U+0075 ) ;(a e i o u) 
+Class [AVWL]    = (U+064B..U+0650);
 Class [LTR]	    = (U+0061..U+007A U+0041 U+0045 U+0047 U+0049 U+004F U+0055 U+0042 U+004E U+0054 U+0059 U+005E U+002E U+005F U+0022 U+0027 U+0060) ;a..z A E I O U B N T Y ^ . _ " "" `
 Class [BRACKETS]    = (U+003C U+003E U+00AB U+00BB U+0028 U+0029 U+005B U+005D U+2018 U+2019 U+201C U+201D); < > () « » [ ] ‘ ’ “ ”
 Class [PUNCT] = (V SC P CO)
@@ -220,6 +221,7 @@ U+005B U+005B ([Digits]+)=dig U+005D U+005D > U+202E U+06DD @dig U+202C ; [[digi
 u u > U 
 i i > I 
 a a > A
+#n [AVWL] > ; strip off vowels when writing UTF-8 Arabic with novoc mode
 #T a e > a U+0626
 #T E e > U+0659 U+06CD
 #T e e > U+0659 U+0626
@@ -781,4 +783,3 @@ BAR       >   ;|
 #f ;; [CONS]=k1 / _ # > @k1 U+0652 ; final consonant
 #f Q > ;
 #v Z > ;
-
