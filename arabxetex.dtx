@@ -2,7 +2,7 @@
 %
 %!TEX encoding = UTF-8 Unicode
 %
-% Copyright © 2007-2009 by François Charette <firmicus at gmx dot net>
+% Copyright © 2007-2010 by François Charette <firmicus at gmx dot net>
 % 
 % Distributable under the LaTeX Project Public License,
 % version 1.3c or higher (your choice). The latest version of
@@ -24,14 +24,14 @@
 
   ____________________________
   The arabxetex package         
-  © 2007–2009  François Charette    
+  © 2007–2010  François Charette
   License information appended
 
 
 \endpreamble
 \postamble
 
-Copyright © 2007–2009 by François Charette <firmicus at gmx dot net>
+Copyright © 2007–2010 by François Charette <firmicus at gmx dot net>
 
 Distributable under the LaTeX Project Public License,
 version 1.3c or higher (your choice). The latest version of
@@ -69,7 +69,7 @@ as well as an extensive collection of TECKit files
 %
 %<*readme>
 --------------------------
-THE ARABXETEX PACKAGE v1.1.3
+THE ARABXETEX PACKAGE v1.1.4
 
 This package provides a convenient ArabTeX-like user-interface for typesetting
 languages using the Arabic script in XeLaTeX, with flexible access to font
@@ -84,7 +84,7 @@ The TECkit fontmapping files (*.map and *.tec) should be copied to
 
 -------------------------
 François Charette
-© 2007–2009
+© 2007–2010
 %</readme>
 %
 % \fi
@@ -1354,7 +1354,7 @@ François Charette
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{arabxetex}
-  [2008/07/16 v1.1.2 ArabTeX-like interface for XeLaTeX]
+  [2010/01/08 v1.1.4 ArabTeX-like interface for XeLaTeX]
 %
 \DeclareOption{fullvoc}{\def\ax@mode{fullvoc}}
 \DeclareOption{voc}{\def\ax@mode{voc}}
@@ -1380,9 +1380,9 @@ François Charette
 		\ax@mode@definedfalse%
 	\fi}
 \def\ax@lang{arab}%default language (for macros like \aemph)
-\RequirePackage{bidi}
 \RequirePackage{amsmath}%because of macro \overline used in \aemph
 \RequirePackage{fontspec}
+\RequirePackage{bidi}
 \AtBeginDocument{\ifdefined\arabicfont\relax\else%
 	\PackageWarning{arabxetex}{\string\arabicfont\ is not defined!^^JI will try to load Scheherazade}%
 	\newfontfamily\arabicfont[Script=Arabic,Scale=2]{Scheherazade}%
