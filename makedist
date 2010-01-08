@@ -27,6 +27,7 @@ mkdir -p $locdocdir/examples
 mkdir -p $locsrcdir
 mkdir -p $loctexdir
 mkdir -p $mapsdir
+mkdir -p $srcdir
 mkdir -p dist/examples
 #mkdir -p $texdir
 
@@ -48,7 +49,7 @@ cp makemaps.pl $srcdir
 cp arabxetex.pdf dist/
 cp arabxetex.dtx dist/
 cp ednotes_example.{tex,pdf} dist/examples
-cp minimal.tex dist/examples
+cp minimal.{tex,pdf} dist/examples
 #cp arabxetex.sty $texdir
 cp README dist/
 
