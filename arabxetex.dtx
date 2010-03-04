@@ -1259,11 +1259,10 @@ François Charette
 % \small
 % \section{Notes on available free and commercial fonts for the Perso-Arabic script} 
 % \label{arabicfont}
-% \texttt{TO BE COMPLETED}
 % 
+% \textcolor{red}{NB: This list is incomplete and has not been updated since 2007.}
 % 
 % ^^AThere are few free good quality fonts that support the Arabic script.
-% 
 % \begin{compactitem}[\textbf{·}]
 % \item ‘Scheherazade’ and ‘Lateef’ from SIL
 % 
@@ -1281,8 +1280,7 @@ François Charette
 % ^^A
 % ^^AA-l-l-h > FDF2
 % 
-% \item Arabic fonts on Mac~OS~X: ‘Geeza Pro’, ‘DecoType Naskh’, \ldots more?\\
-% 	\textcolor{red}{$\rightarrow$ \texttt{Help needed to test those fonts!}}
+% \item Arabic fonts on Mac~OS~X: ‘Geeza Pro’, ‘DecoType Naskh’, \ldots more?
 % 
 % \item ‘Arabic Typesetting’ and other Arabic fonts licensed to Microsoft
 % 
@@ -1303,6 +1301,7 @@ François Charette
 % Here follows a list of open source and freeware fonts with full 
 % \textsc{Latin Extended Additional} coverage.\footnote{ ^^A
 % 	See this \href{http://www.alanwood.net/unicode/fonts.html\#general}{webpage} for more details.}
+%   \textcolor{red}{NB: This list has not been updated since 2007.}
 % \begin{compactitem}[\textbf{·}]
 % \item  Gentium, Doulos, Charis:  \url{http://scripts.sil.org/FontDownloads}
 % 
@@ -1354,7 +1353,7 @@ François Charette
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{arabxetex}
-  [2010/01/08 v1.1.4 ArabTeX-like interface for XeLaTeX]
+  [2010/03/04 v1.1.4 ArabTeX-like interface for XeLaTeX]
 %
 \DeclareOption{fullvoc}{\def\ax@mode{fullvoc}}
 \DeclareOption{voc}{\def\ax@mode{voc}}
@@ -1376,20 +1375,16 @@ François Charette
 \def\ax@ismode@defined#1{%
 	\ifcsname ax@mode@#1\endcsname%
 		\ax@mode@definedtrue%
-	\else%
+	\else
 		\ax@mode@definedfalse%
 	\fi}
 \def\ax@lang{arab}%default language (for macros like \aemph)
 \RequirePackage{amsmath}%because of macro \overline used in \aemph
 \RequirePackage{fontspec}
 \RequirePackage{bidi}
-\AtBeginDocument{\ifdefined\arabicfont\relax\else%
-	\PackageWarning{arabxetex}{\string\arabicfont\ is not defined!^^JI will try to load Scheherazade}%
-	\newfontfamily\arabicfont[Script=Arabic,Scale=2]{Scheherazade}%
-	\let\tmp@baselineskip=\baselineskip%
-	\baselineskip=2*\tmp@baselineskip%
-	\fi%
-	}%
+\AtBeginDocument{\ifdefined\arabicfont\relax\else
+	\PackageWarning{arabxetex}{\string\arabicfont\ is not defined!^^JI will try to load Scheherazade (scaled 1.5)}%
+	\newfontfamily\arabicfont[Script=Arabic,Scale=1.5]{Scheherazade}\fi}%
 \def\ax@trans@style{\itshape}%
 \newcommand{\SetTranslitStyle}[1]{\def\ax@trans@style{#1}}
 \newcommand{\SetTranslitConvention}[1]{\def\ax@trans@convention{#1}}
@@ -1421,14 +1416,14 @@ François Charette
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
 		\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}%
-	\else%
+	\else
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\arabicfont\utf@fontfeature%
-	\else%
+	\else
 		\par\setRL\arabicfont\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}%
-	\fi\fi%
-\else%
+	\fi\fi
+\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\arabicfont\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}%
@@ -1444,14 +1439,14 @@ François Charette
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
 		\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}%
-	\else%
+	\else
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@maghribi@font\utf@fontfeature%
-	\else%
+	\else
 		\par\setRL\ax@maghribi@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\@tempa}%
-	\fi\fi%
-\else%
+	\fi\fi
+\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@maghribi@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\ax@mode}%
@@ -1466,14 +1461,14 @@ François Charette
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
 		\addfontfeature{Mapping=arabtex-farsi-trans-\ax@trans@convention}%
-	\else%
+	\else
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@farsi@font\utf@fontfeature%
-	\else%
+	\else
 		\par\setRL\ax@farsi@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\@tempa}%
-	\fi\fi%
-\else%
+	\fi\fi
+\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@farsi@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\ax@mode}%
@@ -1489,14 +1484,14 @@ François Charette
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
 		\addfontfeature{Mapping=arabtex-urdu-trans-\ax@trans@convention}%
-	\else%
+	\else
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@urdu@font\addfontfeature{Language=Urdu}%Mapping=arabtex-utf}%
-	\else%
+	\else
 		\par\setRL\ax@urdu@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\@tempa}%
-	\fi\fi%
-\else%
+	\fi\fi
+\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@urdu@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\ax@mode}%
@@ -1511,14 +1506,14 @@ François Charette
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
 		\addfontfeature{Mapping=arabtex-pashto-trans-\ax@trans@convention}%
-	\else%
+	\else
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@pashto@font\utf@fontfeature%
-	\else%
+	\else
 		\par\setRL\ax@pashto@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\@tempa}%
-	\fi\fi%
-\else%
+	\fi\fi
+\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@pashto@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\ax@mode}%
@@ -1533,14 +1528,14 @@ François Charette
 	\ifx\@tempa\ax@mode@trans%
 		\par\arabtex@codes\ax@trans@style%
 		\addfontfeature{Mapping=arabtex-sindhi-trans-\ax@trans@convention}%
-	\else%
+	\else
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@sindhi@font\addfontfeature{Language=Sindhi}%Mapping=arabtex-utf}%
-	\else%
+	\else
 		\par\setRL\ax@sindhi@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\@tempa,Language=Sindhi}%
-	\fi\fi%
-\else%
+	\fi\fi
+\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@sindhi@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\ax@mode,Language=Sindhi}%
@@ -1555,14 +1550,14 @@ François Charette
 	%\ifx\@tempa\ax@mode@trans%
 	%	\par\arabtex@codes\ax@trans@style%
 	%	\addfontfeature{Mapping=arabtex-turk-trans-\ax@trans@convention}%
-	%\else%
+	%\else
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@ottoman@font\utf@fontfeature%
-	\else%
+	\else
 		\par\setRL\ax@ottoman@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\@tempa}%
-	\fi%\fi%
-\else%
+	\fi%\fi
+\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@ottoman@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\ax@mode}%
@@ -1578,10 +1573,10 @@ François Charette
 %\ifx\@tempa\ax@mode@trans%
 %	\par\arabtex@codes\ax@trans@style%
 %	\addfontfeature{Mapping=arabtex-kurdish-trans-\ax@trans@convention}%
-%\else%
+%\else
 \ifx\@tempa\ax@mode@utf%
 	\par\setRL\ax@kurdish@font\addfontfeature{Language=Kurdish}%Mapping=arabtex-utf}%
-\else%
+\else
 	\par\setRL\ax@kurdish@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-kurdish,Language=Kurdish}%
 \fi}
@@ -1597,14 +1592,14 @@ François Charette
 	%\ifx\@tempa\ax@mode@trans%
 	%	\par\arabtex@codes\ax@trans@style%
 	%	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-trans-\ax@trans@convention}%
-	%\else%
+	%\else
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@kashmiri@font\utf@fontfeature%
-	\else%
+	\else
 		\par\setRL\ax@kashmiri@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\@tempa}%
-	\fi%\fi%
-\else%
+	\fi%\fi
+\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@kashmiri@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\ax@mode}%
@@ -1621,14 +1616,14 @@ François Charette
 	%\ifx\@tempa\ax@mode@trans%
 	%	\par\arabtex@codes\ax@trans@style%
 	%	\addfontfeature{Mapping=arabtex-malay-trans-\ax@trans@convention}%
-	%\else%
+	%\else
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@malay@font\utf@fontfeature%
-	\else%
+	\else
 		\par\setRL\ax@malay@font\arabtex@codes%
 		\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\@tempa}%
-	\fi%\fi%
-\else%
+	\fi%\fi
+\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@malay@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\ax@mode}%
@@ -1644,10 +1639,10 @@ François Charette
 %\ifx\@tempa\ax@mode@trans%
 %	\par\arabtex@codes\ax@trans@style%
 %	\addfontfeature{Mapping=arabtex-uighur-trans-\ax@trans@convention}%
-%\else%
+%\else
 \ifx\@tempa\ax@mode@utf%
 	\par\setRL\ax@uighur@font\utf@fontfeature%
-\else%
+\else
 	\par\setRL\ax@uighur@font\arabtex@codes%
 	\addfontfeature{Mapping=arabtex-\ax@font@allah-uighur}%
 \fi}
@@ -1677,13 +1672,13 @@ François Charette
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}#2}%
-		\else%
+		\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\arabicfont\utf@fontfeature #2}%
-		\else%
+		\else
 			\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}#2}%
-		\fi\fi%
-	\else%
+		\fi\fi
+	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}#2}%
 	\fi\egroup}
@@ -1694,14 +1689,14 @@ François Charette
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}#2}%
-		\else%
+		\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@maghribi@font\utf@fontfeature #2}%
-		\else%
+		\else
 			\RL{\ax@maghribi@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\@tempa}#2}%
-		\fi\fi%
-	\else%
+		\fi\fi
+	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\RL{\ax@maghribi@font\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\ax@mode}#2}%
 	\fi\egroup}
@@ -1712,14 +1707,14 @@ François Charette
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-farsi-trans-\ax@trans@convention}#2}%
-		\else%
+		\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@farsi@font\utf@fontfeature #2}%
-		\else%
+		\else
 			\RL{\ax@farsi@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\@tempa}#2}%
-		\fi\fi%
-	\else%
+		\fi\fi
+	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\RL{\ax@farsi@font\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\ax@mode}#2}%
 	\fi\egroup}
@@ -1730,14 +1725,14 @@ François Charette
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-urdu-trans-\ax@trans@convention}#2}%
-		\else%
+		\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@urdu@font\addfontfeature{Language=Urdu}#2}%eventually Mapping=arabtex-utf
-		\else%
+		\else
 			\RL{\ax@urdu@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\@tempa,Language=Urdu}#2}%
-		\fi\fi%
-	\else%
+		\fi\fi
+	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\RL{\ax@urdu@font\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\ax@mode,Language=Urdu}#2}%
 	\fi\egroup}
@@ -1748,14 +1743,14 @@ François Charette
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-sindhi-trans-\ax@trans@convention}#2}%
-		\else%
+		\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@sindhi@font\addfontfeature{Language=Sindhi} #2}%eventually Mapping=arabtex-utf
-		\else%
+		\else
 			\RL{\ax@sindhi@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\@tempa,Language=Sindhi}#2}%
-		\fi\fi%
-	\else%
+		\fi\fi
+	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\RL{\ax@sindhi@font\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\ax@mode,Language=Sindhi}#2}%
 	\fi\egroup}
@@ -1766,14 +1761,14 @@ François Charette
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
 			{\ax@trans@style\addfontfeature{Mapping=arabtex-pashto-trans-\ax@trans@convention}#2}%
-		\else%
+		\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@pashto@font\utf@fontfeature #2}%
-		\else%
+		\else
 			\RL{\ax@pashto@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\@tempa}#2}%
-		\fi\fi%
-	\else%
+		\fi\fi
+	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\RL{\ax@pashto@font\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\ax@mode}#2}%
 	\fi\egroup}
@@ -1785,14 +1780,14 @@ François Charette
 		% UNCOMMENT when transliteration mapping is done
 		%\ifx\@tempa\ax@mode@trans%
 		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-turk-trans-\ax@trans@convention}#2}%
-		%\else%
+		%\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@ottoman@font\utf@fontfeature #2}%
-		\else%
+		\else
 			\RL{\ax@ottoman@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\@tempa}#2}%
-		\fi%\fi%
-	\else%
+		\fi%\fi
+	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\RL{\ax@ottoman@font\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\ax@mode}#2}%
 	\fi\egroup}
@@ -1802,13 +1797,13 @@ François Charette
 		% UNCOMMENT when transliteration mapping is done
 		%\ifx\@tempa\ax@mode@trans%
 		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kurdish-trans-\ax@trans@convention}#2}%
-		%\else%
+		%\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@kurdish@font\utf@fontfeature #2}%
-		\else%
+		\else
 			\RL{\ax@kurdish@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-kurdish,Language=Kurdish}#2}%
-		\fi%\fi%
+		\fi%\fi
 	\egroup}
 \newcommand\text@kashmiri[2][\ax@mode]{%
 	\edef\@tempa{#1}%
@@ -1818,14 +1813,14 @@ François Charette
 		% UNCOMMENT when transliteration mapping is done
 		%\ifx\@tempa\ax@mode@trans%
 		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-kashmiri-trans-\ax@trans@convention}#2}%
-		%\else%
+		%\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@kashmiri@font\utf@fontfeature #2}%
-		\else%
+		\else
 			\RL{\ax@kashmiri@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\@tempa}#2}%
-		\fi%\fi%
-	\else%
+		\fi%\fi
+	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\RL{\ax@kashmiri@font\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\ax@mode}#2}%
 	\fi\egroup}
@@ -1837,14 +1832,14 @@ François Charette
 		% UNCOMMENT when transliteration mapping is done
 		%\ifx\@tempa\ax@mode@trans%
 		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-malay-trans-\ax@trans@convention}#2}%
-		%\else%
+		%\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@malay@font\utf@fontfeature #2}%
-		\else%
+		\else
 			\RL{\ax@malay@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\@tempa}#2}%
-		\fi%\fi%
-	\else%
+		\fi%\fi
+	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
 	\RL{\ax@malay@font\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\ax@mode}#2}%
 	\fi\egroup}
@@ -1854,39 +1849,26 @@ François Charette
 		% UNCOMMENT when transliteration mapping is done
 		%\ifx\@tempa\ax@mode@trans%
 		%	{\ax@trans@style\addfontfeature{Mapping=arabtex-uighur-trans-\ax@trans@convention}#2}%
-		%\else%
+		%\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\ax@uighur@font\utf@fontfeature #2}%
-		\else%
+		\else
 			\RL{\ax@uighur@font%
 			\addfontfeature{Mapping=arabtex-\ax@font@allah-uighur}#2}%
-		\fi%\fi%
+		\fi%\fi
 	\egroup}
 %
 \newcommand{\textLR}[1]{\LR{\rmfamily #1}}
 \newcommand{\aemph}[1]{%
   \edef\@tempb{\expandafter\noexpand\csname text\ax@lang\endcsname}%
   $\overline{\text{\@tempb{#1}}}$}
-%
-% experimental: this surely does not work!
-% I want a mechanism to enable defining commands that accept args containing \arabtex@codes
-%\def\newarabxetexcommand#1#2{%
-%	\edef\ax@tcomm@nd{\expandafter\relax\csname #1@\endcsname}
-%	\expandafter\def\string#1{%
-%	\bgroup\arabtex@codes\ax@tcomm@nd}
-%	\def\ax@tcomm@nd{#2\egroup}}
 %    \end{macrocode}
 %
 %\iffalse
 %</package>
 %\fi
 % 
-% \subsection{Some notes on the TECkit mappings}
-% 
-% \texttt{TO BE DONE \dots}
-% 
-% 
-% ^^A\section{Unicode Matters} ---> TODO CONTACT ROOZBEH ABOUT THIS
+% ^^A\section{Unicode Matters}
 % ^^A
 % ^^ASome glyphs are missing in Unicode:
 % ^^A
@@ -1987,9 +1969,6 @@ François Charette
 \defaultfontfeatures{Scale=MatchLowercase}
 \setmonofont{Inconsolata}%{Latin Modern Typewriter Proportional}%{Luxi Mono}%{Courier New}
 \setsansfont{Lucida Sans Unicode}
-%\setmathrm{Optima Regular}
-%\setboldmathrm[BoldFont=Optima ExtraBlack]{Optima Bold}
-%\defaultfontfeatures{Mapping=tex-text}
 \newfontfamily\arabicfont[Script=Arabic,Scale=1.5]{Scheherazade}
 \newfontfamily\urdufont[Script=Arabic,Scale=1.2]{Nafees Pakistani Naskh}%Nafees Nastaleeq does not work well
 \newfontfamily\farsifont[Script=Arabic,Scale=1.33]{Farsi Simple Bold}
@@ -2004,24 +1983,6 @@ François Charette
 
 \linespread{1.05}
 \frenchspacing
-%\newenvironment{MYitemize}{%
-%\renewcommand\labelitemi{\cdot}%
-%\begin{list}{}{\setlength{\itemsep}{.15\parsep}}}%
-%%\setlength{\labelwidth}{0pt}\setlength{\leftmargin}{0pt}\setlength{\itemindent}{0pt}}
-%{\end{list}}
-%\addtolength{\textheight}{3cm}
-%\setlength{\leftmargin}{1cm}
-%\setlength{\topmargin}{0cm}
-%\newcommand{\Tarab}[2][black]{\textcolor{#1}{\textarab{ #2 }}}
-%\newcommand{\Tfarsi}[2][black]{\textcolor{#1}{\textfarsi{ #2 }}}
-%\newcommand{\Turdu}[2][black]{\textcolor{#1}{\texturdu{ #2 }}}
-%\newcommand{\Tsindhi}[2][black]{\textcolor{#1}{\textsindhi{ #2 }}}
-%\newcommand{\Tpashto}[2][black]{\textcolor{#1}{\textpashto{ #2 }}}
-%\newcommand{\Tkashmiri}[2][black]{\textcolor{#1}{\textkashmiri{ #2 }}}
-%\newcommand{\Tkurdish}[2][black]{\textcolor{#1}{\textkurdish{ #2 }}}
-%\newcommand{\Tturk}[2][black]{\textcolor{#1}{\textturk{ #2 }}}
-%\newcommand{\Tmalay}[2][black]{\textcolor{#1}{\textmalay{ #2 }}}
-%\newcommand{\Tuighur}[2][black]{\textcolor{#1}{\textuighur{ #2 }}}
 %%%
 \def\GN{\bgroup\catcode`\_=11\relax\catcode`\^=11\relax\GNX}
 \def\GR{\bgroup\catcode`\_=11\relax\catcode`\^=11\relax\GRX}
