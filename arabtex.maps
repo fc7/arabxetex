@@ -1,6 +1,6 @@
 ##  This is the master file to generate the TECkit ArabTeX font mappings 
 ##     for use with XeTeX
-##  The mappings are generated with a simple sed script
+##  The mappings are generated with a simple perl script (makemaps.pl)
 ##
 ##  Conventions used:
 ##  ---------------------------------------------------------------------------------
@@ -235,8 +235,8 @@ CO O > U+06FC ;
 #U a e / _ # > a U+06D2
 #-T a e > a y
 a o > a w
-#PUK (o|u)? O / # _ > U+0627 w  
-#PUK (o|u)? O > w  
+#PUKS (o|u)? O / # _ > U+0627 w  
+#PUKS (o|u)? O > w  
 CO U > U+06C7 ;
 #-TK e   > i ;; but not pashto > U+0659 and kashmiri > y + U+0658     (U+06CE is kurdish)
 #T e > U+0659
