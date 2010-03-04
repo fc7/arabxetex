@@ -86,3 +86,5 @@ if [ "$INSTALL_Q" = "y" ] || [ "$INSTALL_Q" = "Y" ]; then
   echo "update completed"
 fi
 rm arabxetex.tds.zip
+rm arabxetex*.{aux,glo,idx,ins,log,out,sty,toc}
+rm README.tex
