@@ -501,121 +501,6 @@ François Charette
 % \renewcommand{\urdufont}{\arabicfont}	
 % \renewcommand{\farsifont}{\arabicfont}
 %
-% \subsection{Special considerations}
-% \parindenton
-% \subsubsection{The name of God}  \label{allahliga}
-% 
-% The glyph \textsf{FDF2}, defined as ‘\textsc{arabic ligature allah isolated form}’ 
-% by the Unicode Consortium, is a source of great confusion.  
-% It is displayed in the Unicode Book with an initial alif and thus represents the 
-% name of God, Allāh, which in Arabic is always written as a special ligature 
-% (\ie {\tradarabic اﷲ} and not {\arabicfont الله}).\footnote{ ^^A
-% 	The glyph {\tradarabic اﷲ} is taken from the font Traditional Arabic.
-% 	In Scheherazade its design is rather suboptimal: {\arabicfont\char"FDF2}.}
-% 
-% However, a substantial portion of real-world fonts rather represent that 
-% ligature \textit{without} the initial alif.\footnote{ ^^A
-% 	My research on Arabic fonts available or known to me yields the following picture: 
-% 	The fonts that do not display the initial alif in the ligature \textsf{FDF2} 
-% 	include those provided by \href{http://www.linotype.com/2517/arabicfonts.html}{Linotype}; 
-% 	the great majority of those licensed to or developed by 
-% 	\href{http://www.microsoft.com/typography/links/FontPortal.aspx?PID=8}{Microsoft}
-% 	(I could verify it for Times New Roman, Arial, Courier New, Microsoft Sans Serif, 
-% 	Arabic Transparent, Simplified Arabic, Simplified Arabic Fixed, 
-% 	WinSoft Serif Pro, Traditional Arabic, Andalus, Old Antic Bold, 
-% 	Old Antic Decorated and Farsi Simple Bold); the fonts distributed by 
-% 	\href{http://www.arabeyes.org}{Arabeyes.org}; 
-% 	\href{http://scripts.sil.org/ArabicFonts}{SIL}'s Lateef; 
-% 	and the fonts developed by \href{www.crulp.org}{CRULP} in Pakistan.
-% 	The Unicode-conformant fonts, on the other hand, are:
-% 	\href{http://scripts.sil.org/ArabicFonts}{SIL}'s Scheherazade, 
-% 	\href{http://www.tdc.org/news/2006Results/AdobeArabic.html}{Adobe Arabic} 
-% 	(distributed with the \href{http://www.adobe.com/ceea/}{Middle-Eastern version} 
-% 	of the latest \href{http://www.adobe.com/products/acrobat/readermain.html}{Adobe Reader 7}),
-% 	Arial Unicode MS, and \href{http://sakkal.com/type/typesetting.html}{Arabic Typesetting}
-% 	(distributed with \href{http://www.microsoft.com/typography/VOLT.mspx}{VOLT} 
-% 	and with \href{http://www.microsoft.com/office/editions/prodinfo/language/proofingtools.mspx}{Microsoft Office Proofing Tools 2003}).}
-% The confusion probably has to do with Unicode’s omission to include the ALLAH
-% ligature without the initial alif, which is imperatively required for typesetting 
-% expressions like \textit{al-ḥamdu li-llāh} \RL{\tradarabic الحمد ﷲ}. 
-% Many fonts code the ligature {\tradarabic ﷲ} in the Private Use Area
-% and make it accessible as a default ligature for the sequence \textit{lām-lām-hāʾ}. 
-% In such a case it can be generated from the input ¦\textarab{l|lh}¦ 
-% (the vertical bar here tells \arabxetex\ not to interpret the sequence ¦ll¦ 
-% as \textit{lām} with \textit{shadda}).\footnote{ ^^A
-% 	This currently does not work with Scheharazade, but the 
-% 	developers are aware of the issue.}
-% Besides not being a standard \arabtex\ input sequence, the trouble is that 
-% there is no way to know a priori whether the font provides the glyph {\tradarabic ﷲ}
-% at all, and whether it is defined as a default ligature from the above input.
-% 
-% To solve this problem with \arabxetex, we had no choice but provide two classes of 
-% font mappings, one for each of the above two categories of Arabic fonts.\footnote{ ^^A
-% 	This has the unfortunate consequence of doubling the number of mappings shipped
-% 	with \arabxetex. But since their size is small, it is more an esthetic annoyance 
-% 	than a practical one.}
-% By default we assume the canonical situation where \textsf{U+FDF2} corresponds to 
-% {\tradarabic اﷲ}, but the user can change this by choosing one of the package options
-% ¦fdf2alif¦ or ¦fdf2noalif¦; it can also be changed locally by means of the commands
-% \DescribeMacro{\SetAllahWithAlif}
-% \DescribeMacro{\SetAllahWithoutAlif}
-% \cmd\SetAllahWithAlif\ and \cmd\SetAllahWithoutAlif\ \textit{before} making use of 
-% \cmd\arabicfont. In a future version we might perhaps implement a database of Arabic fonts 
-% within \arabxetex, so that this would work automatically in the most common cases.
-% 
-% The font Adobe Arabic has in addition the ligature \textit{fa-li-llāh}: 
-% \textit{fā fatḥa lām kasra lām hāʾ} $\rightarrow$ {\adobearabic فَلِله}, which can be
-% entered in \arabtex\ notation as ¦\textarab{falilh}¦. In this particular case we also
-% provide the input convention ¦FALILLAH¦.
-% 
-% 
-% ^^ATEST Scheherazade: \textarab{l|lh} 
-% ^^A
-% ^^A\renewcommand{\arabicfont}{\tradarabic} 
-% ^^ATEST Trad Arabic: \textarab{l|lh}
-% 
-% ^^ALinotype: \\
-% ^^ALotus Linotype {\lotusfont\char"FDF2} --- 
-% ^^AAlHarfAlJadid Linotype One {\fontspec[Scale=1.5]{AlHarfAlJadid Linotype One}\char"FDF2} --- 
-% ^^AAlHarfAlJadid Linotype Two {\fontspec[Scale=1.5]{AlHarfAlJadid Linotype Two}\char"FDF2} --- 
-% ^^AMariam Linotype {\fontspec[Scale=1.5]{Mariam Linotype}\char"FDF2} --- 
-% ^^AQadi Linotype {\fontspec[Scale=1.5]{Qadi Linotype}\char"FDF2}  
-% ^^A
-% ^^AFonts from or licensed to Microsoft: \\
-% ^^ATimes New Roman {\fontspec[Scale=1.5]{Times New Roman}\char"FDF2} --- 
-% ^^AArial {\fontspec[Scale=1.5]{Arial}\char"FDF2} --- 
-% ^^ACourier New {\fontspec[Scale=1.5]{Courier New}\char"FDF2} --- 
-% ^^AMicrosoft Sans Serif {\fontspec[Scale=1.5]{Microsoft Sans Serif}\char"FDF2} --- 
-% ^^AArial Unicode MS {\arialuni\char"FDF2} --- 
-% ^^AArabic Transparent {\fontspec[Scale=1.5]{Arabic Transparent}\char"FDF2} --- 
-% ^^ASimplified Arabic {\fontspec[Scale=1.5]{Simplified Arabic}\char"FDF2} --- 
-% ^^ASimplified Arabic Fixed {\fontspec[Scale=1.5]{Simplified Arabic Fixed}\char"FDF2} --- 
-% ^^AWinSoft Serif Pro {\fontspec[Scale=1.5]{WinSoft Serif Pro}\char"FDF2} --- 
-% ^^ATraditional Arabic {\fontspec[Scale=1.5]{Traditional Arabic}\char"FDF2} --- 
-% ^^AArabic Typesetting {\arabtype\char"FDF2} --- 
-% ^^AAndalus {\fontspec[Scale=1.5]{Andalus}\char"FDF2} --- 
-% ^^AOld Antic Bold {\fontspec[Scale=1.5]{Old Antic Bold}\char"FDF2} --- 
-% ^^AFarsi Simple Bold {\fontspec[Scale=1.5]{Farsi Simple Bold}\char"FDF2}  
-% ^^A
-% ^^A
-% ^^AAdobe:\\
-% ^^AAdobe Arabic {\adobearabic\char"FDF2} --- 
-% ^^A
-% ^^ASIL: \\
-% ^^AScheherazade {\arabicfont\char"FDF2} --- 
-% ^^ALateef {\fontspec{Lateef}\char"FDF2}  
-% ^^A
-% ^^A%CRULP:\\
-% ^^A%Nafees Nastaleeq {\fontspec{Nafees Nastaleeq}\char"FDF2} --- 
-% ^^A%{\fontspec{Nafees Pakistani Naskh}\char"FDF2}
-% ^^A
-% ^^AArabeyes:\\
-% ^^AKacstBook {\fontspec{KacstBook}\char"FDF2}
-% ^^AKacstFarsi {\fontspec{KacstFarsi}\char"FDF2}
-% 
-% 
-% 
-% 
 % \subsection{Transliteration}
 % 
 % At the moment transliteration mappings are provided for Arabic, Persian, Urdu, 
@@ -1223,7 +1108,6 @@ François Charette
 % \textsf{FD3F}	\>   {\arabicfont\char"FD3F} 	\>	¦((¦ \\
 % \textsf{FDF0}	\>   {\arialuni\char"FDF0} 	\>	¦SALLASTOP¦ \\
 % \textsf{FDF1}	\>   {\arialuni\char"FDF1} 	\>	¦QALA¦ \\
-% \textsf{FDF2}	\>   {\arabicfont\char"FDF2}   	\>	¦al-ll_ah¦ or ¦ALLAH¦ ** \\
 % \textsf{FDF3}	\>   {\arialuni\char"FDF3} 	\>	¦AKBAR¦ \\
 % \textsf{FDF4}	\>   {\arialuni\char"FDF4} 	\>	¦MUHAMMAD¦ \\
 % \textsf{FDF5}	\>   {\arialuni\char"FDF5} 	\>	¦SALAM¦ \\
@@ -1236,8 +1120,9 @@ François Charette
 % \textsf{FDFC}	\>   {\arabicfont\char"FDFC} 	\>	¦RIYAL¦ \\
 % \textsf{FDFD}	\>   {\Huge\arabesque\char"F050} \>	¦BASMALA¦ \\ 
 % \textbf{Non-Unicode Ligatures} \\
-% 		 \>  {\tradarabic\char"FDF2}	\>	¦ll_ah¦ or ¦LLAH¦ ** \\
-% 		 \>  {\adobearabic فَلِله} 	\> 	¦FALILLAH¦ ***
+%  		\>   {\arabicfont الله}   	\>	¦al-ll_ah¦ or ¦ALLAH¦ ** \\
+% 		\>   {\arabicfont لله}		\>	¦ll_ah¦ or ¦LLAH¦ ** \\
+% 		\>   {\adobearabic فَلِله} 	\> 	¦FALILLAH¦ ***
 % \end{tabbing}
 % \end{multicols}
 % \parindentoff
@@ -1278,7 +1163,6 @@ François Charette
 % ^^A
 % ^^Aﻟ ﻠ ﻪ l-l-h > uni064406440647
 % ^^A
-% ^^AA-l-l-h > FDF2
 % 
 % \item Arabic fonts on Mac~OS~X: ‘Geeza Pro’, ‘DecoType Naskh’, \ldots more?
 % 
@@ -1360,11 +1244,11 @@ François Charette
 \DeclareOption{novoc}{\def\ax@mode{novoc}}
 \DeclareOption{trans}{\def\ax@mode{trans}}
 \DeclareOption{utf}{\def\ax@mode{utf}}
-\DeclareOption{fdf2alif}{\def\ax@font@allah{fdf2alif}}
-\DeclareOption{fdf2noalif}{\def\ax@font@allah{fdf2noalif}}
+\DeclareOption{fdf2alif}{} % deprecated
+\DeclareOption{fdf2noalif}{} % deprecated
 \newif\ifmirror@punct\mirror@punctfalse
 \DeclareOption{mirrorpunct}{\mirror@puncttrue}
-\ExecuteOptions{novoc,fdf2alif}
+\ExecuteOptions{novoc}
 \ProcessOptions
 \def\ax@mode@fullvoc{fullvoc}
 \def\ax@mode@voc{voc}
@@ -1389,8 +1273,8 @@ François Charette
 \newcommand{\SetTranslitStyle}[1]{\def\ax@trans@style{#1}}
 \newcommand{\SetTranslitConvention}[1]{\def\ax@trans@convention{#1}}
 \def\ax@trans@convention{loc}% Library of Congress is default
-\newcommand{\SetAllahWithAlif}{\def\ax@font@allah{fdf2alif}}
-\newcommand{\SetAllahWithoutAlif}{\def\ax@font@allah{fdf2noalif}}
+\newcommand{\SetAllahWithAlif}{} % deprecated
+\newcommand{\SetAllahWithoutAlif}{} % deprecated
 \def\utf@fontfeature{\ifmirror@punct\addfontfeature{Mapping=mirrorpunct}\else\relax\fi}
 \def\arabtex@codes{\catcode`^=11\relax\catcode`_=11\relax}
 \def\UC{\char"E000} % This is used to capitalize the following letter (ignoring
@@ -1421,12 +1305,12 @@ François Charette
 		\par\setRL\arabicfont\utf@fontfeature%
 	\else
 		\par\setRL\arabicfont\arabtex@codes%
-		\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}%
+		\addfontfeature{Mapping=arabtex-\@tempa}%
 	\fi\fi
 \else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\arabicfont\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}%
+	\addfontfeature{Mapping=arabtex-\ax@mode}%
 \fi}
 {\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
 \let\Arabic=\arab%
@@ -1444,12 +1328,12 @@ François Charette
 		\par\setRL\ax@maghribi@font\utf@fontfeature%
 	\else
 		\par\setRL\ax@maghribi@font\arabtex@codes%
-		\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\@tempa}%
+		\addfontfeature{Mapping=arabtex-maghribi-\@tempa}%
 	\fi\fi
 \else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@maghribi@font\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\ax@mode}%
+	\addfontfeature{Mapping=arabtex-maghribi-\ax@mode}%
 \fi}
 {\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
 %%%
@@ -1466,12 +1350,12 @@ François Charette
 		\par\setRL\ax@farsi@font\utf@fontfeature%
 	\else
 		\par\setRL\ax@farsi@font\arabtex@codes%
-		\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\@tempa}%
+		\addfontfeature{Mapping=arabtex-farsi-\@tempa}%
 	\fi\fi
 \else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@farsi@font\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\ax@mode}%
+	\addfontfeature{Mapping=arabtex-farsi-\ax@mode}%
 \fi}
 {\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
 \let\persian=\farsi
@@ -1489,12 +1373,12 @@ François Charette
 		\par\setRL\ax@urdu@font\addfontfeature{Language=Urdu}%Mapping=arabtex-utf}%
 	\else
 		\par\setRL\ax@urdu@font\arabtex@codes%
-		\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\@tempa}%
+		\addfontfeature{Mapping=arabtex-urdu-\@tempa}%
 	\fi\fi
 \else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@urdu@font\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\ax@mode}%
+	\addfontfeature{Mapping=arabtex-urdu-\ax@mode}%
 \fi}
 {\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
 %%%
@@ -1511,12 +1395,12 @@ François Charette
 		\par\setRL\ax@pashto@font\utf@fontfeature%
 	\else
 		\par\setRL\ax@pashto@font\arabtex@codes%
-		\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\@tempa}%
+		\addfontfeature{Mapping=arabtex-pashto-\@tempa}%
 	\fi\fi
 \else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@pashto@font\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\ax@mode}%
+	\addfontfeature{Mapping=arabtex-pashto-\ax@mode}%
 \fi}
 {\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
 %%%
@@ -1533,12 +1417,12 @@ François Charette
 		\par\setRL\ax@sindhi@font\addfontfeature{Language=Sindhi}%Mapping=arabtex-utf}%
 	\else
 		\par\setRL\ax@sindhi@font\arabtex@codes%
-		\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\@tempa,Language=Sindhi}%
+		\addfontfeature{Mapping=arabtex-sindhi-\@tempa,Language=Sindhi}%
 	\fi\fi
 \else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@sindhi@font\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\ax@mode,Language=Sindhi}%
+	\addfontfeature{Mapping=arabtex-sindhi-\ax@mode,Language=Sindhi}%
 \fi}
 {\ifx\@tempa\ax@mode@trans\relax\else\unsetRL\fi\par}
 %%%
@@ -1555,12 +1439,12 @@ François Charette
 		\par\setRL\ax@ottoman@font\utf@fontfeature%
 	\else
 		\par\setRL\ax@ottoman@font\arabtex@codes%
-		\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\@tempa}%
+		\addfontfeature{Mapping=arabtex-turk-\@tempa}%
 	\fi%\fi
 \else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@ottoman@font\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\ax@mode}%
+	\addfontfeature{Mapping=arabtex-turk-\ax@mode}%
 \fi}
 {%\ifx\@tempa\ax@mode@trans\relax\else
 \unsetRL%\fi
@@ -1578,7 +1462,7 @@ François Charette
 	\par\setRL\ax@kurdish@font\addfontfeature{Language=Kurdish}%Mapping=arabtex-utf}%
 \else
 	\par\setRL\ax@kurdish@font\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-kurdish,Language=Kurdish}%
+	\addfontfeature{Mapping=arabtex-kurdish,Language=Kurdish}%
 \fi}
 {%\ifx\@tempa\ax@mode@trans\relax\else
 \unsetRL%\fi
@@ -1591,18 +1475,18 @@ François Charette
 \ifax@mode@defined%
 	%\ifx\@tempa\ax@mode@trans%
 	%	\par\arabtex@codes\ax@trans@style%
-	%	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-trans-\ax@trans@convention}%
+	%	\addfontfeature{Mapping=arabtex-kashmiri-trans-\ax@trans@convention}%
 	%\else
 	\ifx\@tempa\ax@mode@utf%
 		\par\setRL\ax@kashmiri@font\utf@fontfeature%
 	\else
 		\par\setRL\ax@kashmiri@font\arabtex@codes%
-		\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\@tempa}%
+		\addfontfeature{Mapping=arabtex-kashmiri-\@tempa}%
 	\fi%\fi
 \else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@kashmiri@font\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\ax@mode}%
+	\addfontfeature{Mapping=arabtex-kashmiri-\ax@mode}%
 \fi}
 {%\ifx\@tempa\ax@mode@trans\relax\else
 \unsetRL%\fi
@@ -1621,12 +1505,12 @@ François Charette
 		\par\setRL\ax@malay@font\utf@fontfeature%
 	\else
 		\par\setRL\ax@malay@font\arabtex@codes%
-		\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\@tempa}%
+		\addfontfeature{Mapping=arabtex-malay-\@tempa}%
 	\fi%\fi
 \else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
 	\par\setRL\ax@malay@font\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\ax@mode}%
+	\addfontfeature{Mapping=arabtex-malay-\ax@mode}%
 \fi}
 {%\ifx\@tempa\ax@mode@trans\relax\else
 \unsetRL%\fi
@@ -1644,7 +1528,7 @@ François Charette
 	\par\setRL\ax@uighur@font\utf@fontfeature%
 \else
 	\par\setRL\ax@uighur@font\arabtex@codes%
-	\addfontfeature{Mapping=arabtex-\ax@font@allah-uighur}%
+	\addfontfeature{Mapping=arabtex-uighur}%
 \fi}
 {%\ifx\@tempa\ax@mode@trans\relax\else
 \unsetRL%\fi
@@ -1676,11 +1560,11 @@ François Charette
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\arabicfont\utf@fontfeature #2}%
 		\else
-			\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}\scantokens{#2\noexpand}}%
+			\RL{\arabicfont\addfontfeature{Mapping=arabtex-\@tempa}\scantokens{#2\noexpand}}%
 		\fi\fi
 	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
-	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}\scantokens{#2\noexpand}}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@mode}\scantokens{#2\noexpand}}%
 	\fi\egroup}
 \newcommand\text@maghribi[2][\ax@mode]{%
 	\edef\@tempa{#1}%
@@ -1694,11 +1578,11 @@ François Charette
 			\RL{\ax@maghribi@font\utf@fontfeature #2}%
 		\else
 			\RL{\ax@maghribi@font%
-			\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\@tempa}#2}%
+			\addfontfeature{Mapping=arabtex-maghribi-\@tempa}#2}%
 		\fi\fi
 	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
-	\RL{\ax@maghribi@font\addfontfeature{Mapping=arabtex-\ax@font@allah-maghribi-\ax@mode}#2}%
+	\RL{\ax@maghribi@font\addfontfeature{Mapping=arabtex-maghribi-\ax@mode}#2}%
 	\fi\egroup}
 \newcommand\text@farsi[2][\ax@mode]{%
 	\edef\@tempa{#1}%
@@ -1712,11 +1596,11 @@ François Charette
 			\RL{\ax@farsi@font\utf@fontfeature #2}%
 		\else
 			\RL{\ax@farsi@font%
-			\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\@tempa}#2}%
+			\addfontfeature{Mapping=arabtex-farsi-\@tempa}#2}%
 		\fi\fi
 	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
-	\RL{\ax@farsi@font\addfontfeature{Mapping=arabtex-\ax@font@allah-farsi-\ax@mode}#2}%
+	\RL{\ax@farsi@font\addfontfeature{Mapping=arabtex-farsi-\ax@mode}#2}%
 	\fi\egroup}
 \newcommand\text@urdu[2][\ax@mode]{%
 	\edef\@tempa{#1}%
@@ -1730,11 +1614,11 @@ François Charette
 			\RL{\ax@urdu@font\addfontfeature{Language=Urdu}#2}%eventually Mapping=arabtex-utf
 		\else
 			\RL{\ax@urdu@font%
-			\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\@tempa,Language=Urdu}#2}%
+			\addfontfeature{Mapping=arabtex-urdu-\@tempa,Language=Urdu}#2}%
 		\fi\fi
 	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
-	\RL{\ax@urdu@font\addfontfeature{Mapping=arabtex-\ax@font@allah-urdu-\ax@mode,Language=Urdu}#2}%
+	\RL{\ax@urdu@font\addfontfeature{Mapping=arabtex-urdu-\ax@mode,Language=Urdu}#2}%
 	\fi\egroup}
 \newcommand\text@sindhi[2][\ax@mode]{%
 	\edef\@tempa{#1}%
@@ -1748,11 +1632,11 @@ François Charette
 			\RL{\ax@sindhi@font\addfontfeature{Language=Sindhi} #2}%eventually Mapping=arabtex-utf
 		\else
 			\RL{\ax@sindhi@font%
-			\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\@tempa,Language=Sindhi}#2}%
+			\addfontfeature{Mapping=arabtex-sindhi-\@tempa,Language=Sindhi}#2}%
 		\fi\fi
 	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
-	\RL{\ax@sindhi@font\addfontfeature{Mapping=arabtex-\ax@font@allah-sindhi-\ax@mode,Language=Sindhi}#2}%
+	\RL{\ax@sindhi@font\addfontfeature{Mapping=arabtex-sindhi-\ax@mode,Language=Sindhi}#2}%
 	\fi\egroup}
 \newcommand\text@pashto[2][\ax@mode]{%
 	\edef\@tempa{#1}%
@@ -1766,11 +1650,11 @@ François Charette
 			\RL{\ax@pashto@font\utf@fontfeature #2}%
 		\else
 			\RL{\ax@pashto@font%
-			\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\@tempa}#2}%
+			\addfontfeature{Mapping=arabtex-pashto-\@tempa}#2}%
 		\fi\fi
 	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
-	\RL{\ax@pashto@font\addfontfeature{Mapping=arabtex-\ax@font@allah-pashto-\ax@mode}#2}%
+	\RL{\ax@pashto@font\addfontfeature{Mapping=arabtex-pashto-\ax@mode}#2}%
 	\fi\egroup}
 \newcommand\text@ottoman[2][\ax@mode]{%
 	\edef\@tempa{#1}%
@@ -1785,11 +1669,11 @@ François Charette
 			\RL{\ax@ottoman@font\utf@fontfeature #2}%
 		\else
 			\RL{\ax@ottoman@font%
-			\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\@tempa}#2}%
+			\addfontfeature{Mapping=arabtex-turk-\@tempa}#2}%
 		\fi%\fi
 	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
-	\RL{\ax@ottoman@font\addfontfeature{Mapping=arabtex-\ax@font@allah-turk-\ax@mode}#2}%
+	\RL{\ax@ottoman@font\addfontfeature{Mapping=arabtex-turk-\ax@mode}#2}%
 	\fi\egroup}
 \newcommand\text@kurdish[2][]{%
 	\edef\@tempa{#1}%
@@ -1802,7 +1686,7 @@ François Charette
 			\RL{\ax@kurdish@font\utf@fontfeature #2}%
 		\else
 			\RL{\ax@kurdish@font%
-			\addfontfeature{Mapping=arabtex-\ax@font@allah-kurdish,Language=Kurdish}#2}%
+			\addfontfeature{Mapping=arabtex-kurdish,Language=Kurdish}#2}%
 		\fi%\fi
 	\egroup}
 \newcommand\text@kashmiri[2][\ax@mode]{%
@@ -1818,11 +1702,11 @@ François Charette
 			\RL{\ax@kashmiri@font\utf@fontfeature #2}%
 		\else
 			\RL{\ax@kashmiri@font%
-			\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\@tempa}#2}%
+			\addfontfeature{Mapping=arabtex-kashmiri-\@tempa}#2}%
 		\fi%\fi
 	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
-	\RL{\ax@kashmiri@font\addfontfeature{Mapping=arabtex-\ax@font@allah-kashmiri-\ax@mode}#2}%
+	\RL{\ax@kashmiri@font\addfontfeature{Mapping=arabtex-kashmiri-\ax@mode}#2}%
 	\fi\egroup}
 \newcommand\text@malay[2][\ax@mode]{%
 	\edef\@tempa{#1}%
@@ -1837,11 +1721,11 @@ François Charette
 			\RL{\ax@malay@font\utf@fontfeature #2}%
 		\else
 			\RL{\ax@malay@font%
-			\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\@tempa}#2}%
+			\addfontfeature{Mapping=arabtex-malay-\@tempa}#2}%
 		\fi%\fi
 	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \ax@mode}%
-	\RL{\ax@malay@font\addfontfeature{Mapping=arabtex-\ax@font@allah-malay-\ax@mode}#2}%
+	\RL{\ax@malay@font\addfontfeature{Mapping=arabtex-malay-\ax@mode}#2}%
 	\fi\egroup}
 \newcommand\text@uighur[2][]{%
 	\edef\@tempa{#1}%
@@ -1854,7 +1738,7 @@ François Charette
 			\RL{\ax@uighur@font\utf@fontfeature #2}%
 		\else
 			\RL{\ax@uighur@font%
-			\addfontfeature{Mapping=arabtex-\ax@font@allah-uighur}#2}%
+			\addfontfeature{Mapping=arabtex-uighur}#2}%
 		\fi%\fi
 	\egroup}
 %
@@ -1879,8 +1763,6 @@ François Charette
 % ^^A- hamza directly above baseline (for Qur'an) : 0654 is too high!
 % ^^A  \def\hamzaB{\raisebox[-1ex]{\char"0654} is ok
 % ^^A
-% ^^A- U+FDF2: codify the LLAH ligature as well?
-% ^^A          Perhaps the FALILLAH ligature could be added as well?
 %
 % ^^A\clearpage
 % ^^A\PrintChanges
