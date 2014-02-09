@@ -94,7 +94,7 @@ François Charette
 %
 % \GetFileInfo{\jobname.sty}
 % 
-% \title{~\hfil {\color{IslamicGreen}\arabxetex \hfil \arabxetexAr}\hfil~\\ 
+% \title{~\hfil {\color{IslamicGreen}\arabxetex}\hfil~\\
 % An \arabtex-like interface for typesetting languages in Arabic script with \XeLaTeX}
 % \author{François Charette}
 % \date{\filedate \qquad \fileversion}
@@ -324,7 +324,7 @@ François Charette
 % You can also define specific fonts \new{1.1} for all other languages, by similarly defining
 % ¦\<language>font¦, such as for example:
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
-%     \newfontfamily\urdufont[Script=Arabic]{Nafees Pakistani Naskh}
+%     \newfontfamily\urdufont[Script=Arabic]{Hussaini Nastaleeq}
 % \end{Verbatim}
 % So for example if the \cmd\texturdu\ command or the ¦urdu¦ environment is used,
 % \arabxetex\ will use the \cmd\urdufont\ if it is defined, 
@@ -448,7 +448,7 @@ François Charette
 % \subsubsection{Farsi}
 %
 % These are some of the Persian examples in the \arabtex\ documentation,
-% typeset with the font Simple Farsi Bold:
+% typeset with the font IranNastaliq:
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
 % \begin{farsi}[voc]
 % _hwAb, xwI^s, _hwod, ^ceH, naH, yal_aH, _hAneH, _hAneHhA, _hAneH-hA, 
@@ -473,7 +473,7 @@ François Charette
 % 
 % \subsubsection{Urdu}
 % 
-% An Urdu example, typeset with Nafees Pakistani Naskh:\footnote{ ^^A
+% An Urdu example, typeset with Hussaini Nastaleeq:\footnote{ ^^A
 % 	The example is borrowed from 
 % 	\url{http://tabish.freeshell.org/u-trans/urducode.html}}
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
@@ -1103,41 +1103,29 @@ François Charette
 % \textsf{076B}   \>   {\arabicfont\char"076B}   \\
 % \textsf{076C}   \>   {\arabicfont\char"076C}   \\
 % \textsf{076D}   \>   {\arabicfont\char"076D}   \\
-% \textbf{Presentation Forms} * \\
+% \textbf{Presentation Forms} \\
 % \textsf{FD3E}	\>   {\arabicfont\char"FD3E} 	\>	¦))¦ \\
 % \textsf{FD3F}	\>   {\arabicfont\char"FD3F} 	\>	¦((¦ \\
-% \textsf{FDF0}	\>   {\arialuni\char"FDF0} 	\>	¦SALLASTOP¦ \\
-% \textsf{FDF1}	\>   {\arialuni\char"FDF1} 	\>	¦QALA¦ \\
-% \textsf{FDF3}	\>   {\arialuni\char"FDF3} 	\>	¦AKBAR¦ \\
-% \textsf{FDF4}	\>   {\arialuni\char"FDF4} 	\>	¦MUHAMMAD¦ \\
-% \textsf{FDF5}	\>   {\arialuni\char"FDF5} 	\>	¦SALAM¦ \\
-% \textsf{FDF6}	\>   {\arialuni\char"FDF6} 	\>	¦RASUL¦ or ¦RASOUL¦ \\
-% \textsf{FDF7}	\>   {\arialuni\char"FDF7} 	\>	¦ALAYHI¦ or ¦ALAYHE¦ \\
-% \textsf{FDF8}	\>   {\arialuni\char"FDF8} 	\>	¦WASALLAM¦ \\
-% \textsf{FDF9}	\>   {\arialuni\char"FDF9} 	\>	¦SALLA¦ \\
-% \textsf{FDFA}	\>   {\adobearabic\char"FDFA} 	\>	¦SLM¦ \\
-% \textsf{FDFB}	\>   {\arialuni\char"FDFB} 	\>	¦JALLA¦ \\
+% \textsf{FDF0}	\>   {\arabicfont\char"FDF0} 	\>	¦SALLASTOP¦ \\
+% \textsf{FDF1}	\>   {\arabicfont\char"FDF1} 	\>	¦QALA¦ \\
+% \textsf{FDF3}	\>   {\arabicfont\char"FDF3} 	\>	¦AKBAR¦ \\
+% \textsf{FDF4}	\>   {\arabicfont\char"FDF4} 	\>	¦MUHAMMAD¦ \\
+% \textsf{FDF5}	\>   {\arabicfont\char"FDF5} 	\>	¦SALAM¦ \\
+% \textsf{FDF6}	\>   {\arabicfont\char"FDF6} 	\>	¦RASUL¦ or ¦RASOUL¦ \\
+% \textsf{FDF7}	\>   {\arabicfont\char"FDF7} 	\>	¦ALAYHI¦ or ¦ALAYHE¦ \\
+% \textsf{FDF8}	\>   {\arabicfont\char"FDF8} 	\>	¦WASALLAM¦ \\
+% \textsf{FDF9}	\>   {\arabicfont\char"FDF9} 	\>	¦SALLA¦ \\
+% \textsf{FDFA}	\>   {\arabicfont\char"FDFA} 	\>	¦SLM¦ \\
+% \textsf{FDFB}	\>   {\jallafont\char"FDFB} 	\>	¦JALLA¦ \\
 % \textsf{FDFC}	\>   {\arabicfont\char"FDFC} 	\>	¦RIYAL¦ \\
-% \textsf{FDFD}	\>   {\Huge\arabesque\char"F050} \>	¦BASMALA¦ \\ 
-% \textbf{Non-Unicode Ligatures} \\
-%  		\>   {\arabicfont الله}   	\>	¦al-ll_ah¦ or ¦ALLAH¦ ** \\
-% 		\>   {\arabicfont لله}		\>	¦ll_ah¦ or ¦LLAH¦ ** \\
-% 		\>   {\adobearabic فَلِله} 	\> 	¦FALILLAH¦ ***
+% \textsf{FDFD}	\>   {\arabicfont\char"FDFD}	\>	¦BASMALA¦ \\
+% \textbf{Special Combinations} \\
+%  		\>   {\arabicfont الله}   	\>	¦al-ll_ah¦ or ¦ALLAH¦ \\
+% 		\>   {\arabicfont لله}		\>	¦ll_ah¦ or ¦LLAH¦ \\
+% 		\>   {\arabicfont فَلِله} 	\> 	¦FALILLAH¦
 % \end{tabbing}
 % \end{multicols}
 % \parindentoff
-% 
-% \baselineskip 14pt 
-% \textit{Notes}\\
-% * Since most of these glyphs are not present in Scheherazade 
-% (and, with a few exceptions, are very rarely featured in other fonts), 
-% for illustration purposes we have taken \textsf{FDF0}, \textsf{FDF1}, 
-% \textsf{FDF3}--\textsf{FDF9} and \textsf{FDFB} from Arial Unicode MS, 
-% \textsf{FDFA} from Adobe Arabic, and \textsf{FDFD} from AGA Arabesque.
-% 
-% ** See §~\ref{allahliga} 
-% 
-% *** Specific to the font Adobe Arabic
 % 
 % \newpage
 % \appendix
@@ -1819,7 +1807,6 @@ François Charette
 \makeatother
 \def\arabxetex{Arab\XeTeX}
 \def\arabtex{Arab\TeX}
-\def\arabxetexAr{\RL{\fontspec[Script=Arabic,Scale=1.5]{DecoType Thuluth} عرب زيتخ}}
 \def\MacOSX{Mac~OS~X}
 \def\ASCII{\textsc{ascii}} % ii small caps does not work with Junicode!
 
@@ -1847,21 +1834,14 @@ François Charette
 %%%
 
 %% fontspec declarations:
-\setromanfont[Mapping=tex-text]{Junicode}%{FPL Neu}
+\setromanfont[Mapping=tex-text]{Junicode}
 \defaultfontfeatures{Scale=MatchLowercase}
-\setmonofont{Inconsolata}%{Latin Modern Typewriter Proportional}%{Luxi Mono}%{Courier New}
+\setmonofont{Inconsolata}
 \setsansfont{Lucida Sans Unicode}
-\newfontfamily\arabicfont[Script=Arabic,Scale=1.5]{Scheherazade}
-\newfontfamily\urdufont[Script=Arabic,Scale=1.2]{Nafees Pakistani Naskh}%Nafees Nastaleeq does not work well
-\newfontfamily\farsifont[Script=Arabic,Scale=1.33]{Farsi Simple Bold}
-\newfontfamily\lateeffont[Script=Arabic,Scale=1.5]{Lateef}
-\newfontfamily\lotusfont[Script=Arabic,Scale=1.5]{Lotus Linotype}
-\newfontfamily\arabtype[Script=Arabic,Scale=1.5]{Arabic Typesetting}
-\newfontfamily\adobearabic[Script=Arabic,Scale=1.5]{Adobe Arabic}
-\newfontfamily\tradarabic[Script=Arabic,Scale=1.5]{Traditional Arabic}
-\newfontfamily\arabesque{AGA Arabesque}
-\newfontfamily\arialuni{Arial Unicode MS}
-\newfontfamily\gentium{Gentium}
+\newfontfamily\arabicfont[Script=Arabic,Scale=1]{Amiri}
+\newfontfamily\urdufont[Script=Arabic,Scale=1.2]{Hussaini Nastaleeq}
+\newfontfamily\farsifont[Script=Arabic,Scale=1.33]{IranNastaliq}
+\newfontfamily\jallafont{Arial Unicode MS} % drop this one JALLA is supported by Amiri
 
 \linespread{1.05}
 \frenchspacing
