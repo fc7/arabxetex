@@ -1765,7 +1765,7 @@ François Charette
 %    \begin{macrocode}
 \ProvidesPackage{arabxetex-dtx-style}
 \usepackage[silent]{fontspec}
-\usepackage{xltxtra}
+\usepackage{hologo}
 \usepackage{array,supertabular,xspace,multicol,fancyvrb,paralist}
 \usepackage{color}
 \definecolor{myblue}{rgb}{0.02,0.04,0.48}
@@ -1801,11 +1801,6 @@ François Charette
 \newcommand{\parindentoff}{\setlength{\oldparindent}{\parindent} \setlength{\parindent}{0pt}}
 \newcommand{\parindenton}{\setlength{\parindent}{\oldparindent}}
 
-%% LOGOS, tuned for Palatino:
-\makeatletter
-\TeX@logo@spacing{-0.12em}{-0.12em}%
-  {0.5ex}{-0.3em}{-0.12em}{-0.1em}
-\makeatother
 \def\arabxetex{Arab\XeTeX}
 \def\arabtex{Arab\TeX}
 \def\MacOSX{Mac~OS~X}
