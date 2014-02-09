@@ -705,13 +705,13 @@ UL a	  > U+0670
 #n AN / (A H|Ha) _ > ;
 #v Q AN / (A H|Ha) _ > ; 
 #v AN / (A H|Ha) _ > U+064B
-#n Q AN   > U+0627 U+064B 
+#n Q AN   > U+064B U+0627
 #n AN  	  > U+0627 
 #n Q a	  > U+064E 
 #n Q A	  > U+064E U+0627 
 #n A	  > U+0627 
 #v Q AN   > U+0627 
-#v AN 	  > U+0627 U+064B 
+#v AN 	  > U+064B U+0627
 #v Q a	  > 
 #v a 	  > U+064E 
 #v Q A	  > U+0627 
