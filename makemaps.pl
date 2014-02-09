@@ -483,24 +483,6 @@ while (<MAPS>) {
 close OUTPUT;
 close MAPS;
 
-# Now Kurdish and Uighur...
-
-open MAPS, "<arabtex-kurdish.maps" ;
-open OUTPUT, ">$output-kurdish.map";
-while (<MAPS>) {
-	print OUTPUT
-}
-close OUTPUT;
-close MAPS;
-
-open MAPS, "<arabtex-uighur.maps" ;
-open OUTPUT, ">$output-uighur.map";
-while (<MAPS>) {
-	print OUTPUT
-}
-close OUTPUT;
-close MAPS;
-
 # Let's compile them now
 system("cp *.map mappings/");
 system("for map in mappings/*.map; do echo \"compiling \$map ...\" && teckit_compile \$map; done");
