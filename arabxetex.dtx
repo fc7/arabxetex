@@ -1671,16 +1671,16 @@ François Charette
 	\ax@ismode@defined{\@tempa}%
 	\ifax@mode@defined%
 		\ifx\@tempa\ax@mode@trans%
-			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}#2}%
+			{\ax@trans@style\addfontfeature{Mapping=arabtex-trans-\ax@trans@convention}\scantokens{#2\noexpand}}%
 		\else
 		\ifx\@tempa\ax@mode@utf%
 			\RL{\arabicfont\utf@fontfeature #2}%
 		\else
-			\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}#2}%
+			\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\@tempa}\scantokens{#2\noexpand}}%
 		\fi\fi
 	\else
 	\PackageWarning{arabxetex}{Mode \@tempa\ not defined, defaulting to \@ax@mode}%
-	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}#2}%
+	\RL{\arabicfont\addfontfeature{Mapping=arabtex-\ax@font@allah-\ax@mode}\scantokens{#2\noexpand}}%
 	\fi\egroup}
 \newcommand\text@maghribi[2][\ax@mode]{%
 	\edef\@tempa{#1}%
