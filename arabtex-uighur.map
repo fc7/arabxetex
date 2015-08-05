@@ -96,8 +96,8 @@ U+0053 U+0041 U+004A U+0044 U+0041 > U+06E9 ;; SAJDA
 
 U+0044 U+004F U+0054 U+0053 > U+061E ;; DOTS  (also possible by typing "::")
 
-;; This is to enclose digits within glyph U+06DD, see http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&item_id=ArabicFonts
-U+005B U+005B ([Digits]+)=dig U+005D U+005D > U+202E U+06DD @dig U+202C ; [[digits]]
+;; This is to enclose digits within glyph U+06DD
+U+005B U+005B ([Digits]+)=dig U+005D U+005D > U+06DD @dig ; [[digits]]
 
 
 ; vowels
