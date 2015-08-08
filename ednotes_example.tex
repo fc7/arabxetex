@@ -11,9 +11,9 @@
 %%
 \documentclass[12pt,a4paper,oneside]{memoir}
 \usepackage{fontspec}
-\setromanfont[Mapping=tex-text]{Junicode}
-\usepackage[novoc,fdf2alif]{arabxetex}
-\newfontfamily\arabicfont[Script=Arabic,Scale=1.2,WordSpace=2]{Scheherazade}
+\setmainfont[Ligatures=TeX]{Junicode}
+\usepackage[novoc]{arabxetex}
+\newfontfamily\arabicfont[Script=Arabic,WordSpace=2]{Amiri}
 %% OK, now we load ednotes with appropriate options. 
 %% For each extra level of notes in the critical apparatus we need to 
 %% initialize it with the appropriate option, in this case, "Bpara". 
@@ -51,7 +51,7 @@
 \renewcommand*{\differentlines}[2]{\linesfmt{\RL{#1\textendash#2}}}% 
 \renewcommand*{\linesfmt}[1]{\raisebox{1ex}{\linenumberfont #1}~}% 
 \renewcommand{\lemmafmt}[1]{#1~[ }% 
-\renewcommand*{\pageandline}[2]{#2.\textlatin{#1}}% #1 page, #2 line. 
+\renewcommand*{\pageandline}[2]{#2.\textLR{#1}}% #1 page, #2 line.
 % \renewcommand*{\repeatref}[1]{\raisebox{-.5ex}{$\Vert$}}% << not advisable 
 % \renewcommand{\lemmaellipsis}{\textsymmdots}%
 % \renewcommand{\notefmt}[1]{##1}%
@@ -91,9 +91,9 @@
 %% The typographical "object" that separates successive variants in one note:
 \newcommand{\SEP}{\enskip;\enskip} 
 %% The typographical "object" that indicates additions in a MS:
-\newcommand{\ADD}{\textlatin{\textbf{+}}\,}%
+\newcommand{\ADD}{\textLR{\textbf{+}}\,}%
 %% The typographical "object" that indicates omissions in a MS:
-\newcommand{\OM}{\textlatin{\textbf{–}}\,}%
+\newcommand{\OM}{\textLR{\textbf{–}}\,}%
 %% The typographical "object" that indicates a correction not reflected in any MS:
 \newcommand{\CORR}{\textarab{.s.h.h-}}%
 %% The typographical "object" that indicates illegible passages in a MS:
@@ -105,7 +105,7 @@
 %% The typographical "object" that indicates a supralinear passage in a MS:
 \newcommand{\SUPERLIN}{\textarab{ta.ht al-sa.tr}}%
 %% The typographical "object" in the main text that indicates a lacuna in all MSS:
-\newcommand{\LACUNA}{\textlatin{\textlangle\,\dots\textrangle}}
+\newcommand{\LACUNA}{\textLR{\textlangle\,\dots\textrangle}}
 %% The typographical "object" in the main text that indicates a restoration:
 \newcommand{\RESTOR}[1]{\}~#1~\{}
 %%
