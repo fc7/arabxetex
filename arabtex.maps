@@ -151,24 +151,14 @@ Define ENDZ (#|[BRACKETS]|[PUNCT] U+0020|[PUNCT] #|Z)
 
 ; special ligatures
 ;; 1. Standard ArabTeX input
-;; WARNING! there are, alas, two classes of Arabic fonts:
-;; a) Those that are Unicode-compliant and include the initial alif in glyph U+FDF2 
-;;    For these the ligature llah can be accessed by the sequence lam-lam-ha
-;; b) Those that do not have the initial alif in U+FDF2
 ;; The BAR is used in the DMG transliteration to suppress the initial A
-#0 (a|A) BAR? l Z LLAH > U+0627 U+FDF2 ;; 'al-ll_ah' or 'Al-ll_ah'
-#1 (a|A) BAR? l Z LLAH > U+FDF2 ;; 'al-ll_ah' or 'Al-ll_ah'
-#0 LLAH > U+FDF2 ;; 'll_ah' > U+FDF2
-#1 LLAH > U+0644 U+0644 U+0647  ;; 'll_ah' -> 'l l h'
+(a|A) BAR? l Z LLAH > U+0627 U+0644 U+0644 U+0647 ;; 'al-ll_ah' or 'Al-ll_ah'
+LLAH > U+0644 U+0644 U+0647  ;; 'll_ah' -> 'l l h'
 ;; UPPERCASE mnemonics for various ligatures or special glyphs
-;; 2a. custom ArabXeTeX input for ligatures not defined in Unicode
 U+004C U+004C U+0048 > U+0644 U+0644 U+0647  ;; 'LLH' -> 'l l h'
-U+0046 U+0041 U+004C U+0049 U+004C U+004C U+0041 U+0048 > U+0641 U+064E U+0644 U+0650 U+0644 U+0647 ;; 'FALILLAH' : ligature in Adobe Arabic
-;; 2b. Ligatures and glyphs defined in Unicode:
-#0  U+0041 U+004C U+004C U+0041 U+0048 > U+0627 U+FDF2 ; 'ALLAH'
-#1 U+0041 U+004C U+004C U+0041 U+0048 > U+FDF2 ; 'ALLAH'
-#0  U+004C U+004C U+0041 U+0048 > U+FDF2 ; 'LLAH'
-#1 U+004C U+004C U+0041 U+0048 > U+0644 U+0644 U+0647 ; 'LLAH'
+U+0046 U+0041 U+004C U+0049 U+004C U+004C U+0041 U+0048 > U+0641 U+064E U+0644 U+0650 U+0644 U+0647 ;; 'FALILLAH'
+U+0041 U+004C U+004C U+0041 U+0048 > U+0627 U+0644 U+0644 U+0647 ; 'ALLAH'
+U+004C U+004C U+0041 U+0048 > U+0644 U+0644 U+0647 ; 'LLAH'
 
 U+0053 U+004C U+004D > U+FDFA ; 'SLM' : .sallY al-ll_ah `alayhi wa-sallam
 U+0028 U+0028 > U+FD3F ;; '((' : ornate right par
@@ -213,8 +203,8 @@ U+005F U+004D U+0049 U+004D > U+06ED  ;; _MIM
 
 U+0044 U+004F U+0054 U+0053 > U+061E ;; DOTS  (also possible by typing "::")
 
-;; This is to enclose digits within glyph U+06DD, see http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&item_id=ArabicFonts
-U+005B U+005B ([Digits]+)=dig U+005D U+005D > U+202E U+06DD @dig U+202C ; [[digits]]
+;; This is to enclose digits within glyph U+06DD
+U+005B U+005B ([Digits]+)=dig U+005D U+005D > U+06DD @dig ; [[digits]]
 
 
 ; vowels
@@ -715,13 +705,13 @@ UL a	  > U+0670
 #n AN / (A H|Ha) _ > ;
 #v Q AN / (A H|Ha) _ > ; 
 #v AN / (A H|Ha) _ > U+064B
-#n Q AN   > U+0627 U+064B 
+#n Q AN   > U+064B U+0627
 #n AN  	  > U+0627 
 #n Q a	  > U+064E 
 #n Q A	  > U+064E U+0627 
 #n A	  > U+0627 
 #v Q AN   > U+0627 
-#v AN 	  > U+0627 U+064B 
+#v AN 	  > U+064B U+0627
 #v Q a	  > 
 #v a 	  > U+064E 
 #v Q A	  > U+0627 
