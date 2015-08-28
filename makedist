@@ -81,8 +81,9 @@ echo "arabxetex.zip can be uploaded on CTAN..."
 echo "Install to ~/texmf/ ? [y/N]"
 read -en 1 INSTALL_Q
 if [ "$INSTALL_Q" = "y" ] || [ "$INSTALL_Q" = "Y" ]; then
-  unzip -uo arabxetex.tds.zip -d $HOME/texmf/ 
-  mktexlsr $HOME/texmf
+  TEXMFHOME="$HOME/Library/texmf"
+  unzip -uo arabxetex.tds.zip -d $TEXMFHOME/ 
+  mktexlsr $TEXMFHOME
   echo "update completed"
 fi
 rm arabxetex.tds.zip
