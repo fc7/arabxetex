@@ -114,7 +114,7 @@ Define Q U+0022  ;"  << QUOTE
 Define Z U+002D  ;-  << HYPHEN
 Define BAR U+007C ;|
 Define AN  U+0061 U+004E ; aN
-Define LLAH U+006C U+006C U+005F U+0061 U+0068 
+Define LLAH U+006C U+006C U+005F U+0061 U+0068 ; ll_ah
 ;Define NUL U+00A6;
 Define Ha  U+0623
 Define Hi  U+0625
@@ -151,11 +151,13 @@ Define ENDZ (#|[BRACKETS]|[PUNCT] U+0020|[PUNCT] #|Z)
 
 ; special ligatures
 ;; 1. Standard ArabTeX input
+;; FDF2 is just used as temporary holder, and is converted back to ligature lam lam hah later (to be taken care of by the font)
+#Af Z (a|A) l Z LLAH > U+0671 U+FDF2 ;; '-al-ll_ah' or '-Al-ll_ah'
 ;; The BAR is used in the DMG transliteration to suppress the initial A
-(a|A) BAR? l Z LLAH > U+0627 U+0644 U+0644 U+0647 ;; 'al-ll_ah' or 'Al-ll_ah'
-LLAH > U+0644 U+0644 U+0647  ;; 'll_ah' -> 'l l h'
+(a|A) BAR? l Z LLAH > U+0627 U+FDF2 ;; 'al-ll_ah' or 'Al-ll_ah'
+LLAH > U+FDF2  ;; 'll_ah' -> 'l l h'
 ;; UPPERCASE mnemonics for various ligatures or special glyphs
-U+004C U+004C U+0048 > U+0644 U+0644 U+0647  ;; 'LLH' -> 'l l h'
+U+004C U+004C U+0048 > U+FDF2  ;; 'LLH' -> 'l l h'
 U+0046 U+0041 U+004C U+0049 U+004C U+004C U+0041 U+0048 > U+0641 U+064E U+0644 U+0650 U+0644 U+0647 ;; 'FALILLAH'
 U+0041 U+004C U+004C U+0041 U+0048 > U+0627 U+0644 U+0644 U+0647 ; 'ALLAH'
 U+004C U+004C U+0041 U+0048 > U+0644 U+0644 U+0647 ; 'LLAH'
@@ -771,5 +773,6 @@ BAR       >   ;|
 #f U+0627 / # _ U+0644 > U+0627 U+064E ; otherwise initial alif takes fatha
 #f [CONS]=k1 / _ ([CONS]|#) > @k1 U+0652  ; consonant + (consonant or final)
 #f ;; [CONS]=k1 / _ # > @k1 U+0652 ; final consonant
+U+FDF2 > U+0644 U+0644 U+0647 ;
 #f Q > ;
 #v Z > ;
