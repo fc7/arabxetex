@@ -119,7 +119,10 @@ François Charette
 % 
 % \section{Introduction}
 % 
-% Since the early 1990s, \TeX\ users who wished to typeset in Arabic script 
+% 
+% Since the early 1990s,\footnote{ ^^A
+%   This introduction reflects the state of things in 2007 when \arabxetex\ was initially released.} 
+% \TeX\ users who wished to typeset in Arabic script 
 % have relied on Klaus Lagally's excellent \arabtex\ system.\footnote{ ^^A
 % 	\url{ftp://ftp.informatik.uni-stuttgart.de/pub/arabtex/arabtex.htm}.
 % 	Version 2.00 was released in April 1992 and version 3.00 in November of
@@ -156,7 +159,7 @@ François Charette
 % up-to-date typesetting engine based on the integration of \eTeX, Unicode, and 
 % modern font-rendering technology, without the complex hassle of
 % font installation.\footnote{ ^^A
-% 	\url{http://scripts.sil.org/xetex}.}
+% 	\url{http://xetex.sourceforge.net}.}
 % 
 % \section{Description}
 % 
@@ -171,12 +174,7 @@ François Charette
 % \arabxetex\ introduces several additions, and a few minor modifications, 
 % to \arabtex's conventions. These are documented in tabular form in 
 % Section~\ref{conventiontable}.  \arabxetex\ relies on the package \pkg{bidi}
-% which contains the macros necessary for bidirectional typesetting --
-% using \eTeX's \cmd{\beginR} \ldots \cmd{\endR}, \cmd{\beginL} \ldots \cmd{\endL} 
-% primitives.  The main code in \pkg{bidi.sty} is essentially borrowed, 
-% with minor adaptations, from the file \pkg{rlbabel.def} in the Babel
-% distribution (where it serves for typesetting Hebrew). Some improvements 
-% in the beta version were inspired by Youssef Jabri's \pkg{Arabi}.
+% which contains the macros necessary for bidirectional typesetting.
 % 
 % Languages supported at present are the same as in \arabtex, namely: Arabic,
 % Maghribi Arabic, Farsi (Persian), Urdu, Sindhi, Kashmiri, Ottoman Turkish,
@@ -220,7 +218,7 @@ François Charette
 % \DescribeMacro{\textarab}\DescribeMacro{\textfarsi}\marginpar{\raggedleft\small etc.}
 % where ¦<language>¦ is one of the following (alternative names are given in brackets):
 % \begin{compactitem}[\textbf{·}]
-% 	\item ¦arab¦ (¦Arabic¦),\footnote{ ^^A
+% 	\item ¦arab¦ (¦arabic¦),\footnote{ ^^A
 % 		Since the command \cmd\arabic\ is already defined in \LaTeX, we chose
 % 		the environment ¦arab¦ and the command \cmd\textarab\ instead,
 % 		but the equivalent environment ¦Arabic¦ and the command
@@ -384,21 +382,20 @@ François Charette
 % typesetters. Nevertheless, with Open Type fonts that cover the full Unicode range 
 % for the Arabic script, it is possible to achieve pretty decent results.
 % The following examples represent my attempt to reproduce, with the font
-% Scheherazade, the various typographic features of a typical printed edition 
-% from Saudi Arabia. 
+% Amiri, the various typographic features of a typical printed edition (disregarding those that cannot be achieved 
+% by means of Unicode, such as putting the \textit{hamza} directly over the baseline).\footnote{ ^^A
+%   In the previous version of the manual, I attempted to mimic that behaviour with a \TeX\ macro ¦\hamzaB¦ which happened to work rather well with the font Scheherazade. With Amiri it does not.}
 % 
-% In printed Qurʾāns, one frequently encounters typographical oddities that are 
-% not taken into account by Unicode, such as the \textit{hamza} placed directly over 
-% the baseline instead as over the \textit{alif}. 
-% But with a \TeX\ macro it is possible to emulate this rather well: 
+% ^^AIn printed Qurʾāns, one frequently encounters typographical oddities that are 
+% ^^Anot taken into account by Unicode, such as the \textit{hamza} placed directly over 
+% ^^Athe baseline instead as over the \textit{alif}. 
+% ^^ABut with a \TeX\ macro it is possible to emulate this rather well: 
 % 
 % \begin{Verbatim}[gobble=2,fontsize=\small]
-% \newcommand{\hamzaB}{\char"200D\char"0640\raise-.95ex\hbox{\char"0654}\char"200D}
-%
 % \begin{arab}[fullvoc]
 % mina 'l-qur'Ani 'l-karImi, sUraTu 'l-ssajdaTi 15--16:
 %  
-% 'innamA yu'minu bi-\hamzaB a|"Ay___atinA 'lla_dIna 'i_dA _dukkirUA bihA 
+% 'innamA yu'minu bi-'AyAtinA 'lla_dIna 'i_dA _dukkirUA bihA 
 % _harrUA sujjadaN wa-sabba.hUA bi-.hamdi rabbihim wa-hum lA yastakbirUna 
 % SAJDA [[15]] tatajAfY_a junUbuhum `ani 'l-ma.dAji`i yad`Una rabbahum 
 % _hawfaN wa-.tama`aN wa-mimmA razaqn_ahum yunfiqUna [[16]]
@@ -408,36 +405,38 @@ François Charette
 % sUraTu 'l-baqaraTi 71--72:
 % 
 % qAla 'innahu, yaqUlu 'innahA baqaraTuN llA _dalUluN tu_tIru 'l-'ar.da wa-lA
-% tasq.I 'l-.har_ta musallamaTuN llA ^siyaTa fIhA|^JIM qAluW" 'l-\hamzaB a___ana
+% tasq.I 'l-.har_ta musallamaTuN llA ^siyaTa fIhA|^JIM qAluW" 'l-'Ana
 % ji'ta bi-'l-.haqqi|^JIM fa_daba.hUhA wa-mA kAdduW" yaf`alUna [[71]] wa-'i_d
-% qataltum nafsaN fa-udda$\,$_ara|'|_i"tum fIhA|^SLY wa-al-ll_ahu mu_hrijuN mmA
+% qataltum nafsaN fa-udda_ara|'|_i"tum fIhA|^SLY wa-al-ll_ahu mu_hrijuN mmA
 % kun"tum taktumUna [[72]] 
 % \end{arab} 
 % \end{Verbatim}
-% 
+% ^^A\let\stdarabicfont\arabicfont
+% ^^A\let\arabicfont\amiriquran
 % \begin{arab}[fullvoc]
 % mina 'l-qur'Ani 'l-karImi, sUraTu 'l-ssajdaTi 15--16:
 %  
-% 'innamA yu'minu bi-\hamzaB a|"Ay___atinA 'lla_dIna 'i_dA _dukkirUA bihA _harrUA
-% sujjadaN wa-sabba.hUA bi-.hamdi rabbihim wa-hum lA yastakbirUna SAJDA [[15]]
-% tatajAfY_a junUbuhum `ani 'l-ma.dAji`i yad`Una rabbahum _hawfaN wa-.tama`aN
-% wa-mimmA razaqn_ahum yunfiqUna [[16]]
+% 'innamA yu'minu bi-'AyAtinA 'lla_dIna 'i_dA _dukkirUA bihA 
+% _harrUA sujjadaN wa-sabba.hUA bi-.hamdi rabbihim wa-hum lA yastakbirUna 
+% SAJDA [[15]] tatajAfY_a junUbuhum `ani 'l-ma.dAji`i yad`Una rabbahum 
+% _hawfaN wa-.tama`aN wa-mimmA razaqn_ahum yunfiqUna [[16]]
 % \end{arab}
 %
 % \begin{arab}[fullvoc]
 % sUraTu 'l-baqaraTi 71--72:
 % 
 % qAla 'innahu, yaqUlu 'innahA baqaraTuN llA _dalUluN tu_tIru 'l-'ar.da wa-lA
-% tasq.I 'l-.har_ta musallamaTuN llA ^siyaTa fIhA|^JIM qAluW" 'l-\hamzaB a___ana
+% tasq.I 'l-.har_ta musallamaTuN llA ^siyaTa fIhA|^JIM qAluW" 'l-'Ana
 % ji'ta bi-'l-.haqqi|^JIM fa_daba.hUhA wa-mA kAdduW" yaf`alUna [[71]] wa-'i_d
-% qataltum nafsaN fa-udda$\,$_ara|'|_i"tum fIhA|^SLY wa-al-ll_ahu mu_hrijuN mmA
+% qataltum nafsaN fa-udda_ara|'|_i"tum fIhA|^SLY wa-al-ll_ahu mu_hrijuN mmA
 % kun"tum taktumUna [[72]] 
 % \end{arab}
-% 
+% ^^A\let\arabicfont\stdarabicfont 
 % \subsubsection{Farsi}
 %
 % These are some of the Persian examples in the \arabtex\ documentation,
-% typeset with the font IranNastaliq:
+% typeset with the font IranNastaliq:\footnote{ ^^A
+%   \url{http://www.scict.ir/portal/File/ShowFile.aspx?ID=29bc4b98-bfd0-428d-b56b-63e36de8c9b5}}
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
 % \begin{farsi}[novoc]
 % _hwAb, xwI^s, _hwod, ^ceH, naH, yal_aH, _hAneH, _hAneHhA, _hAneH-hA, 
@@ -463,7 +462,8 @@ François Charette
 % \subsubsection{Urdu}
 % 
 % An Urdu example, typeset with Hussaini Nastaleeq:\footnote{ ^^A
-% 	The example is borrowed from 
+% 	\url{https://github.com/khaledhosny/hussaini-nastaleeq}. 
+%   The example is borrowed from 
 % 	\url{http://tabish.freeshell.org/u-trans/urducode.html}}
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
 % \begin{urdu}[novoc]
@@ -522,10 +522,7 @@ François Charette
 % \end{arab}
 % Note that the article \textit{al-} is automatically skipped.
 % Note also that since the transliteration is coded in Unicode at the level of
-% the font-mapping, it is necessary that the font contains all required glyphs.\footnote{ ^^A
-% 	See Appendix~\ref{latinextfonts} for a list of recommended Unicode fonts that cover the 
-% 	full \textsc{latin extended additional} plane.}
-% 
+% the font-mapping, it is necessary that the font contains all required glyphs. 
 % ^^AIf your default roman font does not have the required
 % ^^Adiacritics, you can declare for instance
 % ^^A¦\SetTranslitStyle{\fontspec{Gentium}\itshape}¦.
@@ -813,7 +810,7 @@ François Charette
 % ^^A06BC -> 0646 0631
 % ^^A0689 -> 0688
 % ^^A
-% 
+% \newpage
 % \section{Unicode-Encoding concordance}
 % \parindent 0pt
 % \let\oldbaselineskip=\baselineskip
@@ -1091,7 +1088,8 @@ François Charette
 % \textsf{076A}   \>   {\arabicfont\char"076A}   \\
 % \textsf{076B}   \>   {\arabicfont\char"076B}   \\
 % \textsf{076C}   \>   {\arabicfont\char"076C}   \\
-% \textsf{076D}   \>   {\arabicfont\char"076D}   \\
+% \textsf{076D}   \>   {\arabicfont\char"076D}   \\ 
+% ~~~             \>   ~~~  \\
 % \textbf{Presentation Forms} \\
 % \textsf{FD3E}	\>   {\arabicfont\char"FD3E} 	\>	¦))¦ \\
 % \textsf{FD3F}	\>   {\arabicfont\char"FD3F} 	\>	¦((¦ \\
@@ -1105,12 +1103,12 @@ François Charette
 % \textsf{FDF8}	\>   {\arabicfont\char"FDF8} 	\>	¦WASALLAM¦ \\
 % \textsf{FDF9}	\>   {\arabicfont\char"FDF9} 	\>	¦SALLA¦ \\
 % \textsf{FDFA}	\>   {\arabicfont\char"FDFA} 	\>	¦SLM¦ \\
-% \textsf{FDFB}	\>   {\arabicfont\char"FDFB} 	\>	¦JALLA¦ \\
+% \textsf{FDFB}	\>   {\arialuni\char"FDFB} 	    \>	¦JALLA¦ \\ ^^A fixme not available in Amiri
 % \textsf{FDFC}	\>   {\arabicfont\char"FDFC} 	\>	¦RIYAL¦ \\
-% \textsf{FDFD}	\>   {\arabicfont\char"FDFD}	\>	¦BASMALA¦ \\
+% \textsf{FDFD}	\>   {\arabicfont\char"FDFD}	\>\hspace*{100pt} ¦BASMALA¦ \\
 % \textbf{Special Combinations} \\
 %  		\>   {\arabicfont الله}   	\>	¦al-ll_ah¦ or ¦ALLAH¦ \\
-% 		\>   {\arabicfont لله}		\>	¦ll_ah¦ or ¦LLAH¦ \\
+% 		\>   {\arabicfont لله}		\>	¦ll_ah¦ or ¦LLAH¦ or ¦LLH¦ \\
 % 		\>   {\arabicfont فَلِله} 	\> 	¦FALILLAH¦
 % \end{tabbing}
 % \end{multicols}
@@ -1695,7 +1693,7 @@ François Charette
 \def\Eg{\textit{E.g.,}\xspace}
 \def\Ie{\textit{I.e.,}\xspace}
 \def\etc{\@ifnextchar.{\textit{etc}}{\textit{etc.}\@\xspace}}
-
+\def\eTeX{\hologo{eTeX}}
 \newlength{\oldparindent}
 \newcommand{\parindentoff}{\setlength{\oldparindent}{\parindent} \setlength{\parindent}{0pt}}
 \newcommand{\parindenton}{\setlength{\parindent}{\oldparindent}}
@@ -1734,6 +1732,8 @@ François Charette
 \setmonofont{Consolas}%{Inconsolata}
 \setsansfont{Lucida Sans Unicode}
 \newfontfamily\arabicfont[Script=Arabic,Scale=1]{Amiri}
+\newfontfamily\amiriquran[Script=Arabic,Scale=1]{Amiri Quran}
+\newfontfamily\arialuni[Script=Arabic,Scale=1]{Arial Unicode MS}
 \newfontfamily\urdufont[Script=Arabic,Scale=1.2]{Hussaini Nastaleeq}
 \newfontfamily\farsifont[Script=Arabic,Scale=1.33]{IranNastaliq}
 
