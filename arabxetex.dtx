@@ -154,10 +154,9 @@ François Charette
 % 
 % With the availability of Jonathan Kew's \XeTeX, users can now rely on a very
 % up-to-date typesetting engine based on the integration of \eTeX, Unicode, and 
-% modern font-rendering technology (AAT and ICU), without the complex hassle of
+% modern font-rendering technology, without the complex hassle of
 % font installation.\footnote{ ^^A
-% 	\url{http://scripts.sil.org/xetex}. \XeTeX\ was originally developed 
-% 	for the Mac~OS~X platform, but Linux and WIN32 ports are now available.}
+% 	\url{http://scripts.sil.org/xetex}.}
 % 
 % \section{Description}
 % 
@@ -304,9 +303,11 @@ François Charette
 %     \newfontfamily\arabicfont[Script=Arabic]{<fontname>}
 % \end{Verbatim}
 % If not, then a warning is issued and \arabxetex\ will attempt to load 
-% the font \textbf{Scheherazade} (designed by Bob Halissy and
-% Jonathan Kew of SIL International).\footnote{ 
-% 	Available from \url{http://scripts.sil.org/ArabicFonts}. For
+% the font \textbf{Amiri} (by Khaled Hosny).\footnote{ 
+%   Available from \url{http://www.amirifont.org}.
+%   Prior to version 1.2.0, the default font was \textbf{Scheherazade} (designed by Bob Halissy and
+%   Jonathan Kew of SIL International),
+% 	available from \url{http://scripts.sil.org/ArabicFonts}. For
 % 	typesetting Sindhi and Kashmiri, the font \textbf{Lateef}, available at
 % 	the same place, is also recommended.}
 % You can also define specific fonts \new{1.1} for all other languages, by similarly defining
@@ -1104,7 +1105,7 @@ François Charette
 % \textsf{FDF8}	\>   {\arabicfont\char"FDF8} 	\>	¦WASALLAM¦ \\
 % \textsf{FDF9}	\>   {\arabicfont\char"FDF9} 	\>	¦SALLA¦ \\
 % \textsf{FDFA}	\>   {\arabicfont\char"FDFA} 	\>	¦SLM¦ \\
-% \textsf{FDFB}	\>   {\jallafont\char"FDFB} 	\>	¦JALLA¦ \\
+% \textsf{FDFB}	\>   {\arabicfont\char"FDFB} 	\>	¦JALLA¦ \\
 % \textsf{FDFC}	\>   {\arabicfont\char"FDFC} 	\>	¦RIYAL¦ \\
 % \textsf{FDFD}	\>   {\arabicfont\char"FDFD}	\>	¦BASMALA¦ \\
 % \textbf{Special Combinations} \\
@@ -1243,8 +1244,8 @@ François Charette
 \RequirePackage{fontspec}
 \RequirePackage{bidi}
 \AtBeginDocument{\ifdefined\arabicfont\relax\else
-	\PackageWarning{arabxetex}{\string\arabicfont\ is not defined!^^JI will try to load Scheherazade (scaled 1.5)}%
-	\newfontfamily\arabicfont[Script=Arabic,Scale=1.5]{Scheherazade}\fi}%
+	\PackageWarning{arabxetex}{\string\arabicfont\ is not defined!^^JI will try to load Amiri}%
+	\newfontfamily\arabicfont[Script=Arabic]{Amiri}\fi}%
 \def\ax@trans@style{\itshape}%
 \newcommand{\SetTranslitStyle}[1]{\def\ax@trans@style{#1}}
 \newcommand{\SetTranslitConvention}[1]{\def\ax@trans@convention{#1}}
@@ -1820,12 +1821,11 @@ François Charette
 %% fontspec declarations:
 \setmainfont[Ligatures=TeX]{Junicode}
 \defaultfontfeatures{Scale=MatchLowercase}
-\setmonofont{Inconsolata}
+\setmonofont{Consolas}%{Inconsolata}
 \setsansfont{Lucida Sans Unicode}
 \newfontfamily\arabicfont[Script=Arabic,Scale=1]{Amiri}
 \newfontfamily\urdufont[Script=Arabic,Scale=1.2]{Hussaini Nastaleeq}
 \newfontfamily\farsifont[Script=Arabic,Scale=1.33]{IranNastaliq}
-\newfontfamily\jallafont{Arial Unicode MS} % drop this one JALLA is supported by Amiri
 
 \linespread{1.05}
 \frenchspacing
