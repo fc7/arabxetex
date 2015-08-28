@@ -191,14 +191,14 @@ François Charette
 % can use keymaps or keyboard utilities to achieve the same, so why bother? 
 % An expert in Arabic mathematical linguistic and author of the Perl module 
 % \pkg{Encode::Arabic::ArabTeX}, Otakar Srmž, has this to say about the 
-% virtues of \arabtex\ \ASCII\ encoding:
+% virtues of \arabtex\ \ASCII\ encoding:\footnote{ ^^A
+% 		\url{http://search.cpan.org/~smrz/Encode-Arabic/lib/Encode/Arabic/ArabTeX.pm\#DESCRIPTION}.
+% 		See also \url{http://ufal.mff.cuni.cz/~smrz/ICFP2006/icfp-encode.pdf}.}
 % \begin{quote}
 % 	“ArabTeX is an excellent extension to TeX/LaTeX designed for
 % 	typesetting the right-to-left scripts of the Orient. It comes up with
 % 	very intuitive and comprehensible lower \ASCII\ transliterations, the
-% 	expressive power of which is even better than that of the scripts.”^^A\footnote{ %
-% 		[Source: \url{http://search.cpan.org/~smrz/Encode-Arabic-1.16/ArabTeX/ArabTeX.pm#DESCRIPTION}.
-% 		See also \url{http://ufal.mff.cuni.cz/~smrz/ICFP2006/icfp-encode.pdf}]^^A}
+% 	expressive power of which is even better than that of the scripts.”
 % \end{quote}
 % There are indeed several advantages in using \arabtex\ input convention for
 % typesetting in the Arabic script, besides ease and legibility.  First it is
@@ -261,11 +261,7 @@ François Charette
 % 
 % Left-to-right insertions in Latin script within an Arabic environment 
 % can be made by means of the \DescribeMacro{\textLR} 
-% command \cmd\textLR¦{…}¦.\new{1.1.2}\footnote{ %
-%	In version 1.0 this was called \cmd\textlatin, which was renamed \cmd\textroman
-%	in version 1.1. But the former conflicted with \pkg{Babel}, 
-%	and the latter with \pkg{Beamer}. Hopefully \cmd\textLR\ 
-%	won't be as short-lived!}
+% command \cmd\textLR¦{…}¦.
 % Emphasis in Arabic is traditionally indicated by
 % overlining the text, and this can be achieved with the command
 % \DescribeMacro{\aemph} 
@@ -308,7 +304,7 @@ François Charette
 % 	available from \url{http://scripts.sil.org/ArabicFonts}. For
 % 	typesetting Sindhi and Kashmiri, the font \textbf{Lateef}, available at
 % 	the same place, is also recommended.}
-% You can also define specific fonts \new{1.1} for all other languages, by similarly defining
+% You can also define specific fonts for all other languages, by similarly defining
 % ¦\<language>font¦, such as for example:
 % \begin{Verbatim}[gobble=2,fontsize=\normalsize]
 %     \newfontfamily\urdufont[Script=Arabic]{Hussaini Nastaleeq}
@@ -337,7 +333,7 @@ François Charette
 % ^say'uN, ^say'iN, ^say'aN, sA'ala, mas'alaTuN, saw'aTuN, _ha.tI'aTuN, 
 % jA'a, ridA'uN, ridA'aN, jI'a, radI'iN, sU'uN, .daw'uN, qay'iN, .zim'aN
 % , yatasA'alUna, 'a`dA'akum, 'a`dA'ikum, 'a`dA'ukum maqrU'aT, mU'ibAt, 
-% taw'am, yas'alu, 'a.sdiq^A$\;$'uh_u, ya^g^I'u, s^U'ila 
+% taw'am, yas'alu, 'a.sdiq^A'uh_u, ya^g^I'u, s^U'ila 
 % \end{arab}
 % \end{Verbatim}
 % 
@@ -348,7 +344,7 @@ François Charette
 % ^say'uN, ^say'iN, ^say'aN, sA'ala, mas'alaTuN, saw'aTuN, _ha.tI'aTuN, 
 % jA'a, ridA'uN, ridA'aN, jI'a, radI'iN, sU'uN, .daw'uN, qay'iN, .zim'aN
 % , yatasA'alUna, 'a`dA'akum, 'a`dA'ikum, 'a`dA'ukum maqrU'aT, mU'ibAt, 
-% taw'am, yas'alu, 'a.sdiq^A$\;$'uh_u, ya^g^I'u, s^U'ila 
+% taw'am, yas'alu, 'a.sdiq^A'uh_u, ya^g^I'u, s^U'ila 
 % \end{arab}
 % 
 % \subsubsection{Special orthographies}
@@ -373,7 +369,7 @@ François Charette
 % \bigskip
 % 
 % \textbf{NB}: For the time being only \textit{miʾa} is supported, but more irregular
-% constructs should be added in later versions.
+% constructs may be added in later versions.
 % 
 % \subsubsection{Typesetting the Holy Qurʾān}
 %
@@ -384,7 +380,7 @@ François Charette
 % The following examples represent my attempt to reproduce, with the font
 % Amiri, the various typographic features of a typical printed edition (disregarding those that cannot be achieved 
 % by means of Unicode, such as putting the \textit{hamza} directly over the baseline).\footnote{ ^^A
-%   In the previous version of the manual, I attempted to mimic that behaviour with a \TeX\ macro ¦\hamzaB¦ which happened to work rather well with the font Scheherazade. With Amiri it does not.}
+%   In the previous version of the manual, I attempted to mimic that behaviour with a \TeX\ macro \cmd\hamzaB, which happened to work rather well with the font Scheherazade. With Amiri it does not.}
 % 
 % ^^AIn printed Qurʾāns, one frequently encounters typographical oddities that are 
 % ^^Anot taken into account by Unicode, such as the \textit{hamza} placed directly over 
@@ -421,7 +417,8 @@ François Charette
 % SAJDA [[15]] tatajAfY_a junUbuhum `ani 'l-ma.dAji`i yad`Una rabbahum 
 % _hawfaN wa-.tama`aN wa-mimmA razaqn_ahum yunfiqUna [[16]]
 % \end{arab}
-%
+% 
+% \bigskip
 % \begin{arab}[fullvoc]
 % sUraTu 'l-baqaraTi 71--72:
 % 
@@ -495,7 +492,7 @@ François Charette
 % At the moment transliteration mappings are provided for Arabic, Persian, Urdu, 
 % Sindhi and Pashto. The rest may be provided in a future version.
 % As a rule the default conventions provided are those of the Library of Congress.
-% \new{1.1.2}For Arabic the alternative transliteration of the 
+% For Arabic the alternative transliteration of the 
 % \href{http://www.orientasia.info/download/arab_trans.pdf}{Deutsche Morgenländische Gesellschaft}
 % is also available (but should be still considered experimental). 
 % You can set it with the command \DescribeMacro{\SetTranslitConvention}
