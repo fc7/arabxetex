@@ -1625,7 +1625,7 @@ François Charette
 	\egroup}
 %
 \newcommand{\textLR}[1]{\LR{\rmfamily #1}}
-\newcommand{\aemph}[1]{%
+\providecommand*{\aemph}[1]{%
   \edef\@tempb{\expandafter\noexpand\csname text\ax@lang\endcsname}%
   $\overline{\text{\@tempb{#1}}}$}
 %    \end{macrocode}
