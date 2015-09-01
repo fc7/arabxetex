@@ -1,5 +1,5 @@
 --------------------------
-THE ARABXETEX PACKAGE v1.1.4
+THE ARABXETEX PACKAGE v1.2.0
 
 This package provides a convenient ArabTeX-like user-interface for typesetting
 languages using the Arabic script in XeLaTeX, with flexible access to font
@@ -14,4 +14,4 @@ The TECkit fontmapping files (*.map and *.tec) should be copied to
 
 -------------------------
 François Charette
-© 2007–2010
+© 2007–2015
