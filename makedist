@@ -13,26 +13,27 @@ perl makemaps.pl
 fi
 
 distdir="dist"
-mapsdir="dist/fontmapping/"
-docdir="dist/doc/"
-srcdir="dist/source/"
-#texdir="dist/xelatex/"
-locmapsdir="loc/fonts/misc/xetex/fontmapping/arabxetex/"
-locdocdir="loc/doc/xelatex/arabxetex/"
-locsrcdir="loc/source/xelatex/arabxetex/"
-loctexdir="loc/tex/xelatex/"
+pkgdir=$distdir/arabxetex
+mapsdir="$pkgdir/fontmapping/"
+docdir="$pkgdir/doc/"
+srcdir="$pkgdir/source/"
+#texdir="$pkgdir/xelatex/"
+tdsmapsdir="tds/fonts/misc/xetex/fontmapping/arabxetex/"
+tdsdocdir="tds/doc/xelatex/arabxetex/"
+tdssrcdir="tds/source/xelatex/arabxetex/"
+tdstexdir="tds/tex/xelatex/"
 
-mkdir -p $locmapsdir
-mkdir -p $locdocdir/examples
-mkdir -p $locsrcdir
-mkdir -p $loctexdir
+mkdir -p $tdsmapsdir
+mkdir -p $tdsdocdir/examples
+mkdir -p $tdssrcdir
+mkdir -p $tdstexdir
 mkdir -p $mapsdir
 mkdir -p $srcdir
-mkdir -p dist/examples
+mkdir -p $pkgdir/examples
 #mkdir -p $texdir
 
 cp mappings/*.{map,tec} $mapsdir
-mv mappings/*.{map,tec} $locmapsdir
+mv mappings/*.{map,tec} $tdsmapsdir
 rm -rf mappings/
 
 echo "Recompile arabxetex.dtx? [y/N]"
@@ -46,34 +47,34 @@ fi
 cp *-trans*.map $srcdir 
 cp *.maps $srcdir
 cp makemaps.pl $srcdir
-cp arabxetex.pdf dist/
-cp arabxetex.dtx dist/
-cp ednotes_example.{tex,pdf} dist/examples
-cp minimal.{tex,pdf} dist/examples
+cp arabxetex.pdf $pkgdir/
+cp arabxetex.dtx $pkgdir/
+cp ednotes_example.{tex,pdf} $pkgdir/examples
+cp minimal.{tex,pdf} $pkgdir/examples
 #cp arabxetex.sty $texdir
-cp README dist/
+cp README.md $pkgdir/
 
-cp *-trans*.map $locsrcdir 
-cp *.maps $locsrcdir
-cp makemaps.pl $locsrcdir
-cp arabxetex.pdf $locdocdir
-cp arabxetex.dtx $locsrcdir
-cp ednotes_example.{tex,pdf} $locdocdir/examples
-cp minimal.tex $locdocdir/examples
-cp arabxetex.sty $loctexdir || exit 1
-cp README $locdocdir
+cp *-trans*.map $tdssrcdir 
+cp *.maps $tdssrcdir
+cp makemaps.pl $tdssrcdir
+cp arabxetex.pdf $tdsdocdir
+cp arabxetex.dtx $tdssrcdir
+cp ednotes_example.{tex,pdf} $tdsdocdir/examples
+cp minimal.tex $tdsdocdir/examples
+cp arabxetex.sty $tdstexdir || exit 1
+cp README.md $tdsdocdir
 
 [ -f arabxetex.zip ] && mv arabxetex.zip arabxetex.zip.bak
-cd loc
+cd tds
 zip -r arabxetex.tds.zip *
-mv arabxetex.tds.zip ../
+mv arabxetex.tds.zip ../dist
 cd ..
-rm -fr loc/
+rm -fr tds/
 cd dist
 zip -r arabxetex.zip *
 mv arabxetex.zip ../
 cd ..
-zip arabxetex.zip arabxetex.tds.zip
+#zip arabxetex.zip arabxetex.tds.zip
 rm -fr dist/
 
 echo "arabxetex.zip can be uploaded on CTAN..."
@@ -86,6 +87,6 @@ if [ "$INSTALL_Q" = "y" ] || [ "$INSTALL_Q" = "Y" ]; then
   mktexlsr $TEXMFHOME
   echo "update completed"
 fi
-rm arabxetex.tds.zip
+#rm arabxetex.tds.zip
 rm arabxetex*.{aux,glo,idx,ins,log,out,sty,toc}
 rm README.tex
