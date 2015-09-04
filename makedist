@@ -21,7 +21,7 @@ srcdir="$pkgdir/source/"
 tdsmapsdir="tds/fonts/misc/xetex/fontmapping/arabxetex/"
 tdsdocdir="tds/doc/xelatex/arabxetex/"
 tdssrcdir="tds/source/xelatex/arabxetex/"
-tdstexdir="tds/tex/xelatex/"
+tdstexdir="tds/tex/xelatex/arabxetex/"
 
 mkdir -p $tdsmapsdir
 mkdir -p $tdsdocdir/examples
@@ -36,13 +36,9 @@ cp mappings/*.{map,tec} $mapsdir
 mv mappings/*.{map,tec} $tdsmapsdir
 rm -rf mappings/
 
-echo "Recompile arabxetex.dtx? [y/N]"
-read -en 1 RECOMPILE_Q
-if [ "$RECOMPILE_Q" = "y" ] || [ "$RECOMPILE_Q" = "Y" ]; then
-	xelatex arabxetex.dtx
-	xelatex arabxetex.dtx
-	xelatex arabxetex.dtx
-fi
+xelatex arabxetex.dtx
+xelatex arabxetex.dtx
+xelatex arabxetex.dtx
 
 cp *-trans*.map $srcdir 
 cp *.maps $srcdir
