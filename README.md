@@ -1,13 +1,14 @@
-# THE ARABXETEX PACKAGE 
-## v1.2.0
+# THE ARABXETEX PACKAGE
+## v1.2.1
 
 This package provides a convenient ArabTeX-like user-interface for typesetting
 languages using the Arabic script in XeLaTeX, with flexible access to font
-features. Input in ArabTeX notation can be set in three different
-vocalization modes or in roman transliteration. Direct UTF-8 input is also
-supported.  Since most of the ‘real work’ -- namely parsing and converting
-ArabTeX input to Unicode -- is done at the level of TECkit mappings,
-ArabXeTeX is really performant.
+features. Input in ArabTeX notation can be set in three different vocalization
+modes or in roman transliteration. Direct UTF-8 input is also supported, but
+users not interested in ArabTeX input notation should rather consider the
+package [polyglossia](https://www.ctan.org/pkg/polyglossia). Since most of the
+‘real work’ – namely parsing and converting ArabTeX input to Unicode – is done
+at the level of TECkit mappings, ArabXeTeX is really performant.
 
 The TECkit fontmapping files (`*.map` and `*.tec`) should be copied to
 `<TEXMF>/fonts/misc/xetex/fontmapping/arabxetex/`
@@ -24,6 +25,8 @@ The TECkit fontmapping files (`*.map` and `*.tec`) should be copied to
 	  the commands `\SetAllahWithAlif` and `\SetAllahWithoutAlif`.
   * Fix placement of tanwin fatah
   * Fix handling of end of ayeh symbol in mapping
+
+*NB* From a user perspective there is no difference between 1.2.0 and 1.2.1.
 
 ---
 François Charette
